@@ -59,7 +59,7 @@
     })(start);
   }
 
-  /* ---------- Hero: the title clears, the portrait moves, the statement arrives ---------- */
+  /* ---------- Hero: the title clears, the sea opens up, the statement arrives ---------- */
   var hero = d.querySelector('[data-hero]');
   if (hero) {
     hero.classList.toggle('pin', !reduced);
