@@ -4,6 +4,7 @@
 Usage:  python build.py          (needs Python 3.9+, no other packages)
 Then:   python -m http.server 8000 --directory docs
 """
+import hashlib
 import html
 import json
 import shutil
@@ -25,20 +26,30 @@ BASE_PATH = urlparse(SITE).path
 ALL = PROJ["projects"]
 BY_SLUG = {p["slug"]: p for p in ALL}
 PERSONAL = {p["slug"]: p for p in PROJ["personal"]}
-ROLES = {r["id"]: (r, e) for e in CAREER["employers"] for r in e["roles"]}
-ASSET_V = "1"
+ROLES = {r["id"]: (r, emp) for emp in CAREER["employers"] for r in emp["roles"]}
+ASSET_V = hashlib.sha1((ROOT / "src" / "styles.css").read_bytes() + (ROOT / "src" / "app.js").read_bytes()).hexdigest()[:8]
 errors = []
 e = html.escape
 NAV = [("Profile", "profile/"), ("Career", "career/"), ("Projects", "projects/"), ("AI", "ai/"), ("Skills", "skills/"), ("Credentials", "credentials/")]
+CV = "@@/Ali-Alzahrani-CV.pdf"
+
+
+def waves(variant=""):
+    a = "M0 100C200 58 400 58 600 100S1000 142 1200 100 1600 58 1800 100 2200 142 2400 100V220H0Z"
+    b = "M0 110C150 80 450 80 600 110S1050 140 1200 110 1650 80 1800 110 2250 140 2400 110V220H0Z"
+    c = "M0 120C200 96 400 96 600 120S1000 144 1200 120 1600 96 1800 120 2200 144 2400 120V220H0Z"
+    return f"""<div class="waves {variant}" aria-hidden="true">
+  <svg class="wv wv1" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="{a}"/></svg>
+  <svg class="wv wv2" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="{b}"/></svg>
+  <svg class="wv wv3" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="{c}"/></svg>
+</div>"""
 
 
 def page(path, title, desc, body, current="", og_type="website", jsonld=None):
     depth = path.count("/")
     r = "../" * depth
     full_title = title if title.startswith(P["name"]) else f"{title} | {P['name']}"
-    nav = "".join(
-        f'<a href="{r}{h}"{" aria-current=page" if current == h else ""}>{n}</a>' for n, h in NAV
-    )
+    nav = "".join(f'<a href="{r}{h}"{" aria-current=page" if current == h else ""}>{n}</a>' for n, h in NAV)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ""
     canonical = SITE + path
     doc = f"""<!doctype html>
@@ -49,38 +60,39 @@ def page(path, title, desc, body, current="", og_type="website", jsonld=None):
 <title>{e(full_title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{canonical}">
-<meta name="theme-color" content="#0b1215">
+<meta name="theme-color" content="#06142a">
 <meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{e(full_title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE}assets/social-preview.png">
+<meta property="og:image" content="{SITE}assets/social-preview.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{r}assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{r}assets/apple-touch-icon.png">
-<link rel="preload" href="{r}assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{r}assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{r}assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{r}assets/styles.css?v={ASSET_V}">
 <script>document.documentElement.classList.add('js')</script>
 {ld}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-head">
-  <a class="wordmark" href="{r or './'}"><span class="mark" aria-hidden="true"></span>Ali Alzahrani</a>
-  <nav class="nav-wide" aria-label="Main">{nav}<a class="nav-cv" href="{r}Ali-Alzahrani-CV.pdf">Download CV</a></nav>
-  <details class="menu">
-    <summary><span>Menu</span></summary>
-    <nav class="nav-narrow" aria-label="Main, small screens">{nav}<a class="nav-cv" href="{r}Ali-Alzahrani-CV.pdf">Download CV</a></nav>
-  </details>
+<header class="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="{r or './'}">Ali Alzahrani</a>
+    <nav class="nav-wide" aria-label="Main">{nav}<a class="nav-cv" href="{r}Ali-Alzahrani-CV.pdf">Download CV</a></nav>
+    <details class="menu">
+      <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span></summary>
+      <nav class="nav-narrow" aria-label="Main, small screens">{nav}<a class="nav-cv" href="{r}Ali-Alzahrani-CV.pdf">Download CV</a></nav>
+    </details>
+  </div>
 </header>
 <main id="main">
 {body.replace('@@/', r)}
 </main>
-<footer class="site-foot">
-  <div class="foot-grid">
+<footer class="foot">
+  <div class="wrap foot-in">
     <div>
       <p class="foot-name">Ali Alzahrani</p>
       <p>{e(P['current_title'])}<br>{e(P['location'])}</p>
@@ -117,126 +129,164 @@ def case_title(slug):
 
 
 def cred_item(c, level=3):
-    st = f'<span class="status status-{c.get("kind","done")}">{e(c["status"])}</span>' if c.get("status") else ""
+    st = f'<span class="status status-{c.get("kind", "done")}">{e(c["status"])}</span>' if c.get("status") else ""
     det = f'<p>{e(c["detail"])}</p>' if c.get("detail") else ""
     return f'<li class="cred"><div><h{level}>{e(c["title"])}</h{level}><p class="org">{e(c["org"])}</p>{det}</div>{st}</li>'
 
 
 def contact_band():
-    return f"""<section class="band band-contact" aria-labelledby="contact-title" id="contact">
-  <div class="wrap contact-grid">
+    return f"""<section class="contact" aria-labelledby="contact-title" id="contact">
+  <div class="wrap contact-in">
+    <h2 id="contact-title" class="rv">Bring me a difficult problem.</h2>
+    <p class="lede rv">I'm open to conversations with recruiters, technology leaders and collaborators. Email is the best way to reach me.</p>
+    <div class="cta rv">
+      <a class="pill pill-white" href="mailto:{P['email']}">Email me</a>
+      <a class="pill pill-line" href="{P['linkedin']}" rel="me noopener">LinkedIn</a>
+      <a class="pill pill-line" href="{CV}">Download CV</a>
+    </div>
+    <p class="contact-mail rv"><a href="mailto:{P['email']}">{P['email']}</a> <button class="copy" type="button" data-copy="{P['email']}" hidden>Copy</button></p>
+  </div>
+  {waves('waves-foot')}
+</section>"""
+
+
+def page_hero(eyebrow, title, lede="", extra="", crumb=""):
+    crumb_html = f'<p class="crumb"><a href="{crumb[1]}">{e(crumb[0])}</a></p>' if crumb else ""
+    lede_html = f'<p class="lede">{e(lede)}</p>' if lede else ""
+    return f"""<section class="phero">
+  <div class="wrap phero-in">
+    {crumb_html}
+    <p class="eyebrow">{e(eyebrow)}</p>
+    <h1>{e(title)}</h1>
+    {lede_html}
+    {extra}
+  </div>
+  {waves('waves-sail')}
+</section>"""
+
+
+# ---------- Home sections ----------
+def bento():
+    cards = []
+    for b in P["bento"]:
+        count = f' data-count="{b["count"]}" data-pre="{e(b.get("pre", ""))}" data-suf="{e(b.get("suf", ""))}"' if b.get("count") else ""
+        fig_cls = "fig fig-words" if b.get("words") else "fig"
+        cards.append(
+            f'<a class="tile tile-{b.get("size", "s")} {"tile-navy" if b.get("navy") else ""}" href="@@/{b["href"]}"><span class="{fig_cls}"{count}>{e(b["fig"])}</span><span class="tile-label">{e(b["label"])}</span></a>'
+        )
+    return f'<div class="bento">{"".join(cards)}</div>'
+
+
+def stack():
+    cards = []
+    flag = [p for p in ALL if p["tier"] == "flagship"]
+    for i, p in enumerate(flag):
+        tone = ["t-navy", "t-deep", "t-white"][i % 3]
+        cards.append(f"""<article class="scard {tone}" style="--i:{i}" data-scard>
+  <div class="scard-in">
     <div>
-      <p class="eyebrow">Contact</p>
-      <h2 id="contact-title">Bring me a difficult problem.</h2>
-      <p class="lede">I'm open to conversations with recruiters, technology leaders and collaborators. Email is the best way to reach me.</p>
+      <p class="scard-where">{e(p['where'])} · {e(p['my_role'])}</p>
+      <h3>{e(p['title'])}</h3>
+      <p class="scard-sum">{e(p['summary'])}</p>
     </div>
-    <div class="contact-actions">
-      <a class="contact-line" href="mailto:{P['email']}"><span>Email</span>{P['email']}</a>
-      <button class="copy" type="button" data-copy="{P['email']}" hidden>Copy email address</button>
-      <a class="contact-line" href="{P['linkedin']}" rel="me noopener"><span>LinkedIn</span>{P['linkedin_label']}</a>
-      <a class="contact-line" href="@@/Ali-Alzahrani-CV.pdf"><span>CV</span>Download PDF</a>
-      <p class="contact-line static"><span>Based in</span>{e(P['location'])}</p>
+    <div class="scard-end">
+      <p class="scard-key">{e(p['key'])}</p>
+      <a class="pill {'pill-navy' if tone == 't-white' else 'pill-white'}" href="@@/projects/{p['slug']}/" aria-label="Read the case study: {e(p['title'])}">Read the case study</a>
     </div>
+  </div>
+</article>""")
+    return f'<div class="stack" data-stack>{"".join(cards)}</div>'
+
+
+def story():
+    hubname = {h["id"]: h["name"] for h in MAP["hubs"]}
+    pills = "".join(
+        f'<button type="button" class="spill" data-story-btn="{i}" aria-pressed="{"true" if i == 0 else "false"}">{e(t["label"])}</button>'
+        for i, t in enumerate(MAP["traces"])
+    )
+    panels = []
+    for t in MAP["traces"]:
+        if len(t["path"]) != len(t["steps"]):
+            errors.append(f"trace {t['id']} path/steps mismatch")
+        steps = "".join(
+            f'<li><span class="story-at">{e(hubname[p])}</span><p>{e(s)}</p></li>' for p, s in zip(t["path"], t["steps"])
+        )
+        wps = "".join(f'<li><span class="dot"></span><span class="lbl">{e(hubname[p])}</span></li>' for p in t["path"])
+        panels.append(f"""<article class="story-panel" data-story-panel id="story-{t['id']}">
+  <h3 class="story-problem">{e(t['problem'])}</h3>
+  <ol class="story-steps">{steps}</ol>
+  <div class="course" aria-hidden="true"><div class="course-track"><span class="course-fill"></span></div><ol class="course-wps">{wps}</ol></div>
+  <p class="story-more"><a class="more" href="{case_href(t['case'])}">Read the full case study</a></p>
+</article>""")
+    return f"""<section class="story" data-story aria-labelledby="story-title">
+  <div class="story-stage">
+    <div class="wrap story-top">
+      <div>
+        <p class="eyebrow">Follow one problem</p>
+        <h2 id="story-title">From first symptom to lasting fix.</h2>
+      </div>
+      <div class="story-pills" role="group" aria-label="Choose a real problem" data-story-pills hidden>{pills}</div>
+    </div>
+    <div class="wrap story-panels">{''.join(panels)}</div>
   </div>
 </section>"""
 
 
-# ---------- Solution Map ----------
-def solution_map(short=False):
+def areas():
+    short = {"ai": "AI", "people": "People", "enterprise": "Enterprise", "industrial": "Industrial", "security": "Security", "outcomes": "Outcomes"}
     hubs = MAP["hubs"]
     pos = {h["id"]: h for h in hubs}
-    lines = "".join(
-        f'<line data-a="{a}" data-b="{b}" x1="{pos[a]["x"]*10}" y1="{pos[a]["y"]*6}" x2="{pos[b]["x"]*10}" y2="{pos[b]["y"]*6}"/>'
-        for a, b, _ in MAP["links"]
-    )
-    hub_btns = "".join(
-        f'<a class="hub" href="#hub-{h["id"]}" data-hub="{h["id"]}" style="--x:{h["x"]};--y:{h["y"]}"><span class="dot" aria-hidden="true"></span><span class="hub-name">{e(h["name"])}</span></a>'
-        for h in hubs
+    tabs = "".join(
+        f'<button type="button" role="tab" id="tab-{h["id"]}" aria-controls="area-{h["id"]}" aria-selected="{"true" if i == 0 else "false"}" tabindex="{0 if i == 0 else -1}" data-area="{h["id"]}">{short[h["id"]]}</button>'
+        for i, h in enumerate(hubs)
     )
     panels = []
     for h in hubs:
         does = "".join(f"<li>{e(x)}</li>" for x in h["does"])
-        proof = "".join(f'<li><a href="{case_href(s)}">{e(case_title(s))}</a></li>' for s in h["proof"])
+        proof = "".join(f'<a class="chip-link" href="{case_href(s)}">{e(case_title(s))}</a>' for s in h["proof"])
         conns = []
         for a, b, label in MAP["links"]:
             if h["id"] in (a, b):
                 other = pos[b if a == h["id"] else a]
-                conns.append(f'<li><a class="conn" href="#hub-{other["id"]}" data-hub-link="{other["id"]}"><strong>{e(other["name"])}</strong><span>{e(label)}</span></a></li>')
-        panels.append(f"""<article class="hub-panel" id="hub-{h['id']}" data-panel="{h['id']}" tabindex="-1">
-  <h3>{e(h['name'])}</h3>
-  <p class="hub-line">{e(h['line'])}</p>
-  <div class="hub-cols">
-    <div><h4>What I do here</h4><ul>{does}</ul></div>
-    <div><h4>A decision I stand by</h4><p>{e(h['decision'])}</p>
-      <h4>Where to see it</h4><ul class="linklist">{proof}</ul>
-      <p class="more"><a href="@@/{h['extra']['href']}">{e(h['extra']['label'])}</a></p></div>
+                conns.append(f'<li><a href="#area-{other["id"]}" data-area-link="{other["id"]}"><strong>{e(other["name"])}</strong><span>{e(label)}</span></a></li>')
+        panels.append(f"""<div class="area" id="area-{h['id']}" role="tabpanel" aria-labelledby="tab-{h['id']}" tabindex="0" data-area-panel="{h['id']}">
+  <p class="area-name">{e(h['name'])}</p>
+  <h3>{e(h['line'])}</h3>
+  <div class="area-cols">
+    <div><h4>What I do</h4><ul class="ticks">{does}</ul></div>
+    <div><h4>A decision I stand by</h4><p>{e(h['decision'])}</p></div>
     <div><h4>How it connects</h4><ul class="conns">{''.join(conns)}</ul></div>
   </div>
-</article>""")
-    traces_btn = "".join(
-        f'<li><a class="trace-btn" href="#trace-{t["id"]}" data-trace="{t["id"]}">{e(t["problem"])}</a></li>' for t in MAP["traces"]
-    )
-    traces = []
-    for t in MAP["traces"]:
-        hubname = {h["id"]: h["name"] for h in hubs}
-        steps = "".join(
-            f'<li data-at="{p}"><span class="at">{e(hubname[p])}</span>{e(s)}</li>' for p, s in zip(t["path"], t["steps"])
-        )
-        if len(t["path"]) != len(t["steps"]):
-            errors.append(f"trace {t['id']} path/steps mismatch")
-        traces.append(f"""<article class="trace-panel" id="trace-{t['id']}" data-trace-panel="{t['id']}" data-path="{','.join(t['path'])}" tabindex="-1">
-  <h3>{e(t['problem'])}</h3>
-  <ol class="trace-steps">{steps}</ol>
-  <p class="more"><a href="{case_href(t['case'])}">Read the full case study</a></p>
-</article>""")
-    return f"""<section class="band band-map" id="solution-map" aria-labelledby="map-title">
+  <div class="area-proof"><h4>See it in practice</h4><div>{proof}<a class="more" href="@@/{h['extra']['href']}">{e(h['extra']['label'])}</a></div></div>
+</div>""")
+    return f"""<section class="sec sec-white" aria-labelledby="areas-title">
   <div class="wrap">
-    <div class="map-head">
-      <div>
-        <p class="eyebrow">The Solution Map</p>
-        <h2 id="map-title">Real problems rarely stay in one department.</h2>
-      </div>
-      <p class="lede">This is how I think: people, AI, enterprise technology, industrial operations and security, all connected to a business outcome. Choose an area, or trace how a real problem was solved. The map is conceptual and doesn't show any employer's actual systems.</p>
+    <div class="sec-head center">
+      <p class="eyebrow rv">Where the work connects</p>
+      <h2 id="areas-title" class="rv">Real problems rarely stay in one department.</h2>
+      <p class="lede rv">People, AI, enterprise technology, industrial operations and security, all connected to a business outcome. This view is conceptual and doesn't show any employer's actual systems.</p>
     </div>
-    <div class="map-grid">
-      <div class="map-left">
-        <div class="map-stage" data-map>
-          <svg viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g class="map-lines">{lines}</g><polyline class="map-trace" points="" pathLength="1"/></svg>
-          <nav class="hubs" aria-label="Areas of the Solution Map">{hub_btns}</nav>
-        </div>
-        <div class="traces">
-          <h3 class="traces-title">Trace a real problem</h3>
-          <ul>{traces_btn}</ul>
-        </div>
-      </div>
-      <div class="map-panels" aria-live="polite">
-        {''.join(panels)}
-        {''.join(traces)}
-      </div>
-    </div>
+    <div class="seg-wrap" data-seg-wrap hidden><div class="seg" role="tablist" aria-label="Areas of my work"><span class="seg-thumb" aria-hidden="true"></span>{tabs}</div></div>
+    <div class="areas" data-areas>{''.join(panels)}</div>
   </div>
 </section>"""
 
 
-# ---------- Career timeline ----------
-def timeline():
-    s, end = 2014.0, 2027.0
+def route(compact=False):
     items = []
-    for emp in CAREER["employers"]:
-        for r in emp["roles"]:
-            left = (r["start"] - s) / (end - s) * 100
-            width = (r["end"] - r["start"]) / (end - s) * 100
-            items.append(
-                f'<li class="tl-role" style="--l:{left:.2f};--w:{width:.2f}"><a href="@@/career/#{r["id"]}"><span class="tl-bar" aria-hidden="true"></span><span class="tl-text"><strong>{e(r["title"])}</strong><span>{e(emp["name"])}, {e(r["dates"])}</span></span></a></li>'
-            )
-    items.reverse()
-    years = "".join(f'<span style="--l:{(y - s) / (end - s) * 100:.2f}">{y}</span>' for y in range(2014, 2027, 2))
-    return f'<div class="timeline"><ol>{"".join(items)}</ol><div class="tl-years" aria-hidden="true">{years}</div></div>'
+    for emp in reversed(CAREER["employers"]):
+        for r in reversed(emp["roles"]):
+            items.append(f"""<li class="wp"><a href="@@/career/#{r['id']}">
+  <span class="wp-dates">{e(r['dates'])}</span>
+  <span class="wp-title">{e(r['title'])}</span>
+  <span class="wp-emp">{e(emp['name'])}</span>
+  {'' if compact else f'<span class="wp-sum">{e(r["summary"])}</span>'}
+</a></li>""")
+    return f'<div class="route" data-route><span class="route-line" aria-hidden="true"><span class="route-fill"></span></span><ol>{"".join(items)}</ol></div>'
 
 
-# ---------- Pages ----------
-def project_card(p, cls=""):
-    return f"""<a class="pcard {cls}" href="@@/projects/{p['slug']}/">
+def project_card(p):
+    return f"""<a class="pcard" href="@@/projects/{p['slug']}/">
   <p class="pcard-key">{e(p['key'])}</p>
   <h3>{e(p['title'])}</h3>
   <p>{e(p['summary'])}</p>
@@ -244,82 +294,112 @@ def project_card(p, cls=""):
 </a>"""
 
 
+def personal_card(p, meta=None):
+    return f"""<a class="pcard" href="@@/projects/{p['slug']}/">
+  <p class="pcard-key">{e(p['stage'])}</p>
+  <h3>{e(p['title'])}</h3>
+  <p>{e(p['summary'])}</p>
+  <p class="pcard-meta">{e(meta or p['category'])}</p>
+</a>"""
+
+
 def home():
-    proof = "".join(
-        f'<li><a href="@@/{x["href"]}"><strong>{e(x["figure"])}</strong><span>{e(x["label"])}</span></a></li>' for x in P["proof"]
+    words = "".join(f'<span class="w">{e(x)}</span> ' for x in P["philosophy"].split())
+    stat = lambda n, l: f'<div><strong>{e(n)}</strong><span>{e(l)}</span></div>'
+    ai_rows = "".join(
+        f'<li class="ai-row"><p class="ai-status">{e(l["status"])}</p><h3>{e(l["name"])}</h3><p>{e(l["text"])}</p><a class="more" href="{"@@/ai/#personal-ai" if l["href"] == "#projects" else "@@/" + l["href"]}">{e(l["link"])}</a></li>'
+        for l in AI["layers"]
     )
-    traits = "".join(
-        f'<li><h3>{e(t["name"])}</h3><div><p>{e(t["text"])}</p><a href="@@/{t["href"]}">{e(t["link"])}</a></div></li>' for t in P["traits"]
-    )
-    flagship = "".join(project_card(p) for p in ALL if p["tier"] == "flagship")
-    ai_layers = "".join(
-        f'<li><h3>{e(l["name"])}</h3><p class="status-line">{e(l["status"])}</p></li>' for l in AI["layers"]
-    )
-    body = f"""<section class="hero">
-  <div class="hero-lines" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-text">
-      <p class="eyebrow">{e(P['current_title'])} · {e(P['location'])}</p>
+    body = f"""<section class="hero" data-hero>
+  <div class="hero-stage">
+    {waves('waves-back')}
+    <div class="hero-copy">
+      <p class="hero-kicker">{e(P['current_title'])} · {e(P['location'])}</p>
       <h1>Ali Alzahrani</h1>
-      <p class="hero-head">{e(P['headline'])}</p>
-      <p class="hero-value">{e(P['value'])}</p>
+      <p class="hero-sub">{e(P['headline'])}</p>
       <div class="cta">
-        <a class="btn btn-solid" href="#solution-map">Explore the Solution Map</a>
-        <a class="btn" href="@@/Ali-Alzahrani-CV.pdf">Download CV</a>
-        <a class="btn-text" href="#contact">Contact</a>
+        <a class="pill pill-white" href="#record">See the record</a>
+        <a class="pill pill-line" href="{CV}">Download CV</a>
       </div>
     </div>
-    <figure class="portrait">
-      <picture>
-        <source srcset="@@/assets/ali-480.webp 480w, @@/assets/ali-800.webp 800w" type="image/webp" sizes="(max-width: 860px) 60vw, 380px">
-        <img src="@@/assets/ali-800.jpg" width="800" height="1000" alt="Portrait of Ali Alzahrani in a white thobe and red shemagh" fetchpriority="high">
-      </picture>
+    <div class="hero-stats hero-stats-l">{stat('12', 'years in IT')}{stat('4', 'international sites')}</div>
+    <div class="hero-stats hero-stats-r">{stat('~300', 'employees trained on AI')}{stat('9', 'remote sites delivered')}</div>
+    <figure class="person">
+      <img src="@@/assets/ali-640.webp" srcset="@@/assets/ali-640.webp 640w, @@/assets/ali-1122.webp 1122w" sizes="(max-width: 734px) 80vw, 720px" width="1122" height="1402" alt="Ali Alzahrani in a white thobe and red shemagh" fetchpriority="high" decoding="async">
     </figure>
-  </div>
-  <div class="wrap"><ul class="proof">{proof}</ul></div>
-</section>
-
-<section class="band band-ivory philosophy" aria-labelledby="phil-title">
-  <div class="wrap narrow">
-    <p class="eyebrow" id="phil-title">My philosophy</p>
-    <blockquote>{e(P['philosophy'])}</blockquote>
+    <div class="hero-value"><p>{e(P['value'])}</p></div>
+    {waves('waves-front')}
   </div>
 </section>
 
-{solution_map()}
+<section class="phil" data-phil aria-label="My philosophy">
+  <div class="phil-stage"><div class="wrap">
+    <p class="eyebrow">My philosophy</p>
+    <p class="phil-text">{words}</p>
+  </div></div>
+</section>
 
-<section class="band band-ivory" aria-labelledby="work-title">
+<section class="sec sec-sail" id="record" aria-labelledby="record-title">
   <div class="wrap">
-    <div class="sec-head"><div><p class="eyebrow">Selected work</p><h2 id="work-title">The challenge, the decisions, the result.</h2></div>
-    <a class="all" href="@@/projects/">All projects and contributions</a></div>
-    <div class="pgrid">{flagship}</div>
-  </div>
-</section>
-
-<section class="band band-ai" aria-labelledby="ai-title">
-  <div class="wrap ai-split">
-    <div>
-      <p class="eyebrow">AI expertise</p>
-      <h2 id="ai-title">AI is how I work, not something I talk about.</h2>
-      <p class="lede">{e(AI['intro'])}</p>
-      <a class="btn btn-solid" href="@@/ai/">See the full range of my AI work</a>
+    <div class="sec-head">
+      <p class="eyebrow rv">The record</p>
+      <h2 id="record-title" class="rv">Twelve years of delivery, in plain numbers.</h2>
     </div>
-    <ul class="ai-layers">{ai_layers}</ul>
+    {bento()}
   </div>
 </section>
 
-<section class="band band-ivory" aria-labelledby="traits-title">
-  <div class="wrap">
-    <div class="sec-head"><div><p class="eyebrow">How I show up</p><h2 id="traits-title">What people can count on, with the evidence.</h2></div></div>
-    <ol class="traits">{traits}</ol>
+<section class="sec sec-navy" aria-labelledby="ai-title">
+  <div class="wrap ai-grid">
+    <div class="ai-side">
+      <p class="eyebrow rv">AI expertise</p>
+      <h2 id="ai-title" class="rv">AI that does real work.</h2>
+      <p class="lede rv">{e(AI['intro'])}</p>
+      <a class="pill pill-white rv" href="@@/ai/">See all my AI work</a>
+    </div>
+    <ol class="ai-rows" data-ai-rows>{ai_rows}</ol>
   </div>
 </section>
 
-<section class="band band-ink" aria-labelledby="career-title">
+<section class="sec sec-sail" aria-labelledby="work-title">
   <div class="wrap">
-    <div class="sec-head"><div><p class="eyebrow">Career</p><h2 id="career-title">From remote sites to a regional role.</h2></div>
-    <a class="all" href="@@/career/">Complete career history</a></div>
-    {timeline()}
+    <div class="sec-head">
+      <p class="eyebrow rv">Selected work</p>
+      <h2 id="work-title" class="rv">The work that proves it.</h2>
+    </div>
+    {stack()}
+    <p class="sec-more"><a class="pill pill-navy" href="@@/projects/">All projects and contributions</a></p>
+  </div>
+</section>
+
+{story()}
+
+{areas()}
+
+<section class="sec sec-navy" aria-labelledby="career-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow rv">Career</p>
+      <h2 id="career-title" class="rv">The course so far.</h2>
+    </div>
+    {route()}
+    <p class="sec-more"><a class="pill pill-white" href="@@/career/">Complete career history</a></p>
+  </div>
+</section>
+
+<section class="sec sec-sail" aria-labelledby="cred-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow rv">Qualifications</p>
+      <h2 id="cred-title" class="rv">Stated exactly as they are.</h2>
+    </div>
+    <div class="bento bento-4">
+      <div class="tile"><span class="tile-kicker">Degree</span><span class="tile-h">BSc Information Technology &amp; Computing</span><span class="tile-label">Arab Open University. GPA 3.24 / 4.00.</span></div>
+      <div class="tile"><span class="tile-kicker">Certified, 2026</span><span class="tile-h">Five ISO standards, practitioner level</span><span class="tile-label">TRECCERT Digital Trust Fellowship, 91.7%. ISO 27001, 27701, 22301, 31000 and 42001.</span></div>
+      <div class="tile"><span class="tile-kicker">In progress</span><span class="tile-h">PMP and MIT</span><span class="tile-label">PMP exam booked. Enrolled in MIT's Applied Generative AI for Digital Transformation.</span></div>
+      <div class="tile"><span class="tile-kicker">Recognition</span><span class="tile-h">Two Vallourec awards</span><span class="tile-label">Excellence Leader Award, 2020. Group Creativity Award, 2019.</span></div>
+    </div>
+    <p class="sec-more"><a class="pill pill-navy" href="@@/credentials/">All qualifications and training</a></p>
   </div>
 </section>
 
@@ -329,7 +409,7 @@ def home():
         "@type": "Person",
         "name": P["name"],
         "url": SITE,
-        "image": SITE + "assets/ali-800.jpg",
+        "image": SITE + "assets/ali-navy-800.jpg",
         "jobTitle": "Middle East IT Leader",
         "worksFor": {"@type": "Organization", "name": "Vallourec"},
         "email": "mailto:" + P["email"],
@@ -342,35 +422,36 @@ def home():
     return page("", f"{P['name']}: {P['headline']}", P["description"], body, jsonld=person)
 
 
+def traits_list():
+    return "".join(
+        f'<li class="rv"><h3>{e(t["name"])}</h3><div><p>{e(t["text"])}</p><a class="more" href="@@/{t["href"]}">{e(t["link"])}</a></div></li>' for t in P["traits"]
+    )
+
+
 def profile():
-    journey = "".join(f"<p>{e(x)}</p>" for x in P["journey"])
-    contrib = "".join(f'<li><h3>{e(c["title"])}</h3><p>{e(c["text"])}</p></li>' for c in P["contribution"])
-    how = "".join(f"<li>{e(x)}</li>" for x in P["how_i_work"])
-    traits = "".join(f'<li><h3>{e(t["name"])}</h3><div><p>{e(t["text"])}</p><a href="@@/{t["href"]}">{e(t["link"])}</a></div></li>' for t in P["traits"])
-    langs = "".join(f'<li><strong>{e(l["name"])}</strong> {e(l["level"])}</li>' for l in P["languages"])
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Professional profile</p>
-  <h1>I have never faced an issue without providing a solution.</h1>
-  <p class="lede">That is how I describe my own approach, and it is a high bar to set in public. The rest of this site is the evidence.</p>
-</div></section>
-<section class="band band-ivory"><div class="wrap two-col">
-  <div><h2 class="side">My journey</h2></div>
+    journey = "".join(f'<p class="rv">{e(x)}</p>' for x in P["journey"])
+    contrib = "".join(f'<li class="rv"><h3>{e(c["title"])}</h3><p>{e(c["text"])}</p></li>' for c in P["contribution"])
+    how = "".join(f'<li class="rv">{e(x)}</li>' for x in P["how_i_work"])
+    langs = "".join(f'<li><strong>{e(l["name"])}</strong><span>{e(l["level"])}</span></li>' for l in P["languages"])
+    body = f"""{page_hero('Professional profile', P['own_words'], 'That is how I describe my own approach, and it is a high bar to set in public. The rest of this site is the evidence.')}
+<section class="sec sec-sail"><div class="wrap split">
+  <h2 class="side">My journey</h2>
   <div class="prose">{journey}</div>
 </div></section>
-<section class="band band-ink"><div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow">Contribution</p><h2>What I bring to an organisation</h2></div></div>
+<section class="sec sec-navy"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Contribution</p><h2 class="rv">What I bring to an organisation.</h2></div>
   <ul class="contrib">{contrib}</ul>
 </div></section>
-<section class="band band-ivory"><div class="wrap two-col">
-  <div><h2 class="side">How I work</h2></div>
+<section class="sec sec-white"><div class="wrap split">
+  <h2 class="side">How I work</h2>
   <ul class="plain-list">{how}</ul>
 </div></section>
-<section class="band band-ivory band-tight"><div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow">Strengths, with evidence</p><h2>What people can count on</h2></div></div>
-  <ol class="traits">{traits}</ol>
+<section class="sec sec-sail"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Strengths, with evidence</p><h2 class="rv">What people can count on.</h2></div>
+  <ol class="traits">{traits_list()}</ol>
 </div></section>
-<section class="band band-ink band-tight"><div class="wrap two-col">
-  <div><h2 class="side">Languages</h2></div>
+<section class="sec sec-white sec-tight"><div class="wrap split">
+  <h2 class="side">Languages</h2>
   <ul class="langs">{langs}</ul>
 </div></section>
 {contact_band()}"""
@@ -385,17 +466,15 @@ def career():
         for r in emp["roles"]:
             groups = ""
             for g in r["groups"]:
-                items = "".join(
-                    f'<li><span class="tag tag-{k}">{e(CAREER["legend"][k])}</span><span>{e(t)}</span></li>' for k, t in g["items"]
-                )
+                items = "".join(f'<li><span class="tag tag-{k}">{e(CAREER["legend"][k])}</span><span>{e(t)}</span></li>' for k, t in g["items"])
                 groups += f'<h3 class="minor">{e(g["name"])}</h3><ul class="duties">{items}</ul>'
-            cases = "".join(f'<li><a href="{case_href(c)}">{e(case_title(c))}</a></li>' for c in r["cases"])
+            cases = "".join(f'<a class="chip-link" href="{case_href(c)}">{e(case_title(c))}</a>' for c in r["cases"])
             roles.append(f"""<details class="role" id="{r['id']}" open>
   <summary><span class="role-title">{e(r['title'])}</span><span class="role-dates">{e(r['dates'])}</span></summary>
   <div class="role-body">
     <p class="role-sum">{e(r['summary'])}</p>
     {groups}
-    <h3 class="minor">Related case studies</h3><ul class="linklist">{cases}</ul>
+    <h3 class="minor">Related case studies</h3><div class="chips-row">{cases}</div>
   </div>
 </details>""")
         legal = f" ({e(emp['legal'])})" if emp.get("legal") else ""
@@ -403,13 +482,9 @@ def career():
   <header><h2>{e(emp['name'])}{legal}</h2><p>{e(emp['context'])} · {e(emp['dates'])}</p></header>
   {''.join(roles)}
 </section>""")
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Career history</p>
-  <h1>Twelve years, five roles, two very different industries.</h1>
-  <p class="lede">Start with the overview, then open any role for its full detail. Each line says whether I led, built, coordinated or supported the work.</p>
-</div></section>
-<section class="band band-ink band-tight"><div class="wrap">{timeline()}</div></section>
-<section class="band band-ivory"><div class="wrap career">
+    body = f"""{page_hero('Career history', 'Twelve years, five roles, two very different industries.', 'Start with the overview, then open any role for its full detail. Each line says whether I led, built, coordinated or supported the work.')}
+<section class="sec sec-sail"><div class="wrap career">
+  <div class="career-over">{route(compact=True).replace('class="route"', 'class="route route-light"')}</div>
   <div class="career-tools">
     <ul class="legend" aria-label="Key to my role in each item">{legend}</ul>
     <button type="button" class="link-btn" data-toggle-roles hidden>Collapse all roles</button>
@@ -448,22 +523,18 @@ def skills():
             )
         chips.append(f'<button type="button" class="chip" data-cat="{c["id"]}" aria-pressed="false">{e(c["name"])}</button>')
         cats.append(f'<section class="skill-cat" data-category="{c["id"]}" id="{c["id"]}"><h2>{e(c["name"])} <span class="count">{len(rows)}</span></h2><ul>{"".join(rows)}</ul></section>')
-    legend = "".join(f"<li><strong>{e(v)}</strong></li>" for v in levels.values())
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Skills and capabilities</p>
-  <h1>The complete directory.</h1>
-  <p class="lede">All {total} skills and technologies, with where I applied them. I describe how I used each one rather than giving it a percentage score.</p>
-</div></section>
-<section class="band band-ivory"><div class="wrap">
+    legend = "".join(f"<li>{e(v)}</li>" for v in levels.values())
+    body = f"""{page_hero('Skills and capabilities', 'The complete directory.', f'All {total} skills and technologies, with where I applied them. I describe how I used each one rather than giving it a percentage score.')}
+<section class="sec sec-sail sec-skills"><div class="wrap">
   <div class="skill-tools">
     <label for="skill-search">Find a skill or technology</label>
-    <input id="skill-search" type="search" placeholder="Try Copilot, Intune, Cisco, procurement" autocomplete="off" disabled>
+    <input id="skill-search" type="search" placeholder="Try Copilot, Intune, Cisco or procurement" autocomplete="off" disabled>
     <p class="skill-count" role="status" data-count>{total} skills</p>
     <div class="chips" data-chips hidden role="group" aria-label="Filter by category">{''.join(chips)}</div>
   </div>
   <p class="no-results" data-empty hidden>No skills match that search. <button type="button" class="link-btn" data-clear>Clear search</button></p>
   {''.join(cats)}
-  <ul class="levels" aria-label="How proficiency is described"><li>How I describe my use:</li>{legend}</ul>
+  <ul class="levels" aria-label="How proficiency is described"><li class="levels-t">How I describe my use:</li>{legend}</ul>
 </div></section>
 {contact_band()}"""
     return page("skills/", "Skills and capabilities", f"A searchable directory of Ali Alzahrani's {total} professional skills and technologies, across AI, infrastructure, networking, security, industrial IT and leadership.", body, current="skills/")
@@ -476,24 +547,17 @@ def projects_index():
         f'<li id="{p["slug"]}"><div><h3>{e(p["title"])}</h3><p>{e(p["summary"])}</p></div><p class="lib-meta">{e(p["where"])}<br>{e(p["my_role"])}. {e(p["status"])}.<br><a href="@@/career/#{p["role_id"]}">{e(ROLES[p["role_id"]][0]["title"])}</a></p></li>'
         for p in ALL if p["tier"] == "library"
     )
-    personal = "".join(
-        f'<a class="pcard pcard-p" href="@@/projects/{p["slug"]}/"><p class="pcard-key">{e(p["stage"])}</p><h3>{e(p["title"])}</h3><p>{e(p["summary"])}</p><p class="pcard-meta">{e(p["category"])}</p></a>'
-        for p in PROJ["personal"]
-    )
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Projects and achievements</p>
-  <h1>How problems were actually solved.</h1>
-  <p class="lede">The strongest work comes first, with every other documented contribution below it. {e(PROJ['note'])}</p>
-</div></section>
-<section class="band band-ivory"><div class="wrap">
+    personal = "".join(personal_card(p) for p in PROJ["personal"])
+    body = f"""{page_hero('Projects and achievements', 'How problems were actually solved.', 'The strongest work comes first, with every other documented contribution below it. ' + PROJ['note'])}
+<section class="sec sec-sail"><div class="wrap">
   <h2 class="group">Flagship work</h2><div class="pgrid">{flagship}</div>
   <h2 class="group">More case studies</h2><div class="pgrid">{cases}</div>
   <h2 class="group">Other contributions</h2><ul class="library">{lib}</ul>
 </div></section>
-<section class="band band-ink" id="personal"><div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow">Personal innovation</p><h2>What I build on my own time</h2></div></div>
-  <p class="lede narrow-l">Each project shows its actual stage. These are separate from my employment, and I direct and test them with AI-assisted development.</p>
-  <div class="pgrid">{personal}</div>
+<section class="sec sec-navy" id="personal"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Personal innovation</p><h2 class="rv">What I build on my own time.</h2>
+  <p class="lede rv">Each project shows its actual stage. These are separate from my employment, and I direct and test them with AI-assisted development.</p></div>
+  <div class="pgrid pgrid-dark">{personal}</div>
 </div></section>
 {contact_band()}"""
     page("projects/", "Projects and achievements", "Case studies and documented contributions from Ali Alzahrani's career, plus personal AI projects with their actual status.", body, current="projects/")
@@ -504,31 +568,34 @@ def projects_index():
         personal_page(p)
 
 
+def facts(items):
+    return '<dl class="facts">' + "".join(f"<div><dt>{e(k)}</dt><dd>{v}</dd></div>" for k, v in items) + "</dl>"
+
+
 def case_page(p):
-    role, emp = ROLES[p["role_id"]]
+    role, _ = ROLES[p["role_id"]]
     dec = "".join(f"<li>{e(x)}</li>" for x in p["decisions"])
     known = {s[0] for c in SK["categories"] for s in c["skills"]}
     for s in p["skills"]:
         if s not in known:
             errors.append(f"case {p['slug']} skill not in directory: {s}")
-    sk = "".join(f'<li><a href="@@/skills/?q={e(s)}">{e(s)}</a></li>' for s in p["skills"])
+    sk = "".join(f'<a class="chip-link" href="@@/skills/?q={e(s)}">{e(s)}</a>' for s in p["skills"])
     idx = [x for x in ALL if x["tier"] != "library"]
     nxt = idx[(idx.index(p) + 1) % len(idx)]
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="crumb"><a href="@@/projects/">Projects</a></p>
-  <p class="eyebrow">{e(p['where'])}</p>
-  <h1>{e(p['title'])}</h1>
-  <p class="lede">{e(p['summary'])}</p>
-  <dl class="facts"><div><dt>My role</dt><dd>{e(p['my_role'])}</dd></div><div><dt>Status</dt><dd>{e(p['status'])}</dd></div><div><dt>Position</dt><dd><a href="@@/career/#{p['role_id']}">{e(role['title'])}</a></dd></div></dl>
-</div></section>
-<section class="band band-ivory"><div class="wrap narrow case">
-  <h2><span>1</span>The challenge</h2><p>{e(p['challenge'])}</p>
-  <h2><span>2</span>My responsibility</h2><p>{e(p['responsibility'])}</p>
-  <h2><span>3</span>My reasoning and decisions</h2><ul>{dec}</ul>
-  <h2><span>4</span>The solution</h2><p>{e(p['solution'])}</p>
-  <h2><span>5</span>The result</h2><p class="result">{e(p['result'])}</p>
-  <h2><span>6</span>Skills demonstrated</h2><ul class="tags">{sk}</ul>
-  <p class="next">Next: <a href="@@/projects/{nxt['slug']}/">{e(nxt['title'])}</a></p>
+    fx = facts([("My role", e(p["my_role"])), ("Status", e(p["status"])), ("Position", f'<a href="@@/career/#{p["role_id"]}">{e(role["title"])}</a>')])
+    parts = [
+        ("The challenge", f"<p>{e(p['challenge'])}</p>"),
+        ("My responsibility", f"<p>{e(p['responsibility'])}</p>"),
+        ("My reasoning and decisions", f'<ul class="ticks">{dec}</ul>'),
+        ("The solution", f"<p>{e(p['solution'])}</p>"),
+        ("The result", f'<p class="result">{e(p["result"])}</p>'),
+        ("Skills demonstrated", f'<div class="chips-row">{sk}</div>'),
+    ]
+    blocks = "".join(f'<div class="cpart rv"><h2><span class="cn">{i}</span>{t}</h2>{b}</div>' for i, (t, b) in enumerate(parts, 1))
+    body = f"""{page_hero(p['where'], p['title'], p['summary'], fx, crumb=('Projects', '@@/projects/'))}
+<section class="sec sec-sail"><div class="wrap narrow">
+  <div class="case" data-case><span class="case-line" aria-hidden="true"><span class="case-fill"></span></span>{blocks}</div>
+  <p class="next">Next <a class="pill pill-navy" href="@@/projects/{nxt['slug']}/">{e(nxt['title'])}</a></p>
 </div></section>
 {contact_band()}"""
     page(f"projects/{p['slug']}/", p["title"], p["summary"], body, current="projects/", og_type="article")
@@ -537,20 +604,15 @@ def case_page(p):
 def personal_page(p):
     dec = "".join(f"<li>{e(x)}</li>" for x in p["decisions"])
     con = "".join(f"<li>{e(x)}</li>" for x in p["contributions"])
-    tech = "".join(f"<li>{e(x)}</li>" for x in p["technologies"])
-    tech_block = f'<h2>Implementation environment</h2><ul class="tags plain">{tech}</ul>' if tech else ""
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="crumb"><a href="@@/projects/#personal">Personal innovation</a></p>
-  <p class="eyebrow">{e(p['category'])}</p>
-  <h1>{e(p['title'])}</h1>
-  <p class="lede">{e(p['summary'])}</p>
-  <dl class="facts"><div><dt>Actual status</dt><dd>{e(p['status'])}</dd></div><div><dt>My role</dt><dd>{e(p['role'])}</dd></div></dl>
-</div></section>
-<section class="band band-ivory"><div class="wrap narrow case">
-  <h2>Decisions I made</h2><ul>{dec}</ul>
-  <h2>What it covers</h2><ul>{con}</ul>
+    tech = "".join(f'<span class="chip-plain">{e(x)}</span>' for x in p["technologies"])
+    tech_block = f'<div class="cpart rv"><h2>Implementation environment</h2><div class="chips-row">{tech}</div></div>' if tech else ""
+    fx = facts([("Actual status", e(p["status"])), ("My role", e(p["role"]))])
+    body = f"""{page_hero(p['category'], p['title'], p['summary'], fx, crumb=('Personal innovation', '@@/projects/#personal'))}
+<section class="sec sec-sail"><div class="wrap narrow">
+  <div class="cpart rv"><h2>Decisions I made</h2><ul class="ticks">{dec}</ul></div>
+  <div class="cpart rv"><h2>What it covers</h2><ul class="ticks">{con}</ul></div>
   {tech_block}
-  <p class="note">{e(p['note'])}</p>
+  <p class="note rv">{e(p['note'])}</p>
 </div></section>
 {contact_band()}"""
     page(f"projects/{p['slug']}/", p["title"], p["summary"], body, current="projects/", og_type="article")
@@ -560,29 +622,27 @@ def ai_page():
     def fix(h):
         return "#personal-ai" if h == "#projects" else "@@/" + h
     layers = "".join(
-        f'<li><div><p class="status-line">{e(l["status"])}</p><h3>{e(l["name"])}</h3></div><div><p>{e(l["text"])}</p><a href="{fix(l["href"])}">{e(l["link"])}</a></div></li>'
+        f'<li class="rv"><div><p class="ai-status">{e(l["status"])}</p><h3>{e(l["name"])}</h3></div><div><p>{e(l["text"])}</p><a class="more" href="{fix(l["href"])}">{e(l["link"])}</a></div></li>'
         for l in AI["layers"]
     )
-    caps = "".join(f'<li><h3>{e(c["name"])}</h3><p class="status-line">{e(c["level"])}</p><p>{e(c["text"])}</p></li>' for c in AI["capabilities"])
-    personal = "".join(
-        f'<a class="pcard pcard-p" href="@@/projects/{p["slug"]}/"><p class="pcard-key">{e(p["stage"])}</p><h3>{e(p["title"])}</h3><p>{e(p["summary"])}</p><p class="pcard-meta">{e(p["status"])}</p></a>'
-        for p in PROJ["personal"] if p["slug"] != "hospital-database"
-    )
-    learn = "".join(f"<li>{e(x)}</li>" for x in AI["learning"])
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">AI expertise and innovation</p>
-  <h1>AI is how I work, not something I talk about.</h1>
-  <p class="lede">{e(AI['intro'])}</p>
+    caps = "".join(f'<li class="rv"><h3>{e(c["name"])}</h3><p class="ai-status">{e(c["level"])}</p><p>{e(c["text"])}</p></li>' for c in AI["capabilities"])
+    personal = "".join(personal_card(p, p["status"]) for p in PROJ["personal"] if p["slug"] != "hospital-database")
+    learn = "".join(f'<li class="rv">{e(x)}</li>' for x in AI["learning"])
+    body = f"""{page_hero('AI expertise and innovation', 'AI that does real work.', AI['intro'])}
+<section class="sec sec-sail"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Where I apply it</p><h2 class="rv">From a training room to a working product.</h2></div>
+  <ol class="ai-list">{layers}</ol>
 </div></section>
-<section class="band band-ivory"><div class="wrap"><h2 class="group">Where I apply it</h2><ol class="ai-rows">{layers}</ol></div></section>
-<section class="band band-ink"><div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow">Capabilities</p><h2>The full range, with an honest level for each</h2></div></div>
-  <ul class="caps">{caps}</ul>
+<section class="sec sec-navy"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Capabilities</p><h2 class="rv">The full range, with an honest level for each.</h2></div>
+  <ul class="contrib caps">{caps}</ul>
 </div></section>
-<section class="band band-ivory" id="personal-ai"><div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow">Innovation</p><h2>Personal AI projects, with their actual status</h2></div></div>
+<section class="sec sec-sail" id="personal-ai"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow rv">Innovation</p><h2 class="rv">Personal AI projects, with their actual status.</h2></div>
   <div class="pgrid">{personal}</div>
-  <h2 class="group">How I keep learning</h2><ul class="plain-list">{learn}</ul>
+</div></section>
+<section class="sec sec-white sec-tight"><div class="wrap split">
+  <h2 class="side">How I keep learning</h2><ul class="plain-list">{learn}</ul>
 </div></section>
 {contact_band()}"""
     return page("ai/", "AI expertise and innovation", "Ali Alzahrani's practical AI work: adoption, training, use-case delivery, automation, governance, agents and personal AI projects.", body, current="ai/")
@@ -592,39 +652,32 @@ def credentials():
     edu = "".join(cred_item(c) for c in CRED["education"])
     qual = "".join(cred_item(c) for c in CRED["qualifications"])
     groups = "".join(f'<h3 class="cred-group">{e(g["name"])}</h3><ul class="creds">{"".join(cred_item(c, 4) for c in g["items"])}</ul>' for g in CRED["groups"])
-    awards = "".join(f'<li><h3>{e(a["title"])}</h3><p>{e(a["org"])}. {e(a["detail"])}</p></li>' for a in CRED["awards"])
-    aff = "".join(f"<li>{e(a)}</li>" for a in CRED["affiliations"])
-    body = f"""<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Education and professional development</p>
-  <h1>Qualifications, stated exactly.</h1>
-  <p class="lede">Formal education, professional credentials and training are kept apart here, and each one shows its actual status.</p>
+    awards = "".join(f'<li class="rv"><h3>{e(a["title"])}</h3><p>{e(a["org"])}. {e(a["detail"])}</p></li>' for a in CRED["awards"])
+    aff = "".join(f'<li class="rv">{e(a)}</li>' for a in CRED["affiliations"])
+    body = f"""{page_hero('Education and professional development', 'Qualifications, stated exactly.', 'Formal education, professional credentials and training are kept apart here, and each one shows its actual status.')}
+<section class="sec sec-sail"><div class="wrap split">
+  <h2 class="side">Formal education</h2><ul class="creds">{edu}</ul>
 </div></section>
-<section class="band band-ivory"><div class="wrap two-col">
-  <div><h2 class="side">Formal education</h2></div><ul class="creds">{edu}</ul>
-</div></section>
-<section class="band band-ivory band-tight"><div class="wrap two-col">
-  <div><h2 class="side">Professional credentials</h2></div>
+<section class="sec sec-white"><div class="wrap split">
+  <h2 class="side">Professional credentials</h2>
   <div><ul class="creds">{qual}</ul><p class="note">{e(CRED['standards_note'])}</p></div>
 </div></section>
-<section class="band band-ivory band-tight"><div class="wrap two-col">
-  <div><h2 class="side">Courses and training</h2></div><div>{groups}</div>
+<section class="sec sec-sail"><div class="wrap split">
+  <h2 class="side">Courses and training</h2><div>{groups}</div>
 </div></section>
-<section class="band band-ink"><div class="wrap two-col">
-  <div><h2 class="side">Awards and scholarships</h2></div><ul class="awards">{awards}</ul>
+<section class="sec sec-navy"><div class="wrap split">
+  <h2 class="side">Awards and scholarships</h2><ul class="awards">{awards}</ul>
 </div></section>
-<section class="band band-ink band-tight"><div class="wrap two-col">
-  <div><h2 class="side">Affiliations</h2></div><ul class="plain-list">{aff}</ul>
+<section class="sec sec-white sec-tight"><div class="wrap split">
+  <h2 class="side">Affiliations</h2><ul class="plain-list">{aff}</ul>
 </div></section>
 {contact_band()}"""
     return page("credentials/", "Education and credentials", "Verified education, professional credentials, courses, awards and affiliations of Ali Alzahrani.", body, current="credentials/")
 
 
 def not_found():
-    body = """<section class="page-head"><div class="wrap narrow">
-  <p class="eyebrow">Page not found</p>
-  <h1>This page doesn't exist. Here's the way back.</h1>
-  <p class="lede"><a href="./">Go to the home page</a>, or look through the <a href="career/">career history</a>, the <a href="projects/">projects</a> or the <a href="skills/">skills directory</a>.</p>
-</div></section>"""
+    extra = '<div class="cta"><a class="pill pill-white" href="./">Go to the home page</a><a class="pill pill-line" href="career/">Career history</a><a class="pill pill-line" href="projects/">Projects</a></div>'
+    body = page_hero("Page not found", "This page doesn't exist. Here's the way back.", "", extra)
     page("404.html", "Page not found", "This page could not be found.", body)
     f = OUT / "404.html"
     t = f.read_text(encoding="utf-8").replace("<head>", f'<head>\n<base href="{BASE_PATH}">', 1).replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"', 1)

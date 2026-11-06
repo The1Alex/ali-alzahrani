@@ -11,21 +11,119 @@
   "own_words": "I have never faced an issue without providing a solution.",
   "value": "For twelve years I have made technology work where it has to: on factory floors, at remote construction sites and across international teams. Today I lead IT for Vallourec's four international sites in the Middle East, and I put AI into people's hands so it does real work.",
   "description": "Ali Alzahrani is a Middle East IT Leader based in Saudi Arabia, with twelve years across enterprise IT, industrial technology, cybersecurity coordination and practical AI adoption.",
-  "proof": [
-    {"figure": "12", "label": "years in IT, seven of them in leadership", "href": "career/"},
-    {"figure": "4", "label": "international sites led across the Middle East", "href": "career/#middle-east-it-leader"},
-    {"figure": "~300", "label": "employees trained on Microsoft Copilot", "href": "projects/regional-ai-adoption/"},
-    {"figure": "Early", "label": "Aramco Cyber Security Certification, led ahead of schedule", "href": "projects/aramco-cyber-security-certification/"},
-    {"figure": "9", "label": "remote sites stood up for more than 500 users", "href": "projects/nine-remote-sites/"}
+  "bento": [
+    {
+      "fig": "12",
+      "count": 12,
+      "label": "years in IT, seven of them in leadership",
+      "href": "career/",
+      "size": "m",
+      "navy": true
+    },
+    {
+      "fig": "4",
+      "count": 4,
+      "label": "international sites led across the Middle East",
+      "href": "career/#middle-east-it-leader"
+    },
+    {
+      "fig": "~300",
+      "count": 300,
+      "pre": "~",
+      "label": "employees trained on Microsoft Copilot",
+      "href": "projects/regional-ai-adoption/"
+    },
+    {
+      "fig": "Ahead of schedule",
+      "words": true,
+      "label": "Aramco Cyber Security Certification, as principal lead for the company",
+      "href": "projects/aramco-cyber-security-certification/",
+      "size": "m",
+      "navy": true
+    },
+    {
+      "fig": "9",
+      "count": 9,
+      "label": "remote sites stood up for more than 500 users",
+      "href": "projects/nine-remote-sites/"
+    },
+    {
+      "fig": "6 months",
+      "words": true,
+      "label": "to deliver a new regional office end to end",
+      "href": "projects/new-regional-office/"
+    },
+    {
+      "fig": "1,000+",
+      "count": 1000,
+      "suf": "+",
+      "label": "devices brought back under control",
+      "href": "projects/it-asset-control/"
+    },
+    {
+      "fig": "100+",
+      "count": 100,
+      "suf": "+",
+      "label": "Cisco and N-Tron switches re-architected",
+      "href": "projects/network-topology/"
+    },
+    {
+      "fig": "79%",
+      "count": 79,
+      "suf": "%",
+      "label": "of reported issues resolved remotely at first line",
+      "href": "projects/nine-remote-sites/"
+    },
+    {
+      "fig": "Zero",
+      "words": true,
+      "label": "downtime moving 699 users to Exchange Online",
+      "href": "projects/#exchange-online-migration"
+    }
   ],
   "traits": [
-    {"name": "Resourceful", "text": "I investigate, learn what I don't yet know and connect ideas from other fields. When a production machine dropped off its application, I went past the edge of my own scope, into the automation hardware, and researched my way to the answer.", "href": "projects/industrial-communication-fault/", "link": "The machine that disappeared"},
-    {"name": "Accountable", "text": "I own the outcome, including the part after go-live. During COVID, one technician and I moved seven departments and about 100 people to remote work, and the business kept running.", "href": "projects/covid-remote-work/", "link": "The COVID crisis cell"},
-    {"name": "Practical with AI", "text": "I teach AI where people work, then turn their best ideas into working applications. At home I direct AI agents to build real software, and I test every release myself.", "href": "ai/", "link": "How I use AI"},
-    {"name": "Persistent", "text": "A failed first attempt is information. I narrow a problem by elimination, document what I learned and share it, so the same issue costs less next time.", "href": "projects/network-topology/", "link": "Mapping a whole plant"},
-    {"name": "Imaginative", "text": "I look for the idea nobody asked for. Big touchscreens on the shop floor were my proposal, and they helped move escalation off paper. I also put QR codes at production stations, leading operators to short video lessons.", "href": "projects/plant-digitalisation/", "link": "Digitalising a plant"},
-    {"name": "Technical and business-aware", "text": "I can configure a switch in the morning and defend its budget in the afternoon. I own procurement, contracts and licensing as well as the technology they pay for.", "href": "projects/network-lifecycle-renewal/", "link": "Renewing ageing switches"},
-    {"name": "A leader who works across people", "text": "I lead a regional team, work with global functions across time zones and explain complex problems simply, so that non-technical leaders can make clear decisions.", "href": "career/", "link": "Full career history"}
+    {
+      "name": "Resourceful",
+      "text": "I investigate, learn what I don't yet know and connect ideas from other fields. When a production machine dropped off its application, I went past the edge of my own scope, into the automation hardware, and researched my way to the answer.",
+      "href": "projects/industrial-communication-fault/",
+      "link": "The machine that disappeared"
+    },
+    {
+      "name": "Accountable",
+      "text": "I own the outcome, including the part after go-live. During COVID, one technician and I moved seven departments and about 100 people to remote work, and the business kept running.",
+      "href": "projects/covid-remote-work/",
+      "link": "The COVID crisis cell"
+    },
+    {
+      "name": "Practical with AI",
+      "text": "I teach AI where people work, then turn their best ideas into working applications. At home I direct AI agents to build real software, and I test every release myself.",
+      "href": "ai/",
+      "link": "How I use AI"
+    },
+    {
+      "name": "Persistent",
+      "text": "A failed first attempt is information. I narrow a problem by elimination, document what I learned and share it, so the same issue costs less next time.",
+      "href": "projects/network-topology/",
+      "link": "Mapping a whole plant"
+    },
+    {
+      "name": "Imaginative",
+      "text": "I look for the idea nobody asked for. Big touchscreens on the shop floor were my proposal, and they helped move escalation off paper. I also put QR codes at production stations, leading operators to short video lessons.",
+      "href": "projects/plant-digitalisation/",
+      "link": "Digitalising a plant"
+    },
+    {
+      "name": "Technical and business-aware",
+      "text": "I can configure a switch in the morning and defend its budget in the afternoon. I own procurement, contracts and licensing as well as the technology they pay for.",
+      "href": "projects/network-lifecycle-renewal/",
+      "link": "Renewing ageing switches"
+    },
+    {
+      "name": "A leader who works across people",
+      "text": "I lead a regional team, work with global functions across time zones and explain complex problems simply, so that non-technical leaders can make clear decisions.",
+      "href": "career/",
+      "link": "Full career history"
+    }
   ],
   "journey": [
     "I began my path on a Saudi Aramco scholarship: a preparatory programme in Saudi Arabia, then computer science at the University of Nottingham in the UK and at King Fahd University of Petroleum & Minerals. Along the way I joined leadership programmes in Leeds and Newcastle. I went on to complete a BSc in Information Technology and Computing at the Arab Open University.",
@@ -34,12 +132,30 @@
     "Since January 2024 I have been Middle East IT Leader, working across four international sites as the link between the business and our global Business Applications, Infrastructure, Endpoint and Security functions. I also lead regional AI adoption, and that has become central to how I think about the next stage of my career."
   ],
   "contribution": [
-    {"title": "A bridge between the business and IT", "text": "I listen to what site leaders need, turn it into one clear plan, and work with global teams to deliver it."},
-    {"title": "Delivery from first requirement to handover", "text": "Requirements, design, build, testing, cutover and handover to support, with training and follow-up afterwards."},
-    {"title": "AI adoption that people actually use", "text": "Practical enablement, use-case discovery and working applications, with governance in view from the start."},
-    {"title": "Stability in demanding environments", "text": "I choose the stable, long-term solution over the fastest one. Factories, Aramco requirements and ISO standards taught me why."},
-    {"title": "Commercial discipline", "text": "Vendor selection, negotiation and consolidation, in partnership with Procurement and Finance."},
-    {"title": "Order where there was none", "text": "Procedures, standards, documentation and registers that outlast the project and the person who wrote them."}
+    {
+      "title": "A bridge between the business and IT",
+      "text": "I listen to what site leaders need, turn it into one clear plan, and work with global teams to deliver it."
+    },
+    {
+      "title": "Delivery from first requirement to handover",
+      "text": "Requirements, design, build, testing, cutover and handover to support, with training and follow-up afterwards."
+    },
+    {
+      "title": "AI adoption that people actually use",
+      "text": "Practical enablement, use-case discovery and working applications, with governance in view from the start."
+    },
+    {
+      "title": "Stability in demanding environments",
+      "text": "I choose the stable, long-term solution over the fastest one. Factories, Aramco requirements and ISO standards taught me why."
+    },
+    {
+      "title": "Commercial discipline",
+      "text": "Vendor selection, negotiation and consolidation, in partnership with Procurement and Finance."
+    },
+    {
+      "title": "Order where there was none",
+      "text": "Procedures, standards, documentation and registers that outlast the project and the person who wrote them."
+    }
   ],
   "how_i_work": [
     "People know they can count on me. When something important has to get done, managers come to me.",
@@ -48,8 +164,17 @@
     "I don't stop at delivery. I train people on the solutions I deliver, and I follow up with them."
   ],
   "languages": [
-    {"name": "Arabic", "level": "Native or bilingual"},
-    {"name": "English", "level": "Full professional"},
-    {"name": "Spanish", "level": "Elementary"}
+    {
+      "name": "Arabic",
+      "level": "Native or bilingual"
+    },
+    {
+      "name": "English",
+      "level": "Full professional"
+    },
+    {
+      "name": "Spanish",
+      "level": "Elementary"
+    }
   ]
 }

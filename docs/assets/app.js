@@ -1,30 +1,234 @@
-/* Progressive enhancement only. Every piece of content is in the HTML. */
+/* Motion and interaction. Everything is progressive enhancement: all the content is in the HTML. */
 (function () {
   'use strict';
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var d = document;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var all = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
 
-  /* Scroll reveal */
+  /* ---------- A single scroll loop ---------- */
+  var scrubs = [];
+  var queued = false;
+  function frame() {
+    queued = false;
+    var vh = innerHeight;
+    for (var i = 0; i < scrubs.length; i++) {
+      var r = scrubs[i].el.getBoundingClientRect();
+      if (r.bottom > -vh && r.top < vh * 2) scrubs[i].fn(r, vh);
+    }
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  addEventListener('load', queue);
+
+  /* ---------- Reveal on scroll ---------- */
   if (!reduced && 'IntersectionObserver' in window) {
-    var targets = document.querySelectorAll('.pcard, .traits > li, .contrib > li, .caps > li, .ai-rows > li');
+    var targets = all('.rv, .tile, .pcard, .library li, .cred, .wp');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+        var c = en.target.querySelector('[data-count]');
+        if (c) countUp(c);
       });
-    }, { rootMargin: '0px 0px -6% 0px' });
-    targets.forEach(function (t) { t.classList.add('reveal'); io.observe(t); });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    targets.forEach(function (t, i) {
+      if (t.getBoundingClientRect().top < innerHeight * 0.92) return;
+      t.classList.add('hide');
+      var sibs = t.parentElement ? Array.prototype.indexOf.call(t.parentElement.children, t) : 0;
+      t.style.setProperty('--d', Math.min(sibs, 5) * 60 + 'ms');
+      io.observe(t);
+    });
   }
 
-  /* Close the mobile menu when a link is chosen */
-  var menu = document.querySelector('.menu');
+  function countUp(el) {
+    var end = parseFloat(el.dataset.count);
+    var pre = el.dataset.pre || '';
+    var suf = el.dataset.suf || '';
+    var start = performance.now();
+    var dur = 1100;
+    (function step(now) {
+      var t = clamp((now - start) / dur, 0, 1);
+      var v = Math.round(end * (1 - Math.pow(1 - t, 3)));
+      el.textContent = pre + v.toLocaleString('en-US') + suf;
+      if (t < 1) requestAnimationFrame(step);
+    })(start);
+  }
+
+  /* ---------- Hero: the title clears, the portrait moves, the statement arrives ---------- */
+  var hero = d.querySelector('[data-hero]');
+  if (hero && !reduced) {
+    hero.classList.add('pin');
+    scrubs.push({ el: hero, fn: function (r, vh) {
+      var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+      hero.style.setProperty('--a', clamp(p / 0.42, 0, 1).toFixed(4));
+      hero.style.setProperty('--b', clamp((p - 0.38) / 0.42, 0, 1).toFixed(4));
+    } });
+  }
+
+  /* ---------- Philosophy: the sentence lights up word by word ---------- */
+  var phil = d.querySelector('[data-phil]');
+  if (phil && !reduced) {
+    var words = all('.w', phil);
+    phil.classList.add('pin');
+    var lit = -1;
+    scrubs.push({ el: phil, fn: function (r, vh) {
+      var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+      var n = Math.round(clamp(p / 0.85, 0, 1) * words.length);
+      if (n === lit) return;
+      lit = n;
+      words.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+    } });
+  }
+
+  /* ---------- AI rows: the one in the middle of the screen is in focus ---------- */
+  var aiRows = d.querySelector('[data-ai-rows]');
+  if (aiRows && !reduced && 'IntersectionObserver' in window && innerWidth > 1000) {
+    aiRows.classList.add('focus');
+    var aio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle('on', en.isIntersecting); });
+    }, { rootMargin: '-38% 0px -38% 0px' });
+    all('.ai-row', aiRows).forEach(function (r) { aio.observe(r); });
+  }
+
+  /* ---------- Work: cards stack, the one beneath settles back ---------- */
+  var stackEl = d.querySelector('[data-stack]');
+  if (stackEl && !reduced) {
+    var cards = all('[data-scard]', stackEl);
+    stackEl.classList.add('live');
+    cards.forEach(function (card, i) {
+      var next = cards[i + 1];
+      if (!next) return;
+      scrubs.push({ el: next, fn: function (r, vh) {
+        var top = parseFloat(getComputedStyle(next).top) || 0;
+        var p = clamp(1 - (r.top - top) / (vh * 0.8), 0, 1);
+        card.style.setProperty('--s', (1 - p * 0.05).toFixed(4));
+      } });
+    });
+  }
+
+  /* ---------- Story: one problem, one sentence at a time ---------- */
+  var story = d.querySelector('[data-story]');
+  if (story) {
+    var panels = all('[data-story-panel]', story);
+    var btns = all('[data-story-btn]', story);
+    if (!reduced) {
+      var active = 0;
+      var setActive = function (i) {
+        active = i;
+        panels.forEach(function (p, n) { p.classList.toggle('on', n === i); });
+        btns.forEach(function (b, n) { b.setAttribute('aria-pressed', String(n === i)); });
+        story.style.setProperty('--n', all('.story-steps > li', panels[i]).length);
+      };
+      story.classList.add('pin');
+      d.querySelector('[data-story-pills]').hidden = false;
+      setActive(0);
+      var drawStory = function (r, vh) {
+        var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 0.9999);
+        var panel = panels[active];
+        var steps = all('.story-steps > li', panel);
+        var n = steps.length;
+        var idx = Math.floor(p * n);
+        steps.forEach(function (s, i) { s.classList.toggle('on', i === idx); });
+        all('.course-wps > li', panel).forEach(function (w, i) { w.classList.toggle('on', i <= idx); });
+        panel.querySelector('.course-fill').style.transform = 'scaleX(' + clamp(p * n / (n - 1), 0, 1).toFixed(4) + ')';
+        panel.classList.toggle('done', idx === n - 1);
+      };
+      scrubs.push({ el: story, fn: drawStory });
+      btns.forEach(function (b, i) {
+        b.addEventListener('click', function () {
+          setActive(i);
+          scrollTo(0, story.getBoundingClientRect().top + pageYOffset);
+          queue();
+        });
+      });
+    }
+  }
+
+  /* ---------- Areas: a segmented control ---------- */
+  var areasEl = d.querySelector('[data-areas]');
+  if (areasEl) {
+    var segWrap = d.querySelector('[data-seg-wrap]');
+    var tabs = all('[data-area]', segWrap);
+    var thumb = segWrap.querySelector('.seg-thumb');
+    var areaPanels = all('[data-area-panel]', areasEl);
+    segWrap.hidden = false;
+    areasEl.classList.add('live');
+    var moveThumb = function (tab) {
+      thumb.style.width = tab.offsetWidth + 'px';
+      thumb.style.transform = 'translateX(' + tab.offsetLeft + 'px)';
+    };
+    var selectArea = function (id, focus) {
+      tabs.forEach(function (t) {
+        var on = t.dataset.area === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on) {
+          moveThumb(t);
+          var seg = t.parentElement;
+          if (seg.scrollWidth > seg.clientWidth) seg.scrollLeft = t.offsetLeft - (seg.clientWidth - t.offsetWidth) / 2;
+          if (focus) t.focus({ preventScroll: true });
+        }
+      });
+      areaPanels.forEach(function (p) { p.classList.toggle('on', p.dataset.areaPanel === id); });
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { selectArea(t.dataset.area); });
+      t.addEventListener('keydown', function (ev) {
+        var k = { ArrowRight: 1, ArrowLeft: -1 }[ev.key];
+        if (ev.key === 'Home') k = -i;
+        if (ev.key === 'End') k = tabs.length - 1 - i;
+        if (k === undefined) return;
+        ev.preventDefault();
+        selectArea(tabs[(i + k + tabs.length) % tabs.length].dataset.area, true);
+      });
+    });
+    areasEl.addEventListener('click', function (ev) {
+      var a = ev.target.closest('[data-area-link]');
+      if (!a) return;
+      ev.preventDefault();
+      selectArea(a.dataset.areaLink, true);
+    });
+    selectArea(tabs[0].dataset.area);
+    addEventListener('resize', function () {
+      var cur = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+      if (cur) moveThumb(cur);
+    });
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () {
+      var cur = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0];
+      if (cur) moveThumb(cur);
+    });
+  }
+
+  /* ---------- Course lines that draw as you read ---------- */
+  all('[data-route], [data-case]').forEach(function (line) {
+    var fill = line.querySelector('.route-fill, .case-fill');
+    var wps = all('.wp', line);
+    if (reduced) { fill.style.transform = 'scaleY(1)'; wps.forEach(function (w) { w.classList.add('reached'); }); return; }
+    scrubs.push({ el: line, fn: function (r, vh) {
+      var p = clamp((vh * 0.62 - r.top) / r.height, 0, 1);
+      fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
+      wps.forEach(function (w) {
+        var top = w.offsetTop / r.height;
+        w.classList.toggle('reached', p >= top);
+      });
+    } });
+  });
+
+  /* ---------- Menu ---------- */
+  var menu = d.querySelector('.menu');
   if (menu) {
+    menu.addEventListener('toggle', function () { d.documentElement.classList.toggle('menu-open', menu.open); });
     menu.addEventListener('click', function (ev) { if (ev.target.closest('a')) menu.removeAttribute('open'); });
-    document.addEventListener('keydown', function (ev) {
+    d.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && menu.open) { menu.removeAttribute('open'); menu.querySelector('summary').focus(); }
     });
   }
 
-  /* Copy email */
-  document.querySelectorAll('[data-copy]').forEach(function (b) {
+  /* ---------- Copy email ---------- */
+  all('[data-copy]').forEach(function (b) {
     if (!navigator.clipboard) return;
     b.hidden = false;
     var label = b.textContent;
@@ -32,180 +236,51 @@
       navigator.clipboard.writeText(b.dataset.copy).then(function () {
         b.textContent = 'Copied';
         setTimeout(function () { b.textContent = label; }, 1800);
-      }, function () { b.textContent = 'Copy failed. Please select the address above.'; });
+      }, function () { b.textContent = 'Copy failed'; });
     });
   });
 
-  /* Solution Map */
-  var stage = document.querySelector('[data-map]');
-  if (stage) initMap(stage);
-
-  function initMap(stage) {
-    var root = document.getElementById('solution-map');
-    root.classList.add('map-live');
-    var hubs = Array.prototype.slice.call(root.querySelectorAll('.hub'));
-    var panels = root.querySelectorAll('[data-panel]');
-    var tracePanels = root.querySelectorAll('[data-trace-panel]');
-    var traceBtns = root.querySelectorAll('[data-trace]');
-    var lines = root.querySelectorAll('.map-lines line');
-    var traceLine = root.querySelector('.map-trace');
-    var timers = [];
-    var pos = {};
-    hubs.forEach(function (h) {
-      pos[h.dataset.hub] = [parseFloat(h.style.getPropertyValue('--x')) * 10, parseFloat(h.style.getPropertyValue('--y')) * 6];
-    });
-
-    function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-
-    function clearState() {
-      clearTimers();
-      panels.forEach(function (p) { p.classList.remove('on'); });
-      tracePanels.forEach(function (p) { p.classList.remove('on'); });
-      hubs.forEach(function (h) { h.classList.remove('on', 'near', 'lit'); h.removeAttribute('aria-current'); });
-      lines.forEach(function (l) { l.classList.remove('on'); });
-      traceBtns.forEach(function (b) { b.removeAttribute('aria-current'); });
-      traceLine.classList.remove('run');
-      traceLine.setAttribute('points', '');
-    }
-
-    function selectHub(id, opts) {
-      clearState();
-      var panel = root.querySelector('[data-panel="' + id + '"]');
-      if (!panel) return;
-      panel.classList.add('on');
-      var near = {};
-      lines.forEach(function (l) {
-        if (l.dataset.a === id || l.dataset.b === id) {
-          l.classList.add('on');
-          near[l.dataset.a === id ? l.dataset.b : l.dataset.a] = true;
-        }
-      });
-      hubs.forEach(function (h) {
-        if (h.dataset.hub === id) { h.classList.add('on'); h.setAttribute('aria-current', 'true'); }
-        else if (near[h.dataset.hub]) h.classList.add('near');
-      });
-      if (opts && opts.history) history.replaceState(null, '', '#hub-' + id);
-      if (opts && opts.reveal) reveal(panel);
-    }
-
-    function selectTrace(id, opts) {
-      clearState();
-      var panel = root.querySelector('[data-trace-panel="' + id + '"]');
-      if (!panel) return;
-      panel.classList.add('on');
-      root.querySelector('[data-trace="' + id + '"]').setAttribute('aria-current', 'true');
-      var path = panel.dataset.path.split(',');
-      traceLine.setAttribute('points', path.map(function (p) { return pos[p].join(','); }).join(' '));
-      void traceLine.getBoundingClientRect();
-      traceLine.classList.add('run');
-      var steps = panel.querySelectorAll('.trace-steps li');
-      steps.forEach(function (s) { s.classList.remove('now'); });
-      function light(i) {
-        steps.forEach(function (s, n) { s.classList.toggle('now', n === i); });
-        hubs.forEach(function (h) {
-          h.classList.toggle('lit', path.slice(0, i + 1).indexOf(h.dataset.hub) > -1);
-          h.classList.toggle('on', h.dataset.hub === path[i]);
-        });
-      }
-      if (reduced) {
-        hubs.forEach(function (h) { h.classList.toggle('lit', path.indexOf(h.dataset.hub) > -1); });
-      } else {
-        path.forEach(function (_, i) { timers.push(setTimeout(function () { light(i); }, i * 1500)); });
-      }
-      if (opts && opts.history) history.replaceState(null, '', '#trace-' + id);
-      if (opts && opts.reveal) reveal(panel);
-    }
-
-    /* On narrow screens the panel sits below the map, so bring it into view */
-    function reveal(panel) {
-      if (window.innerWidth >= 960) return;
-      panel.scrollIntoView({ block: 'nearest' });
-    }
-
-    hubs.forEach(function (h, i) {
-      h.addEventListener('click', function (ev) {
-        ev.preventDefault();
-        selectHub(h.dataset.hub, { history: true, reveal: true });
-      });
-      h.addEventListener('keydown', function (ev) {
-        var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[ev.key];
-        if (!d) return;
-        ev.preventDefault();
-        var next = hubs[(i + d + hubs.length) % hubs.length];
-        next.focus();
-        selectHub(next.dataset.hub, { history: true });
-      });
-    });
-
-    root.addEventListener('click', function (ev) {
-      var conn = ev.target.closest('[data-hub-link]');
-      if (conn) {
-        ev.preventDefault();
-        selectHub(conn.dataset.hubLink, { history: true });
-        var target = root.querySelector('.hub[data-hub="' + conn.dataset.hubLink + '"]');
-        if (target) target.focus({ preventScroll: true });
-        return;
-      }
-      var t = ev.target.closest('[data-trace]');
-      if (t) {
-        ev.preventDefault();
-        selectTrace(t.dataset.trace, { history: true, reveal: true });
-      }
-    });
-
-    function fromHash() {
-      var h = location.hash;
-      if (h.indexOf('#hub-') === 0) { selectHub(h.slice(5)); return true; }
-      if (h.indexOf('#trace-') === 0) { selectTrace(h.slice(7)); return true; }
-      return false;
-    }
-    if (!fromHash()) selectHub('outcomes');
-    window.addEventListener('hashchange', fromHash);
-  }
-
-  /* Career: open the role that a link points to, and expand or collapse all */
-  var roles = document.querySelectorAll('.role');
+  /* ---------- Career ---------- */
+  var roles = all('.role');
   if (roles.length) {
     var openTarget = function () {
-      var t = location.hash && document.getElementById(location.hash.slice(1));
+      var t = location.hash && d.getElementById(location.hash.slice(1));
       if (t && t.tagName === 'DETAILS') { t.open = true; t.scrollIntoView(); }
     };
     openTarget();
-    window.addEventListener('hashchange', openTarget);
-    var toggle = document.querySelector('[data-toggle-roles]');
+    addEventListener('hashchange', openTarget);
+    var toggle = d.querySelector('[data-toggle-roles]');
     if (toggle) {
       toggle.hidden = false;
       toggle.addEventListener('click', function () {
-        var anyOpen = Array.prototype.some.call(roles, function (r) { return r.open; });
+        var anyOpen = roles.some(function (r) { return r.open; });
         roles.forEach(function (r) { r.open = !anyOpen; });
         toggle.textContent = anyOpen ? 'Expand all roles' : 'Collapse all roles';
       });
     }
   }
 
-  /* Skills directory */
-  var search = document.getElementById('skill-search');
+  /* ---------- Skills directory ---------- */
+  var search = d.getElementById('skill-search');
   if (search) {
-    var chips = document.querySelectorAll('.chip');
-    var cats = document.querySelectorAll('.skill-cat');
-    var countEl = document.querySelector('[data-count]');
-    var empty = document.querySelector('[data-empty]');
-    var clearBtn = document.querySelector('[data-clear]');
-    var chipWrap = document.querySelector('[data-chips]');
+    var chips = all('.chip');
+    var cats = all('.skill-cat');
+    var countEl = d.querySelector('[data-count]');
+    var empty = d.querySelector('[data-empty]');
+    var clearBtn = d.querySelector('[data-clear]');
+    var chipWrap = d.querySelector('[data-chips]');
     var cat = 'all';
     search.disabled = false;
     chipWrap.hidden = false;
-
     var apply = function (fromUser) {
       var q = search.value.trim().toLowerCase();
-      var words = q ? q.split(/\s+/) : [];
+      var terms = q ? q.split(/\s+/) : [];
       var shown = 0;
       cats.forEach(function (section) {
         var inCat = cat === 'all' || section.dataset.category === cat;
         var n = 0;
-        section.querySelectorAll('.skill').forEach(function (s) {
-          var hay = s.dataset.name;
-          var match = inCat && words.every(function (w) { return hay.indexOf(w) > -1; });
+        all('.skill', section).forEach(function (s) {
+          var match = inCat && terms.every(function (w) { return s.dataset.name.indexOf(w) > -1; });
           s.hidden = !match;
           if (match) n++;
         });
@@ -238,4 +313,6 @@
     var initial = new URLSearchParams(location.search).get('q');
     if (initial) { search.value = initial; apply(false); }
   }
+
+  frame();
 })();
