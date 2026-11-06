@@ -65,9 +65,10 @@ def page(path, title, desc, body, current="", og_type="website", jsonld=None):
 <meta property="og:title" content="{e(full_title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE}assets/social-preview.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="{SITE}assets/calm-sea-v1.png">
+<meta property="og:image:width" content="1672">
+<meta property="og:image:height" content="941">
+<meta property="og:image:alt" content="A calm blue sea at twilight">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{r}assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{r}assets/apple-touch-icon.png">
@@ -324,9 +325,6 @@ def home():
     </div>
     <div class="hero-stats hero-stats-l">{stat('12', 'years in IT')}{stat('4', 'international sites')}</div>
     <div class="hero-stats hero-stats-r">{stat('~300', 'employees trained on AI')}{stat('9', 'remote sites delivered')}</div>
-    <figure class="person">
-      <img src="@@/assets/ali-640.webp" srcset="@@/assets/ali-640.webp 640w, @@/assets/ali-1122.webp 1122w" sizes="(max-width: 734px) 80vw, 720px" width="1122" height="1402" alt="Ali Alzahrani in a white thobe and red shemagh" fetchpriority="high" decoding="async">
-    </figure>
     <div class="hero-value"><p>{e(P['value'])}</p></div>
     {waves('waves-front')}
   </div>
@@ -409,7 +407,6 @@ def home():
         "@type": "Person",
         "name": P["name"],
         "url": SITE,
-        "image": SITE + "assets/ali-navy-800.jpg",
         "jobTitle": "Middle East IT Leader",
         "worksFor": {"@type": "Organization", "name": "Vallourec"},
         "email": "mailto:" + P["email"],
@@ -691,7 +688,10 @@ def main():
                 continue
             shutil.rmtree(child) if child.is_dir() else child.unlink()
     OUT.mkdir(exist_ok=True)
-    shutil.copytree(ROOT / "src" / "assets", OUT / "assets")
+    # Preserve the original portraits locally, but omit them from the public site.
+    shutil.copytree(ROOT / "src" / "assets", OUT / "assets", ignore=shutil.ignore_patterns(
+        "ali-640.webp", "ali-1122.webp", "ali-navy-800.jpg", "social-preview.jpg"
+    ))
     shutil.copy(ROOT / "src" / "styles.css", OUT / "assets" / "styles.css")
     shutil.copy(ROOT / "src" / "app.js", OUT / "assets" / "app.js")
     home(); profile(); career(); skills(); projects_index(); ai_page(); credentials(); not_found()

@@ -2,7 +2,7 @@
 
 Needs the private CV builder in ../../tmp/cv-builder and ReportLab.
 Keep the titles, dates and qualifications here in step with content/*.json.
-The phone number and exact city are deliberately left out of this public copy.
+The portrait, phone number and exact city are deliberately left out of this public copy.
 """
 import os
 import sys
@@ -10,13 +10,26 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 BUILDER = os.path.normpath(os.path.join(HERE, '..', '..', 'tmp', 'cv-builder', 'build'))
 sys.path.insert(0, BUILDER)
-# Load the master CV layout, removing only the phone number from this public copy.
+# Load the master CV layout, applying public-copy changes in memory only.
 import types  # noqa: E402
 _path = os.path.join(BUILDER, 'cvlib.py')
 _src = open(_path, encoding='utf-8').read()
 _phone = "('+966 546 288 844', WHITE), "
 assert _phone in _src
 _src = _src.replace(_phone, '').replace('3 * sw(sep', '2 * sw(sep').replace("('Dammam, Saudi Arabia', PALE)", "('Eastern Province, Saudi Arabia', PALE)")
+# Remove the portrait and its border, then use the full header width.
+# The private master builder and original CVs remain unchanged.
+_header_start = _src.index('    def header(self, d):')
+_header_end = _src.index('        # stats band', _header_start)
+_public_header = _src[_header_start:_header_end]
+_photo_draw = "        c.drawImage(PHOTO, 46, Y(134), 92, 92, mask='auto')\n"
+_photo_border = '        c.setStrokeColor(GOLD); c.setLineWidth(1.5); c.circle(92, Y(88), 49.4, stroke=1, fill=0)\n'
+assert _photo_draw in _public_header and _photo_border in _public_header
+assert _public_header.count('self.text(168,') == 3
+_public_header = _public_header.replace(_photo_draw, '').replace(_photo_border, '')
+_public_header = _public_header.replace('self.text(168,', 'self.text(LX,')
+_public_header = _public_header.replace('self.line(168, 88, 308, 88,', 'self.line(LX, 88, LX + 140, 88,')
+_src = _src[:_header_start] + _public_header + _src[_header_end:]
 cvlib = types.ModuleType('cvlib')
 cvlib.__file__ = _path
 exec(compile(_src, _path, 'exec'), cvlib.__dict__)
