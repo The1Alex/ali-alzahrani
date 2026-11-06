@@ -103,7 +103,9 @@ h3 { font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
 
 /* Hero */
 .hero { position: relative; background: var(--n950); }
-.hero-stage { position: relative; display: flex; flex-direction: column; align-items: center; overflow: hidden; min-height: calc(100vh - 52px); padding-top: clamp(30px, 6vh, 64px); background: radial-gradient(70% 60% at 50% 70%, #1b4478 0%, rgba(27, 68, 120, 0) 72%), linear-gradient(180deg, var(--n950) 0%, var(--n900) 58%, var(--n800) 100%); text-align: center; }
+.hero-stage { position: relative; display: flex; flex-direction: column; align-items: center; overflow: hidden; min-height: calc(100vh - 52px); padding-top: clamp(30px, 6vh, 64px); background: linear-gradient(180deg, rgba(6, 20, 42, .88) 0%, rgba(6, 20, 42, .64) 26%, rgba(6, 20, 42, .28) 52%, rgba(6, 20, 42, .4) 78%, #06142a 100%), url("calm-sea-v1.png") center center / cover no-repeat, var(--n950); text-align: center; }
+.hero .waves, .contact .waves { display: none; }
+.hero-copy, .hero-value, .hero-stats { text-shadow: 0 2px 24px rgba(6, 20, 42, .35); }
 .hero-copy { position: relative; z-index: 3; padding: 0 var(--pad); }
 .hero-kicker { font-size: clamp(14px, 1.25vw, 17px); color: var(--sea); font-weight: 500; animation: rise 1s var(--ease) backwards .05s; }
 .hero h1 { font-size: clamp(46px, min(12.4vw, 17vh), 140px); letter-spacing: -.045em; line-height: 1.02; color: var(--white); margin-top: 8px; animation: rise 1.1s var(--ease) backwards .12s; }
@@ -332,7 +334,7 @@ a.tile:hover { transform: translateY(-5px); box-shadow: 0 22px 50px -24px rgba(1
 .career-over .route { margin: 0; }
 
 /* Contact and footer */
-.contact { position: relative; background: linear-gradient(180deg, var(--n900), var(--n950)); color: var(--white); padding: clamp(90px, 15vh, 170px) 0 clamp(150px, 22vh, 230px); text-align: center; overflow: hidden; }
+.contact { position: relative; background: linear-gradient(180deg, rgba(6, 20, 42, .72), rgba(6, 20, 42, .7) 55%, #06142a), url("calm-sea-v1.png") center 65% / cover no-repeat, var(--n950); color: var(--white); padding: clamp(90px, 15vh, 170px) 0 clamp(150px, 22vh, 230px); text-align: center; overflow: hidden; }
 .contact-in { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
 .contact h2 { font-size: clamp(42px, 7vw, 96px); letter-spacing: -.04em; }
 .contact .lede { margin-top: 18px; max-width: 30em; }
@@ -355,7 +357,7 @@ a.tile:hover { transform: translateY(-5px); box-shadow: 0 22px 50px -24px rgba(1
 @media (max-width: 760px) { .foot-in { grid-template-columns: 1fr; } }
 
 /* Inner page hero */
-.phero { position: relative; padding: clamp(66px, 11vh, 120px) 0 clamp(120px, 17vh, 170px); background: radial-gradient(70% 90% at 80% 0%, #17396a 0%, rgba(23, 57, 106, 0) 70%), var(--n950); color: var(--white); overflow: hidden; }
+.phero { position: relative; padding: clamp(66px, 11vh, 120px) 0 clamp(120px, 17vh, 170px); background: linear-gradient(90deg, rgba(6, 20, 42, .88), rgba(6, 20, 42, .6)), url("calm-sea-v1.png") center 60% / cover no-repeat, var(--n950); color: var(--white); overflow: hidden; }
 .phero-in { position: relative; z-index: 2; }
 .phero h1 { font-size: clamp(40px, 6.6vw, 88px); line-height: 1.03; letter-spacing: -.04em; max-width: 16em; animation: rise 1s var(--ease) backwards .05s; }
 .phero .eyebrow { animation: rise 1s var(--ease) backwards; }
