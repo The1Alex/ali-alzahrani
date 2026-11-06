@@ -30,14 +30,19 @@ Then open http://localhost:8000. The `cv/build_cv.py` step needs the private CV 
 
 ## Publish
 
-GitHub Pages serves the `docs/` folder of the `main` branch. Commit and push, and the site updates in about a minute.
+GitHub Pages serves the `docs/` folder of the `main` branch in the separate publishing checkout. This development repository and its history contain private preparation details; do not push it to the public repository.
 
 ```
+python build.py
+python prepare_publish.py
+cd ../.codex-work/ali-alzahrani-publication
 git add -A
-git commit -m "Update content"
+git commit -m "Update website"
 git push
 ```
 
+The publication URL is https://the1alex.github.io/ali-alzahrani/. The publishing checkout includes only generated website files and its public README.
+
 ## Fonts
 
-Newsreader and Instrument Sans, both under the SIL Open Font License.
+Inter, under the SIL Open Font License.

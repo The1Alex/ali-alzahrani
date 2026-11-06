@@ -2,7 +2,8 @@
 (function () {
   'use strict';
   var d = document;
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  var reduced = motionPreference.matches;
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var all = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
 
@@ -11,6 +12,7 @@
   var queued = false;
   function frame() {
     queued = false;
+    if (reduced) return;
     var vh = innerHeight;
     for (var i = 0; i < scrubs.length; i++) {
       var r = scrubs[i].el.getBoundingClientRect();
@@ -50,7 +52,7 @@
     var start = performance.now();
     var dur = 1100;
     (function step(now) {
-      var t = clamp((now - start) / dur, 0, 1);
+      var t = reduced ? 1 : clamp((now - start) / dur, 0, 1);
       var v = Math.round(end * (1 - Math.pow(1 - t, 3)));
       el.textContent = pre + v.toLocaleString('en-US') + suf;
       if (t < 1) requestAnimationFrame(step);
@@ -59,8 +61,8 @@
 
   /* ---------- Hero: the title clears, the portrait moves, the statement arrives ---------- */
   var hero = d.querySelector('[data-hero]');
-  if (hero && !reduced) {
-    hero.classList.add('pin');
+  if (hero) {
+    hero.classList.toggle('pin', !reduced);
     scrubs.push({ el: hero, fn: function (r, vh) {
       var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
       hero.style.setProperty('--a', clamp(p / 0.42, 0, 1).toFixed(4));
@@ -70,9 +72,9 @@
 
   /* ---------- Philosophy: the sentence lights up word by word ---------- */
   var phil = d.querySelector('[data-phil]');
-  if (phil && !reduced) {
+  if (phil) {
     var words = all('.w', phil);
-    phil.classList.add('pin');
+    phil.classList.toggle('pin', !reduced);
     var lit = -1;
     scrubs.push({ el: phil, fn: function (r, vh) {
       var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
@@ -85,8 +87,8 @@
 
   /* ---------- AI rows: the one in the middle of the screen is in focus ---------- */
   var aiRows = d.querySelector('[data-ai-rows]');
-  if (aiRows && !reduced && 'IntersectionObserver' in window && innerWidth > 1000) {
-    aiRows.classList.add('focus');
+  if (aiRows && 'IntersectionObserver' in window) {
+    aiRows.classList.toggle('focus', !reduced && innerWidth > 1000);
     var aio = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { en.target.classList.toggle('on', en.isIntersecting); });
     }, { rootMargin: '-38% 0px -38% 0px' });
@@ -95,9 +97,9 @@
 
   /* ---------- Work: cards stack, the one beneath settles back ---------- */
   var stackEl = d.querySelector('[data-stack]');
-  if (stackEl && !reduced) {
+  if (stackEl) {
     var cards = all('[data-scard]', stackEl);
-    stackEl.classList.add('live');
+    stackEl.classList.toggle('live', !reduced);
     cards.forEach(function (card, i) {
       var next = cards[i + 1];
       if (!next) return;
@@ -114,7 +116,7 @@
   if (story) {
     var panels = all('[data-story-panel]', story);
     var btns = all('[data-story-btn]', story);
-    if (!reduced) {
+    {
       var active = 0;
       var setActive = function (i) {
         active = i;
@@ -122,8 +124,8 @@
         btns.forEach(function (b, n) { b.setAttribute('aria-pressed', String(n === i)); });
         story.style.setProperty('--n', all('.story-steps > li', panels[i]).length);
       };
-      story.classList.add('pin');
-      d.querySelector('[data-story-pills]').hidden = false;
+      story.classList.toggle('pin', !reduced);
+      d.querySelector('[data-story-pills]').hidden = reduced;
       setActive(0);
       var drawStory = function (r, vh) {
         var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 0.9999);
@@ -206,7 +208,7 @@
   all('[data-route], [data-case]').forEach(function (line) {
     var fill = line.querySelector('.route-fill, .case-fill');
     var wps = all('.wp', line);
-    if (reduced) { fill.style.transform = 'scaleY(1)'; wps.forEach(function (w) { w.classList.add('reached'); }); return; }
+    if (reduced) { fill.style.transform = 'scaleY(1)'; wps.forEach(function (w) { w.classList.add('reached'); }); }
     scrubs.push({ el: line, fn: function (r, vh) {
       var p = clamp((vh * 0.62 - r.top) / r.height, 0, 1);
       fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
@@ -217,14 +219,78 @@
     } });
   });
 
+  /* Respect preference changes without requiring a reload. */
+  function updateMotion() {
+    reduced = motionPreference.matches;
+    [hero, phil, story].forEach(function (el) { if (el) el.classList.toggle('pin', !reduced); });
+    if (stackEl) stackEl.classList.toggle('live', !reduced);
+    if (aiRows && 'IntersectionObserver' in window) aiRows.classList.toggle('focus', !reduced && innerWidth > 1000);
+    if (story) {
+      var pills = d.querySelector('[data-story-pills]');
+      var moveFocus = reduced && pills.contains(d.activeElement);
+      pills.hidden = reduced;
+      if (moveFocus) {
+        panels[active].tabIndex = -1;
+        panels[active].focus({ preventScroll: true });
+      }
+    }
+    if (reduced) {
+      if (io) io.disconnect();
+      all('.hide').forEach(function (el) { el.classList.remove('hide'); el.classList.add('in'); });
+      all('[data-scard]').forEach(function (el) { el.style.removeProperty('--s'); });
+      all('.route-fill, .case-fill').forEach(function (el) { el.style.transform = 'scaleY(1)'; });
+      all('.wp').forEach(function (el) { el.classList.add('reached'); });
+    }
+    queue();
+  }
+  motionPreference.addEventListener('change', updateMotion);
+  addEventListener('resize', function () {
+    if (aiRows && 'IntersectionObserver' in window) aiRows.classList.toggle('focus', !reduced && innerWidth > 1000);
+  });
+
   /* ---------- Menu ---------- */
   var menu = d.querySelector('.menu');
   if (menu) {
-    menu.addEventListener('toggle', function () { d.documentElement.classList.toggle('menu-open', menu.open); });
-    menu.addEventListener('click', function (ev) { if (ev.target.closest('a')) menu.removeAttribute('open'); });
+    var smallScreen = matchMedia('(max-width: 860px)');
+    var menuSummary = menu.querySelector('summary');
+    var menuBackground = all('main, .foot, .skip, .wordmark, .nav-wide');
+    var backgroundState = [];
+    var menuActive = false;
+    function syncMenu() {
+      if (!smallScreen.matches) menu.open = false;
+      var open = menu.open;
+      d.documentElement.classList.toggle('menu-open', open);
+      if (open === menuActive) return;
+      menuActive = open;
+      if (open) {
+        backgroundState = menuBackground.map(function (el) { return el.inert; });
+        menuBackground.forEach(function (el) { el.inert = true; });
+        if (!menu.contains(d.activeElement)) menuSummary.focus({ preventScroll: true });
+      } else {
+        menuBackground.forEach(function (el, i) { el.inert = backgroundState[i]; });
+        if (menu.contains(d.activeElement) || !smallScreen.matches) {
+          (smallScreen.matches ? menuSummary : d.querySelector('.wordmark')).focus({ preventScroll: true });
+        }
+      }
+    }
+    function closeMenu() { menu.open = false; syncMenu(); }
+    menu.addEventListener('toggle', syncMenu);
+    smallScreen.addEventListener('change', syncMenu);
+    menu.addEventListener('click', function (ev) { if (ev.target.closest('a')) closeMenu(); });
     d.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape' && menu.open) { menu.removeAttribute('open'); menu.querySelector('summary').focus(); }
+      if (!menu.open) return;
+      if (ev.key === 'Escape') { ev.preventDefault(); closeMenu(); return; }
+      if (ev.key !== 'Tab') return;
+      var links = all('summary, a[href]', menu);
+      var first = links[0];
+      var last = links[links.length - 1];
+      if (ev.shiftKey && d.activeElement === first) {
+        ev.preventDefault(); last.focus();
+      } else if (!ev.shiftKey && d.activeElement === last) {
+        ev.preventDefault(); first.focus();
+      }
     });
+    syncMenu();
   }
 
   /* ---------- Copy email ---------- */

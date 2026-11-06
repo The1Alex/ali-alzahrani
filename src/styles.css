@@ -134,6 +134,8 @@ h3 { font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
 .hero.pin { height: 240vh; }
 .hero.pin .hero-stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding-top: calc(52px + clamp(22px, 5vh, 56px)); margin-top: -52px; }
 .hero.pin .hero-copy { opacity: calc(1 - var(--a) * 1.7); transform: translate3d(0, calc(var(--a) * -90px), 0); }
+.hero.pin .hero-copy:focus-within { opacity: 1; transform: none; z-index: 4; }
+.hero.pin .hero-copy:focus-within ~ .hero-value { opacity: 0; }
 .hero.pin .hero-stats { opacity: calc(1 - var(--a) * 2.2); }
 .hero.pin .person { position: absolute; left: 50%; bottom: -2px; margin: 0; transform-origin: 50% 100%; transform: translate3d(calc(-50% + var(--b) * 21vw), 0, 0) scale(calc(1 + var(--a) * .42)); width: min(44vh, 80vw, 500px); animation: fadein 1.4s ease backwards .25s; }
 .hero.pin .hero-value { position: absolute; top: 50%; left: max(var(--pad), calc(50% - 560px)); width: min(46vw, 560px); padding: 0; background: none; text-align: left; opacity: var(--b); transform: translate3d(0, calc(-50% + (1 - var(--b)) * 46px), 0); }
@@ -171,6 +173,7 @@ h3 { font-weight: 600; letter-spacing: -.015em; line-height: 1.2; }
 /* Reveal */
 .hide { opacity: 0; transform: translate3d(0, 28px, 0); }
 .in { opacity: 1; transform: none; transition: opacity 1s var(--ease) var(--d, 0ms), transform 1s var(--ease) var(--d, 0ms); }
+.hide:focus-within { opacity: 1; transform: none; transition: none; }
 
 /* Bento */
 .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
@@ -200,8 +203,9 @@ a.tile:hover { transform: translateY(-5px); box-shadow: 0 22px 50px -24px rgba(1
 .ai-side .pill { margin-top: 28px; }
 .ai-row { padding: 30px 0; border-top: 1px solid var(--line-d); transition: opacity .6s ease; }
 .ai-row:last-child { border-bottom: 1px solid var(--line-d); }
-.ai-rows.focus .ai-row { opacity: .32; }
+.ai-rows.focus .ai-row { opacity: .78; }
 .ai-rows.focus .ai-row.on { opacity: 1; }
+.ai-rows.focus .ai-row:focus-within { opacity: 1; transition: none; }
 .ai-status { font-size: 14px; font-weight: 500; color: var(--brass); margin-bottom: 8px; }
 .sec-sail .ai-status { color: var(--n600); }
 .ai-row h3 { font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -.025em; margin-bottom: 10px; }
@@ -507,6 +511,8 @@ a.tile:hover { transform: translateY(-5px); box-shadow: 0 22px 50px -24px rgba(1
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hide { opacity: 1; transform: none; }
+  .scard { position: relative; top: auto; transform: none; will-change: auto; }
   @view-transition { navigation: none; }
 }
 @media print {
