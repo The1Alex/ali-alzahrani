@@ -1,0 +1,166 @@
+{
+  "legend": {"led": "Led", "built": "Built", "coord": "Coordinated", "support": "Supported"},
+  "employers": [
+    {
+      "name": "Vallourec",
+      "context": "Industrial manufacturing, Saudi Arabia and the Middle East",
+      "dates": "Oct 2017 – Present",
+      "roles": [
+        {
+          "id": "middle-east-it-leader",
+          "title": "Middle East IT Leader",
+          "dates": "Jan 2024 – Present",
+          "start": 2024.0, "end": 2026.85,
+          "summary": "I lead IT across four international sites (corporate offices, plants and remote locations) and act as the regional focal point for global shared services.",
+          "groups": [
+            {"name": "Regional leadership and partnering", "items": [
+              ["led", "Lead IT delivery across four international sites, spanning corporate offices, plants and remote environments, from end-user support and business applications to site infrastructure."],
+              ["led", "Act as regional focal point for the global Business Applications, Infrastructure, Endpoint and Security functions, working across multiple time zones to translate group programmes into local execution."],
+              ["led", "Capture and clarify business requirements with site leaders and departments, and turn operational priorities into IT initiatives and one clear plan."],
+              ["led", "Prioritise the regional digital-transformation portfolio and align solution roadmaps with business needs."],
+              ["led", "Provide IT consultancy, escalation support and practical issue resolution to site management across the region."],
+              ["led", "Define the IT procedures, service standards and cybersecurity practices adopted across the regional sites."]
+            ]},
+            {"name": "AI adoption", "items": [
+              ["led", "Lead AI adoption across the region: around 300 employees in multiple departments trained on applying Microsoft Copilot and related tools to everyday tasks."],
+              ["led", "Established an initiative to identify high-value AI use cases across the business, and delivered working applications from the findings."],
+              ["led", "Connect practical AI adoption to governance, informed by my ISO 42001 practitioner training."]
+            ]},
+            {"name": "Plant digitalisation", "items": [
+              ["led", "Direct the plant digitalisation programme: SharePoint migration with automated workflows and digital signatures, digital quality log sheets and digital procurement, moving departments away from physical filing in support of the go-green initiative."],
+              ["led", "Introduced cycle-time monitoring and shutdown analysis, giving production management visibility it previously lacked."],
+              ["coord", "Bring shop-floor reporting onto large touchscreens with a third-party application provider, extending it to safety, maintenance, repair and IT requests."],
+              ["led", "Build capability through training, clear documentation and follow-up after delivery."]
+            ]},
+            {"name": "Commercial ownership", "items": [
+              ["led", "Own regional IT procurement, contracts, leasing and licensing, including vendor selection, negotiation, consolidation and maintenance scheduling, with Procurement and Finance. This has consolidated suppliers and reduced overhead."],
+              ["coord", "Coordinate vendor discussions, deployment requirements and procurement for industrial application network licensing."],
+              ["coord", "Follow up delivery of industrial PCs and scanners, and validate quotations for printers, mobile devices, infrastructure requests and support contracts."]
+            ]},
+            {"name": "Operations and service delivery", "items": [
+              ["led", "Coordinated a review of inactive accounts with HR and established a recurring monthly review, improving account hygiene and licence use."],
+              ["built", "Drafted an HR and IT onboarding and offboarding procedure covering approved requests, device preparation, inventory, asset returns, account deactivation and SIM reconciliation."],
+              ["coord", "Coordinate onboarding, account recovery, Teams and SharePoint assistance, Wi-Fi, displays, printing, mobile access and endpoint support across Saudi Arabia and the UAE."],
+              ["coord", "Coordinate recovery after power disruption and troubleshoot industrial connectivity, print licensing, server alerts, backups and shared folders."],
+              ["built", "Assess customer-site and new-location IT readiness in written reports covering equipment, connectivity testing, support model and open items."],
+              ["coord", "Plan replacement of ageing industrial workstations with vendors, operations and budget owners."],
+              ["support", "Take part in monthly safety visits and plant discussions, and follow observations through with the responsible teams."],
+              ["coord", "Coordinate local support coverage, backlog reduction and workspace preparation as team needs change."]
+            ]}
+          ],
+          "cases": ["regional-ai-adoption", "plant-digitalisation", "industrial-communication-fault", "network-lifecycle-renewal"]
+        },
+        {
+          "id": "infrastructure-expert-project-manager",
+          "title": "Infrastructure Expert & Project Manager",
+          "dates": "Jan 2021 – Jan 2024",
+          "start": 2021.0, "end": 2024.0,
+          "summary": "A dedicated project management role alongside infrastructure ownership: scope, schedules, cost, risk and testing, with progress and decisions reported to management.",
+          "groups": [
+            {"name": "Security and certification", "items": [
+              ["led", "Secured Aramco Cyber Security Certification for Vallourec Saudi Arabia as principal lead with an authorised third party, delivered ahead of the expected schedule. The certification belongs to the company."],
+              ["led", "Followed certification with a twelve-month programme to secure every device connected to the Saudi network."]
+            ]},
+            {"name": "Network and infrastructure", "items": [
+              ["led", "Led the two-year programme to recover and define the complete factory network topology, from the automation layer (IT/OT) through to core group switching."],
+              ["built", "Migrated on-premises Active Directory to Microsoft Entra ID with Intune, lowering operating cost and centralising device compliance and application policy."],
+              ["built", "Deployed more than 20 physical and virtual servers with backup and disaster recovery, minimising downtime and enabling rapid restoration."],
+              ["led", "Re-architected more than 100 Cisco and N-Tron switches across interlinked locations to reduce network latency."],
+              ["built", "Formulated architecture plans and recommendations for interlinked site connectivity."]
+            ]},
+            {"name": "Project delivery", "items": [
+              ["led", "Delivered a new regional office's infrastructure end to end within six months."],
+              ["support", "Supported the NDT project replacement, adapting production-line IT tracking systems through each phase of the changeover."],
+              ["led", "Managed scope, objectives, milestones, schedules, resource and cost planning, risks, changes, dependencies and testing alongside routine operations."],
+              ["led", "Oversaw requirements, design, implementation, testing, cutover and handover to operational support, applying management-of-change procedures."],
+              ["coord", "Reported progress, risks and decisions to management, and coordinated internal stakeholders, contractors and external parties."]
+            ]}
+          ],
+          "cases": ["aramco-cyber-security-certification", "network-topology", "cloud-identity-migration", "new-regional-office", "ndt-replacement"]
+        },
+        {
+          "id": "it-specialist",
+          "title": "IT Specialist",
+          "dates": "Oct 2017 – Jan 2021",
+          "start": 2017.75, "end": 2021.0,
+          "summary": "Hands-on ownership of production IT on the shop floor, supplier-connected systems and the site's device estate. Excellence Leader Award, 2020. Creativity Award, Vallourec Group, 2019.",
+          "groups": [
+            {"name": "Production and business systems", "items": [
+              ["built", "Built an automated QR-code processing system with an interactive GUI, reducing manual handling errors."],
+              ["built", "Maintained real-time product tracking and Optimised Material Management (PSI) systems, managing dependencies across multiple integrated applications."],
+              ["built", "Safeguarded the accuracy of online product tracking and monitoring systems across integrated supplier interfaces."],
+              ["built", "Carried out day-to-day maintenance and operation of production IT systems on the shop floor."],
+              ["built", "Created printed production-station guides with QR codes linking to short video lessons, so operators could find help on any shift."]
+            ]},
+            {"name": "Estate and security", "items": [
+              ["built", "Managed maintenance and upgrade planning for more than 200 PCs, more than 100 CCTV units, IP telephony, and attendance and access-control systems."],
+              ["coord", "Applied group antivirus and security-agent standards across endpoints and servers with the central endpoint team."]
+            ]},
+            {"name": "COVID-19", "items": [
+              ["coord", "As part of the crisis cell, moved seven departments and about 100 people to remote work with one IT technician: laptops, VPN, Teams training and home-office setup. The business kept running."]
+            ]}
+          ],
+          "cases": ["covid-remote-work", "qr-code-application"]
+        }
+      ]
+    },
+    {
+      "name": "Target Construction",
+      "legal": "Target Engineering Construction Co LLC",
+      "context": "Construction and contracting, Aramco contractor, Al Khobar",
+      "dates": "Jan 2014 – Sep 2017",
+      "roles": [
+        {
+          "id": "head-of-it",
+          "title": "Head of IT Department",
+          "dates": "Jan 2015 – Sep 2017",
+          "start": 2015.0, "end": 2017.7,
+          "summary": "Responsible for IT across head office and remote construction sites, also serving as Admin and IT procurement advisor. 699 users.",
+          "groups": [
+            {"name": "Services and migration", "items": [
+              ["built", "Built and operated the IT support network serving 699 users across head office and remote construction sites."],
+              ["led", "Migrated user accounts and email to Microsoft Exchange Online with zero downtime."],
+              ["built", "Established Active Directory, user accounts and file sharing, with unified group policies and privileges."],
+              ["built", "Implemented daily incremental backups on Windows Server 2012 R2 with RAID 5."]
+            ]},
+            {"name": "Control and standards", "items": [
+              ["led", "Initiated departmental IT procedures and standards, unified asset models with registered lifespans, and regained control of more than 1,000 devices across servers, switches, firewalls, laptops, desktops and mobiles."],
+              ["built", "Monitored malware, spam, firewall and user activity through Cyberoam controls, kept security software current and patched critical vulnerabilities."],
+              ["built", "Established diagnostic procedures for desktop and laptop repair, including component replacement and reimaging."]
+            ]},
+            {"name": "Systems for the business", "items": [
+              ["led", "Deployed biometric attendance systems across every site with supporting tracking software, improving payroll accuracy."],
+              ["built", "Standardised IP telephony monitoring across Avaya and Cisco estates, reducing downtime."],
+              ["led", "Managed the corporate telecommunications profile, distributing landlines across sites and mobile numbers across employees."],
+              ["coord", "Served as Admin and IT procurement advisor alongside running the IT department."]
+            ]}
+          ],
+          "cases": ["it-asset-control", "exchange-online-migration", "biometric-attendance"]
+        },
+        {
+          "id": "project-engineer",
+          "title": "Project Engineer",
+          "dates": "Jan 2014 – Jan 2015",
+          "start": 2014.0, "end": 2015.0,
+          "summary": "IT delivery on an Aramco contractor project in the Uthmaniyah and Udhailiyah area, coordinating teams, vendors and contractors across remote sites.",
+          "groups": [
+            {"name": "Remote delivery", "items": [
+              ["led", "Directed IT and construction contractors to establish nine remote project sites with full infrastructure and IT assets, connecting more than 500 users."],
+              ["coord", "Coordinated nine IT support and technical teams delivering remote services on time and within budget."],
+              ["built", "Resolved 79% of reported technical issues remotely as first-line support."],
+              ["built", "Built two isolated site networks, strengthening security and enabling daily operations."]
+            ]},
+            {"name": "Clients, vendors and standards", "items": [
+              ["coord", "Collaborated with clients to design and implement IT systems across customer sites."],
+              ["led", "Led vendor interfacing and negotiation for IT procurement, including laptops, servers and accessories."],
+              ["led", "Conducted site audits every two to three months to enforce corporate standards across remote locations."]
+            ]}
+          ],
+          "cases": ["nine-remote-sites"]
+        }
+      ]
+    }
+  ],
+  "earlier": "Before my career began I was sponsored by Saudi Aramco through a College Preparatory Programme and a BSc scholarship. That is listed under education.",
+  "references": "References are available on request."
+}

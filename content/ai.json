@@ -1,0 +1,34 @@
+{
+  "intro": "AI is the most important change I have seen in my career, and I treat it as a practical discipline. I train people on it, govern it, and use it every day to learn and build. My test is simple: did it solve a real problem, and can a person check the answer?",
+  "layers": [
+    {"name": "At work, with people", "status": "Delivered at Vallourec",
+     "text": "I lead AI adoption across the Middle East region. Around 300 employees in multiple departments have been trained on applying Microsoft Copilot and related tools to everyday tasks. I then established an initiative to find high-value use cases and delivered working applications from the findings.",
+     "href": "projects/regional-ai-adoption/", "link": "Read the case study"},
+    {"name": "On hard technical problems", "status": "Used in real incidents",
+     "text": "I use AI as a research partner when I reach the edge of what I know. When a production machine lost contact with its application, AI tools helped me find the documentation for an unfamiliar device. I still tested each theory by hand.",
+     "href": "projects/industrial-communication-fault/", "link": "Read the case study"},
+    {"name": "On automation", "status": "Delivered at Vallourec",
+     "text": "I use workflow automation to make handoffs accountable: automated policy acknowledgement during a certification, SharePoint approvals with digital signatures, and notifications that keep work visible until it is closed.",
+     "href": "projects/plant-digitalisation/", "link": "Read the case study"},
+    {"name": "On governance", "status": "Certified practitioner",
+     "text": "I am an ISO 42001 Practitioner through the TRECCERT Digital Trust Fellowship. I also keep humans responsible in everything I build: source links, confidence labels, approval steps and clear limits on what a model is allowed to do.",
+     "href": "credentials/", "link": "See qualifications"},
+    {"name": "As a builder", "status": "Personal projects, stated status",
+     "text": "Outside work I direct AI coding agents, including OpenAI Codex and Anthropic's Claude, to build real software. I write the requirements, make the design decisions, review the work and test each release on real devices. I am clear about what this is: product direction and AI-assisted delivery, not a claim to have hand-written the code.",
+     "href": "#projects", "link": "See my projects"}
+  ],
+  "capabilities": [
+    {"name": "Practical AI-assisted problem-solving", "level": "Used in real work", "text": "Combine AI tools with documentation and hands-on checks to investigate unfamiliar problems."},
+    {"name": "Enterprise AI adoption and enablement", "level": "Led at regional scale", "text": "Teach people to apply AI to their own tasks, then keep following up."},
+    {"name": "Use-case discovery", "level": "Led", "text": "Identify where AI creates value across business functions, and carry the best ideas through to applications."},
+    {"name": "AI-assisted product development", "level": "Personal projects", "text": "Translate needs into precise instructions, review generated work, test real behaviour and iterate."},
+    {"name": "Human-AI collaboration", "level": "Personal projects", "text": "Combine human judgement, domain knowledge and acceptance decisions with AI-assisted implementation."},
+    {"name": "Intelligent workflow design", "level": "Working prototypes", "text": "Connect source collection, structured generation, validation, rendering and human review."},
+    {"name": "Structured, evidence-aware AI", "level": "Working prototypes", "text": "Use schemas, source links, confidence labels and validation to make AI output reviewable."},
+    {"name": "Agents and multi-model systems", "level": "Directed in practice; designed as a concept", "text": "I direct coding agents day to day. I have also specified a system with specialised agents, counter-analysis and human-controlled decision rules, which is not yet built."},
+    {"name": "Automation with accountable handoffs", "level": "Work and personal projects", "text": "Make notifications, acknowledgements, review and closure visible."},
+    {"name": "AI visual and interaction direction", "level": "Personal projects", "text": "Specify visual behaviour, assess usability and refine creative work over successive versions."},
+    {"name": "AI governance", "level": "ISO 42001 Practitioner", "text": "Apply AI management thinking to adoption, with clear responsibility and limits."}
+  ],
+  "learning": ["MIT Professional Education: Applied Generative AI for Digital Transformation (enrolled, expected 2026)", "Anthropic Academy: Claude 101 (2026)", "Microsoft: Microsoft 365 Copilot Training for IT (2026)", "Arab Open University AI Club: Journey to AI World Bootcamp, covering machine learning, deep learning and AI agents (2025)"]
+}
