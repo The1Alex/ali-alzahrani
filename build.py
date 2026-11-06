@@ -306,27 +306,22 @@ def personal_card(p, meta=None):
 
 def home():
     words = "".join(f'<span class="w">{e(x)}</span> ' for x in P["philosophy"].split())
-    stat = lambda n, l: f'<div><strong>{e(n)}</strong><span>{e(l)}</span></div>'
     ai_rows = "".join(
         f'<li class="ai-row"><p class="ai-status">{e(l["status"])}</p><h3>{e(l["name"])}</h3><p>{e(l["text"])}</p><a class="more" href="{"@@/ai/#personal-ai" if l["href"] == "#projects" else "@@/" + l["href"]}">{e(l["link"])}</a></li>'
         for l in AI["layers"]
     )
-    body = f"""<section class="hero" data-hero>
+    body = f"""<section class="hero" aria-labelledby="hero-title">
   <div class="hero-stage">
-    {waves('waves-back')}
     <div class="hero-copy">
-      <p class="hero-kicker">{e(P['current_title'])} · {e(P['location'])}</p>
-      <h1>Ali Alzahrani</h1>
-      <p class="hero-sub">{e(P['headline'])}</p>
+      <p class="hero-kicker"><span class="hero-role">{e(P['current_title'])}</span><span class="hero-location">{e(P['location'])}</span></p>
+      <h1 id="hero-title">Ali Alzahrani</h1>
+      <p class="hero-sub">{e(P['headline']).replace('enterprise IT', 'enterprise&nbsp;IT').replace('practical AI', 'practical&nbsp;AI')}</p>
       <div class="cta">
         <a class="pill pill-white" href="#record">See the record</a>
         <a class="pill pill-line" href="{CV}">Download CV</a>
       </div>
+      <div class="hero-value"><p>{e(P['value'])}</p></div>
     </div>
-    <div class="hero-stats hero-stats-l">{stat('12', 'years in IT')}{stat('4', 'international sites')}</div>
-    <div class="hero-stats hero-stats-r">{stat('~300', 'employees trained on AI')}{stat('9', 'remote sites delivered')}</div>
-    <div class="hero-value"><p>{e(P['value'])}</p></div>
-    {waves('waves-front')}
   </div>
 </section>
 

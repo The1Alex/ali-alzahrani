@@ -59,17 +59,6 @@
     })(start);
   }
 
-  /* ---------- Hero: the title clears, the sea opens up, the statement arrives ---------- */
-  var hero = d.querySelector('[data-hero]');
-  if (hero) {
-    hero.classList.toggle('pin', !reduced);
-    scrubs.push({ el: hero, fn: function (r, vh) {
-      var p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
-      hero.style.setProperty('--a', clamp(p / 0.42, 0, 1).toFixed(4));
-      hero.style.setProperty('--b', clamp((p - 0.38) / 0.42, 0, 1).toFixed(4));
-    } });
-  }
-
   /* ---------- Philosophy: the sentence lights up word by word ---------- */
   var phil = d.querySelector('[data-phil]');
   if (phil) {
@@ -222,7 +211,7 @@
   /* Respect preference changes without requiring a reload. */
   function updateMotion() {
     reduced = motionPreference.matches;
-    [hero, phil, story].forEach(function (el) { if (el) el.classList.toggle('pin', !reduced); });
+    [phil, story].forEach(function (el) { if (el) el.classList.toggle('pin', !reduced); });
     if (stackEl) stackEl.classList.toggle('live', !reduced);
     if (aiRows && 'IntersectionObserver' in window) aiRows.classList.toggle('focus', !reduced && innerWidth > 1000);
     if (story) {
