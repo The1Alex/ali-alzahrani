@@ -503,7 +503,7 @@ for(var i=0;i<COUNT;i++){
 var sGeo = new THREE.BufferGeometry();
 sGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
 sGeo.setAttribute('color',    new THREE.BufferAttribute(col,3));
-var sMat = new THREE.PointsMaterial({size:0.019,vertexColors:true,transparent:true,opacity:.88,sizeAttenuation:true});
+var sMat = new THREE.PointsMaterial({size:0.038,vertexColors:true,transparent:true,opacity:.92,sizeAttenuation:true});
 var sphere = new THREE.Points(sGeo, sMat);
 scene.add(sphere);
 
@@ -523,7 +523,7 @@ if(!isMobile){
   }
   var lGeo=new THREE.BufferGeometry();
   lGeo.setAttribute('position',new THREE.Float32BufferAttribute(lv,3));
-  var lMat=new THREE.LineBasicMaterial({color:0x1a3d80,transparent:true,opacity:.16});
+  var lMat=new THREE.LineBasicMaterial({color:0x2a5fbb,transparent:true,opacity:.28});
   var lines=new THREE.LineSegments(lGeo,lMat);
   scene.add(lines);
 }
@@ -539,7 +539,7 @@ for(var i=0;i<STARS;i++){
   sp[i*3+2]=r*Math.cos(p);
 }
 var stGeo=new THREE.BufferGeometry(); stGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-var stMat=new THREE.PointsMaterial({size:.013,color:0x1a3870,transparent:true,opacity:.5});
+var stMat=new THREE.PointsMaterial({size:.025,color:0x3a60a8,transparent:true,opacity:.65});
 scene.add(new THREE.Points(stGeo,stMat));
 
 /* ── Position sphere ── */
