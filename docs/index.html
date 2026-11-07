@@ -1,351 +1,648 @@
-<!doctype html>
-<html lang="en-GB">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ali Alzahrani: Technology leader connecting enterprise IT, industrial operations and practical AI</title>
-<meta name="description" content="Ali Alzahrani is a Middle East IT Leader based in Saudi Arabia, with twelve years across enterprise IT, industrial technology, cybersecurity coordination and practical AI adoption.">
-<link rel="canonical" href="https://the1alex.github.io/ali-alzahrani/">
-<meta name="theme-color" content="#06142a">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ali Alzahrani: Technology leader connecting enterprise IT, industrial operations and practical AI">
-<meta property="og:description" content="Ali Alzahrani is a Middle East IT Leader based in Saudi Arabia, with twelve years across enterprise IT, industrial technology, cybersecurity coordination and practical AI adoption.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ali Alzahrani — Middle East IT Leader</title>
+<meta name="description" content="Ali Alzahrani: Technology leader connecting enterprise IT, industrial operations, and practical AI across the Middle East. 12 years. 4 international sites.">
+<meta property="og:title" content="Ali Alzahrani — Middle East IT Leader">
+<meta property="og:description" content="12 years building technology infrastructure that works in real conditions.">
 <meta property="og:url" content="https://the1alex.github.io/ali-alzahrani/">
-<meta property="og:image" content="https://the1alex.github.io/ali-alzahrani/assets/calm-sea-v1.png">
-<meta property="og:image:width" content="1672">
-<meta property="og:image:height" content="941">
-<meta property="og:image:alt" content="A calm blue sea at twilight">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/styles.css?v=ef6de86b">
-<script>document.documentElement.classList.add('js')</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Ali Alzahrani", "url": "https://the1alex.github.io/ali-alzahrani/", "jobTitle": "Middle East IT Leader", "worksFor": {"@type": "Organization", "name": "Vallourec"}, "email": "mailto:IhopeYouAreFine@gmail.com", "address": {"@type": "PostalAddress", "addressRegion": "Eastern Province", "addressCountry": "SA"}, "sameAs": ["https://www.linkedin.com/in/ali-alzahrani-one/"], "alumniOf": [{"@type": "CollegeOrUniversity", "name": "Arab Open University"}, {"@type": "CollegeOrUniversity", "name": "University of Nottingham"}], "knowsLanguage": ["Arabic", "English", "Spanish"], "knowsAbout": ["Enterprise IT", "Industrial IT", "Cybersecurity coordination", "AI adoption", "Digital transformation"]}</script>
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a1f3d'/><path d='M16 7l9 18h-4l-5-10-5 10H7z' fill='%23c9a86a'/></svg>" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#040d1a;
+  --n900:#091b35;
+  --n800:#0f2a52;
+  --white:#ffffff;
+  --off:#c8d8f0;
+  --muted:rgba(200,216,240,0.45);
+  --brass:#c9a86a;
+  --brass-dim:rgba(201,168,106,0.2);
+  --glass:rgba(9,27,53,0.65);
+  --glass-b:rgba(201,168,106,0.18);
+  --font:'Inter',system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --eout:cubic-bezier(.0,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--white);overflow-x:hidden;line-height:1.6}
+
+/* ── Canvas backdrop ── */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+.veil{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse 70% 100% at 20% 50%,transparent 30%,rgba(4,13,26,.55) 100%);pointer-events:none}
+
+/* ── Navigation ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 2.5rem;
+  background:rgba(4,13,26,.65);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(201,168,106,.08);
+  transition:background .3s
+}
+.logo{font-size:1.1rem;font-weight:700;color:var(--brass);text-decoration:none;letter-spacing:.06em}
+.nav-links{display:flex;gap:1.75rem;list-style:none}
+.nav-links a{color:var(--off);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.7;transition:color .2s,opacity .2s}
+.nav-links a:hover{color:var(--brass);opacity:1}
+.nav-cv{color:var(--brass);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(201,168,106,.5);padding:.35rem 1rem;border-radius:2rem;transition:all .2s;white-space:nowrap}
+.nav-cv:hover{background:var(--brass);color:var(--bg)}
+.burger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;background:none;border:none}
+.burger span{width:20px;height:2px;background:var(--white);border-radius:1px;transition:all .3s;display:block}
+
+/* ── Dot nav ── */
+.dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:.6rem}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;position:relative}
+.dot.on{background:var(--brass);box-shadow:0 0 8px var(--brass);transform:scale(1.5)}
+.dot::after{content:attr(data-lbl);position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:.65rem;color:var(--off);opacity:0;transition:opacity .2s;pointer-events:none;letter-spacing:.06em}
+.dot:hover::after{opacity:1}
+
+/* ── Sections ── */
+section{position:relative;z-index:10;min-height:100svh;display:flex;align-items:center;padding:7rem 2.5rem 4rem}
+section.hero{padding-left:clamp(1.5rem,8vw,8rem)}
+section:not(.hero){max-width:58%;padding-left:clamp(1.5rem,6vw,6rem)}
+
+/* ── Entry animations ── */
+.e{opacity:0;transform:translateY(28px);transition:opacity .8s var(--eout),transform .8s var(--eout)}
+.ex{opacity:0;transform:translateX(-36px);transition:opacity .7s var(--eout),transform .7s var(--eout)}
+.on .e,.on .ex{opacity:1;transform:none}
+.on .e:nth-child(1),.on .ex:nth-child(1){transition-delay:.05s}
+.on .e:nth-child(2),.on .ex:nth-child(2){transition-delay:.12s}
+.on .e:nth-child(3),.on .ex:nth-child(3){transition-delay:.19s}
+.on .e:nth-child(4),.on .ex:nth-child(4){transition-delay:.26s}
+.on .e:nth-child(5),.on .ex:nth-child(5){transition-delay:.33s}
+.on .e:nth-child(6),.on .ex:nth-child(6){transition-delay:.40s}
+.on .e:nth-child(7),.on .ex:nth-child(7){transition-delay:.47s}
+.on .e:nth-child(8),.on .ex:nth-child(8){transition-delay:.54s}
+
+/* ── Hero ── */
+.hero{align-items:center}
+.hl{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:1.5rem}
+h1.name{font-size:clamp(3rem,6.5vw,5.5rem);font-weight:700;letter-spacing:-.03em;line-height:1.0;margin-bottom:1.25rem}
+.sub{font-size:1.15rem;font-weight:300;color:var(--off);max-width:460px;margin-bottom:3rem;line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(4,auto);gap:2rem;margin-bottom:3rem}
+.sn{display:block;font-size:2.4rem;font-weight:700;color:var(--brass);line-height:1}
+.sl{display:block;font-size:.7rem;color:var(--muted);margin-top:.3rem;letter-spacing:.02em}
+.ctas{display:flex;gap:.875rem}
+.btn{padding:.7rem 1.6rem;border-radius:2rem;font-size:.825rem;font-weight:600;letter-spacing:.04em;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;border:none;cursor:pointer;font-family:inherit}
+.bp{background:var(--brass);color:var(--bg)}
+.bp:hover{background:#fff;box-shadow:0 6px 24px rgba(201,168,106,.3);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25)}
+.bo:hover{border-color:var(--brass);color:var(--brass);transform:translateY(-1px)}
+
+/* ── Section text ── */
+.lbl{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:.875rem}
+h2.sh{font-size:clamp(1.75rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin-bottom:1.25rem}
+.sd{font-size:1rem;color:var(--off);line-height:1.7;font-weight:300;margin-bottom:2.5rem;max-width:500px}
+
+/* ── Timeline ── */
+.tl{display:flex;flex-direction:column}
+.ti{display:flex;gap:1.25rem;padding-bottom:2.25rem}
+.tn{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:1.75rem}
+.td{width:9px;height:9px;border-radius:50%;background:var(--brass);box-shadow:0 0 10px rgba(201,168,106,.5);margin-top:.45rem;flex-shrink:0}
+.tl-{width:1px;flex-grow:1;background:linear-gradient(to bottom,rgba(201,168,106,.4),rgba(201,168,106,.04));margin-top:.45rem}
+.tc{flex-grow:1}
+.rco{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin-bottom:.2rem}
+.rt{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:.2rem}
+.rp{font-size:.75rem;color:var(--muted);margin-bottom:.6rem}
+.rd{font-size:.875rem;color:var(--off);line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}
+.tag{font-size:.65rem;padding:.18rem .55rem;border-radius:1rem;background:rgba(201,168,106,.08);border:1px solid rgba(201,168,106,.2);color:var(--brass);letter-spacing:.03em}
+
+/* ── Impact grid ── */
+.ig{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.ic{background:var(--glass);border:1px solid var(--glass-b);border-radius:1rem;padding:1.5rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s,transform .2s}
+.ic:hover{border-color:rgba(201,168,106,.4);transform:translateY(-2px)}
+.if_{font-size:2.1rem;font-weight:700;color:var(--brass);line-height:1;margin-bottom:.5rem}
+.id_{font-size:.85rem;color:var(--off);line-height:1.45}
+
+/* ── Skills grid ── */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.sc{background:var(--glass);border:1px solid var(--glass-b);border-radius:.875rem;padding:1.1rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.scn{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:.7rem}
+.sl_{display:flex;flex-wrap:wrap;gap:.35rem}
+.si{font-size:.7rem;color:var(--off);background:rgba(255,255,255,.05);border-radius:.25rem;padding:.18rem .5rem}
+
+/* ── Project cards ── */
+.pg{display:flex;flex-direction:column;gap:.875rem}
+.pc{background:var(--glass);border:1px solid var(--glass-b);border-radius:.875rem;padding:1.1rem 1.35rem;display:flex;align-items:flex-start;gap:1rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s,transform .2s}
+.pc:hover{border-color:rgba(201,168,106,.4);transform:translateX(3px)}
+.pn{font-size:.65rem;font-weight:700;color:var(--brass);letter-spacing:.1em;min-width:1.75rem;margin-top:.1rem}
+.pt{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:.25rem;line-height:1.3}
+.pd{font-size:.825rem;color:var(--off);line-height:1.5}
+
+/* ── AI cards ── */
+.ac{background:var(--glass);border:1px solid rgba(79,195,247,.12);border-radius:.875rem;padding:1.1rem 1.35rem;display:flex;gap:1rem;align-items:flex-start;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s}
+.ac:hover{border-color:rgba(79,195,247,.3)}
+.ai_{font-size:1.1rem;min-width:1.75rem;color:var(--brass)}
+.at{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:.25rem}
+.ad{font-size:.825rem;color:var(--off);line-height:1.5}
+
+/* ── Credential cards ── */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cc{background:var(--glass);border:1px solid var(--glass-b);border-radius:.875rem;padding:1.1rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.ct{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin-bottom:.45rem}
+.cn{font-size:.9rem;font-weight:600;color:var(--white);line-height:1.3;margin-bottom:.25rem}
+.cd{font-size:.75rem;color:var(--muted)}
+
+/* ── Contact ── */
+.ci-list{display:flex;flex-direction:column;gap:.875rem;margin-top:2rem}
+.ci{display:flex;align-items:center;gap:1rem}
+.cilb{font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;min-width:5.5rem}
+.civ{color:var(--white);font-size:.9rem;text-decoration:none}
+.civ:hover{color:var(--brass)}
+.foot{margin-top:3.5rem;font-size:.7rem;color:var(--muted);letter-spacing:.04em}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .burger{display:flex}
+  section:not(.hero){max-width:100%;padding:6rem 1.5rem 4rem}
+  .hero{padding-left:1.5rem;align-items:flex-end;padding-bottom:3rem;min-height:85svh}
+  .stats{grid-template-columns:repeat(2,auto);gap:1.5rem 2rem}
+  .veil{background:radial-gradient(ellipse 100% 60% at 50% 10%,transparent 20%,rgba(4,13,26,.8) 70%)}
+  .dots{display:none}
+  .sg{grid-template-columns:1fr}
+  .cg{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .nav{padding:1rem 1.25rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .ig{grid-template-columns:1fr}
+  h1.name{font-size:clamp(2.5rem,11vw,3.5rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  .e,.ex{opacity:1!important;transform:none!important;transition:none!important}
+}
+</style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="nav">
-  <div class="nav-in">
-    <a class="wordmark" href="./">Ali Alzahrani</a>
-    <nav class="nav-wide" aria-label="Main"><a href="profile/">Profile</a><a href="career/">Career</a><a href="projects/">Projects</a><a href="ai/">AI</a><a href="skills/">Skills</a><a href="credentials/">Credentials</a><a class="nav-cv" href="Ali-Alzahrani-CV.pdf">Download CV</a></nav>
-    <details class="menu">
-      <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span></summary>
-      <nav class="nav-narrow" aria-label="Main, small screens"><a href="profile/">Profile</a><a href="career/">Career</a><a href="projects/">Projects</a><a href="ai/">AI</a><a href="skills/">Skills</a><a href="credentials/">Credentials</a><a class="nav-cv" href="Ali-Alzahrani-CV.pdf">Download CV</a></nav>
-    </details>
-  </div>
-</header>
-<main id="main">
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-stage">
-    <div class="hero-copy">
-      <p class="hero-kicker"><span class="hero-role">Middle East IT Leader, Vallourec</span><span class="hero-location">Eastern Province, Saudi Arabia</span></p>
-      <h1 id="hero-title">Ali Alzahrani</h1>
-      <p class="hero-sub">Technology leader connecting enterprise&nbsp;IT, industrial operations and practical&nbsp;AI</p>
-      <div class="cta">
-        <a class="pill pill-white" href="#record">See the record</a>
-        <a class="pill pill-line" href="Ali-Alzahrani-CV.pdf">Download CV</a>
-      </div>
-      <div class="hero-value"><p>For twelve years I have made technology work where it has to: on factory floors, at remote construction sites and across international teams. Today I lead IT for Vallourec&#x27;s four international sites in the Middle East, and I put AI into people&#x27;s hands so it does real work.</p></div>
-    </div>
-  </div>
-</section>
 
-<section class="phil" data-phil aria-label="My philosophy">
-  <div class="phil-stage"><div class="wrap">
-    <p class="eyebrow">My philosophy</p>
-    <p class="phil-text"><span class="w">I</span> <span class="w">take</span> <span class="w">ownership</span> <span class="w">of</span> <span class="w">complex</span> <span class="w">challenges,</span> <span class="w">connect</span> <span class="w">ideas</span> <span class="w">across</span> <span class="w">disciplines,</span> <span class="w">and</span> <span class="w">keep</span> <span class="w">working</span> <span class="w">until</span> <span class="w">I</span> <span class="w">find</span> <span class="w">a</span> <span class="w">practical</span> <span class="w">solution.</span> </p>
-  </div></div>
-</section>
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a class="logo" href="#">AA</a>
+  <ul class="nav-links">
+    <li><a href="#career">Career</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#ai">AI</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+  </ul>
+  <a class="nav-cv btn bp" href="Ali-Alzahrani-CV.pdf" download>Download CV</a>
+  <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-<section class="sec sec-sail" id="record" aria-labelledby="record-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">The record</p>
-      <h2 id="record-title" class="rv">Twelve years of delivery, in plain numbers.</h2>
-    </div>
-    <div class="bento"><a class="tile tile-m tile-navy" href="career/"><span class="fig" data-count="12" data-pre="" data-suf="">12</span><span class="tile-label">years in IT, seven of them in leadership</span></a><a class="tile tile-s " href="career/#middle-east-it-leader"><span class="fig" data-count="4" data-pre="" data-suf="">4</span><span class="tile-label">international sites led across the Middle East</span></a><a class="tile tile-s " href="projects/regional-ai-adoption/"><span class="fig" data-count="300" data-pre="~" data-suf="">~300</span><span class="tile-label">employees trained on Microsoft Copilot</span></a><a class="tile tile-m tile-navy" href="projects/aramco-cyber-security-certification/"><span class="fig fig-words">Ahead of schedule</span><span class="tile-label">Aramco Cyber Security Certification, as principal lead for the company</span></a><a class="tile tile-s " href="projects/nine-remote-sites/"><span class="fig" data-count="9" data-pre="" data-suf="">9</span><span class="tile-label">remote sites stood up for more than 500 users</span></a><a class="tile tile-s " href="projects/new-regional-office/"><span class="fig fig-words">6 months</span><span class="tile-label">to deliver a new regional office end to end</span></a><a class="tile tile-s " href="projects/it-asset-control/"><span class="fig" data-count="1000" data-pre="" data-suf="+">1,000+</span><span class="tile-label">devices brought back under control</span></a><a class="tile tile-s " href="projects/network-topology/"><span class="fig" data-count="100" data-pre="" data-suf="+">100+</span><span class="tile-label">Cisco and N-Tron switches re-architected</span></a><a class="tile tile-s " href="projects/nine-remote-sites/"><span class="fig" data-count="79" data-pre="" data-suf="%">79%</span><span class="tile-label">of reported issues resolved remotely at first line</span></a><a class="tile tile-s " href="projects/#exchange-online-migration"><span class="fig fig-words">Zero</span><span class="tile-label">downtime moving 699 users to Exchange Online</span></a></div>
-  </div>
-</section>
-
-<section class="sec sec-navy" aria-labelledby="ai-title">
-  <div class="wrap ai-grid">
-    <div class="ai-side">
-      <p class="eyebrow rv">AI expertise</p>
-      <h2 id="ai-title" class="rv">AI that does real work.</h2>
-      <p class="lede rv">AI is the most important change I have seen in my career, and I treat it as a practical discipline. I train people on it, govern it, and use it every day to learn and build. My test is simple: did it solve a real problem, and can a person check the answer?</p>
-      <a class="pill pill-white rv" href="ai/">See all my AI work</a>
-    </div>
-    <ol class="ai-rows" data-ai-rows><li class="ai-row"><p class="ai-status">Delivered at Vallourec</p><h3>At work, with people</h3><p>I lead AI adoption across the Middle East region. Around 300 employees in multiple departments have been trained on applying Microsoft Copilot and related tools to everyday tasks. I then established an initiative to find high-value use cases and delivered working applications from the findings.</p><a class="more" href="projects/regional-ai-adoption/">Read the case study</a></li><li class="ai-row"><p class="ai-status">Used in real incidents</p><h3>On hard technical problems</h3><p>I use AI as a research partner when I reach the edge of what I know. When a production machine lost contact with its application, AI tools helped me find the documentation for an unfamiliar device. I still tested each theory by hand.</p><a class="more" href="projects/industrial-communication-fault/">Read the case study</a></li><li class="ai-row"><p class="ai-status">Delivered at Vallourec</p><h3>On automation</h3><p>I use workflow automation to make handoffs accountable: automated policy acknowledgement during a certification, SharePoint approvals with digital signatures, and notifications that keep work visible until it is closed.</p><a class="more" href="projects/plant-digitalisation/">Read the case study</a></li><li class="ai-row"><p class="ai-status">Certified practitioner</p><h3>On governance</h3><p>I am an ISO 42001 Practitioner through the TRECCERT Digital Trust Fellowship. I also keep humans responsible in everything I build: source links, confidence labels, approval steps and clear limits on what a model is allowed to do.</p><a class="more" href="credentials/">See qualifications</a></li><li class="ai-row"><p class="ai-status">Personal projects, stated status</p><h3>As a builder</h3><p>Outside work I direct AI coding agents, including OpenAI Codex and Anthropic&#x27;s Claude, to build real software. I write the requirements, make the design decisions, review the work and test each release on real devices. I am clear about what this is: product direction and AI-assisted delivery, not a claim to have hand-written the code.</p><a class="more" href="ai/#personal-ai">See my projects</a></li></ol>
-  </div>
-</section>
-
-<section class="sec sec-sail" aria-labelledby="work-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">Selected work</p>
-      <h2 id="work-title" class="rv">The work that proves it.</h2>
-    </div>
-    <div class="stack" data-stack><article class="scard t-navy" style="--i:0" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Vallourec, Middle East · Led</p>
-      <h3>Regional AI adoption</h3>
-      <p class="scard-sum">Taught around 300 employees to use Microsoft Copilot on their real work, then turned the best ideas from the business into working applications.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">Around 300 employees</p>
-      <a class="pill pill-white" href="projects/regional-ai-adoption/" aria-label="Read the case study: Regional AI adoption">Read the case study</a>
-    </div>
-  </div>
-</article><article class="scard t-deep" style="--i:1" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Vallourec Saudi Arabia · Principal lead</p>
-      <h3>Aramco Cyber Security Certification</h3>
-      <p class="scard-sum">Took the company through certification required by a key customer, ahead of a three-month deadline, then went further than asked and secured every connected device.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">Ahead of schedule</p>
-      <a class="pill pill-white" href="projects/aramco-cyber-security-certification/" aria-label="Read the case study: Aramco Cyber Security Certification">Read the case study</a>
-    </div>
-  </div>
-</article><article class="scard t-white" style="--i:2" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Vallourec Saudi Arabia · Led</p>
-      <h3>Mapping a whole plant&#x27;s network</h3>
-      <p class="scard-sum">Recovered and documented the factory network from the machines on the floor up to core group switching, so incidents could be diagnosed from a desk.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">2-year programme</p>
-      <a class="pill pill-navy" href="projects/network-topology/" aria-label="Read the case study: Mapping a whole plant&#x27;s network">Read the case study</a>
-    </div>
-  </div>
-</article><article class="scard t-navy" style="--i:3" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Vallourec Saudi Arabia · Directed; third-party application</p>
-      <h3>Digitalising a plant, from paper to live data</h3>
-      <p class="scard-sum">Moved shop-floor meetings, quality records, filing and procurement away from paper, and gave production management visibility of cycle times and shutdowns.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">Multi-department</p>
-      <a class="pill pill-white" href="projects/plant-digitalisation/" aria-label="Read the case study: Digitalising a plant, from paper to live data">Read the case study</a>
-    </div>
-  </div>
-</article><article class="scard t-deep" style="--i:4" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Vallourec Saudi Arabia · Crisis cell member</p>
-      <h3>Keeping the business running through COVID-19</h3>
-      <p class="scard-sum">With one technician, moved seven departments and about 100 people to remote work as part of the crisis cell.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">~100 people, 7 departments</p>
-      <a class="pill pill-white" href="projects/covid-remote-work/" aria-label="Read the case study: Keeping the business running through COVID-19">Read the case study</a>
-    </div>
-  </div>
-</article><article class="scard t-white" style="--i:5" data-scard>
-  <div class="scard-in">
-    <div>
-      <p class="scard-where">Target Construction · Directed</p>
-      <h3>Nine remote sites for more than 500 users</h3>
-      <p class="scard-sum">Directed IT and construction contractors to stand up nine remote project sites, and resolved 79% of reported issues remotely.</p>
-    </div>
-    <div class="scard-end">
-      <p class="scard-key">500+ users</p>
-      <a class="pill pill-navy" href="projects/nine-remote-sites/" aria-label="Read the case study: Nine remote sites for more than 500 users">Read the case study</a>
-    </div>
-  </div>
-</article></div>
-    <p class="sec-more"><a class="pill pill-navy" href="projects/">All projects and contributions</a></p>
-  </div>
-</section>
-
-<section class="story" data-story aria-labelledby="story-title">
-  <div class="story-stage">
-    <div class="wrap story-top">
-      <div>
-        <p class="eyebrow">Follow one problem</p>
-        <h2 id="story-title">From first symptom to lasting fix.</h2>
-      </div>
-      <div class="story-pills" role="group" aria-label="Choose a real problem" data-story-pills hidden><button type="button" class="spill" data-story-btn="0" aria-pressed="true">The machine that vanished</button><button type="button" class="spill" data-story-btn="1" aria-pressed="false">Paper on the shop floor</button><button type="button" class="spill" data-story-btn="2" aria-pressed="false">A three-month deadline</button><button type="button" class="spill" data-story-btn="3" aria-pressed="false">AI for everyone</button></div>
-    </div>
-    <div class="wrap story-panels"><article class="story-panel" data-story-panel id="story-machine">
-  <h3 class="story-problem">A machine vanishes from the production application</h3>
-  <ol class="story-steps"><li><span class="story-at">Industrial operations</span><p>The machine is running, but the application can&#x27;t see it. A new cable doesn&#x27;t help.</p></li><li><span class="story-at">AI</span><p>I use online research and AI tools to find the manual for an unfamiliar interface device.</p></li><li><span class="story-at">Enterprise technology</span><p>I eliminate each link between the machine and the network until one device is left.</p></li><li><span class="story-at">People</span><p>I share the standard in a lessons-learned session with automation and maintenance.</p></li><li><span class="story-at">Business outcomes</span><p>The machine is visible again, and the fix is no longer known only to me.</p></li></ol>
-  <div class="course" aria-hidden="true"><div class="course-track"><span class="course-fill"></span></div><ol class="course-wps"><li><span class="dot"></span><span class="lbl">Industrial operations</span></li><li><span class="dot"></span><span class="lbl">AI</span></li><li><span class="dot"></span><span class="lbl">Enterprise technology</span></li><li><span class="dot"></span><span class="lbl">People</span></li><li><span class="dot"></span><span class="lbl">Business outcomes</span></li></ol></div>
-  <p class="story-more"><a class="more" href="projects/industrial-communication-fault/">Read the full case study</a></p>
-</article><article class="story-panel" data-story-panel id="story-paper">
-  <h3 class="story-problem">Daily escalation on the shop floor runs on paper</h3>
-  <ol class="story-steps"><li><span class="story-at">People</span><p>The plant director asks for a solution. I start with every department&#x27;s expectations.</p></li><li><span class="story-at">Industrial operations</span><p>I propose large touchscreens that suit the shop floor, and pilot in three buildings.</p></li><li><span class="story-at">Enterprise technology</span><p>A provider builds the application, and IT requests are followed through in our ticketing system.</p></li><li><span class="story-at">Business outcomes</span><p>Escalation becomes clearer, paper use falls, and the plant adopts it.</p></li></ol>
-  <div class="course" aria-hidden="true"><div class="course-track"><span class="course-fill"></span></div><ol class="course-wps"><li><span class="dot"></span><span class="lbl">People</span></li><li><span class="dot"></span><span class="lbl">Industrial operations</span></li><li><span class="dot"></span><span class="lbl">Enterprise technology</span></li><li><span class="dot"></span><span class="lbl">Business outcomes</span></li></ol></div>
-  <p class="story-more"><a class="more" href="projects/plant-digitalisation/">Read the full case study</a></p>
-</article><article class="story-panel" data-story-panel id="story-deadline">
-  <h3 class="story-problem">A key customer sets a three-month security deadline</h3>
-  <ol class="story-steps"><li><span class="story-at">Business outcomes</span><p>The business is at stake, so I explain that to management first.</p></li><li><span class="story-at">People</span><p>I design the training myself, and deliver it across shifts.</p></li><li><span class="story-at">Security and resilience</span><p>We close control gaps with an authorised third party, and automate policy acknowledgement.</p></li><li><span class="story-at">Enterprise technology</span><p>I take the lead on inspecting every endpoint, which nobody required.</p></li><li><span class="story-at">Business outcomes</span><p>Certified ahead of schedule, followed by a year securing every connected device.</p></li></ol>
-  <div class="course" aria-hidden="true"><div class="course-track"><span class="course-fill"></span></div><ol class="course-wps"><li><span class="dot"></span><span class="lbl">Business outcomes</span></li><li><span class="dot"></span><span class="lbl">People</span></li><li><span class="dot"></span><span class="lbl">Security and resilience</span></li><li><span class="dot"></span><span class="lbl">Enterprise technology</span></li><li><span class="dot"></span><span class="lbl">Business outcomes</span></li></ol></div>
-  <p class="story-more"><a class="more" href="projects/aramco-cyber-security-certification/">Read the full case study</a></p>
-</article><article class="story-panel" data-story-panel id="story-ideas">
-  <h3 class="story-problem">Employees need to learn how AI helps with real work</h3>
-  <ol class="story-steps"><li><span class="story-at">People</span><p>I train around 300 employees on applying Copilot to everyday tasks.</p></li><li><span class="story-at">AI</span><p>The training surfaces ideas, and an initiative identifies the most valuable use cases.</p></li><li><span class="story-at">Enterprise technology</span><p>The strongest findings become working applications.</p></li><li><span class="story-at">Business outcomes</span><p>AI becomes a working tool in the business.</p></li></ol>
-  <div class="course" aria-hidden="true"><div class="course-track"><span class="course-fill"></span></div><ol class="course-wps"><li><span class="dot"></span><span class="lbl">People</span></li><li><span class="dot"></span><span class="lbl">AI</span></li><li><span class="dot"></span><span class="lbl">Enterprise technology</span></li><li><span class="dot"></span><span class="lbl">Business outcomes</span></li></ol></div>
-  <p class="story-more"><a class="more" href="projects/regional-ai-adoption/">Read the full case study</a></p>
-</article></div>
-  </div>
-</section>
-
-<section class="sec sec-white" aria-labelledby="areas-title">
-  <div class="wrap">
-    <div class="sec-head center">
-      <p class="eyebrow rv">Where the work connects</p>
-      <h2 id="areas-title" class="rv">Real problems rarely stay in one department.</h2>
-      <p class="lede rv">People, AI, enterprise technology, industrial operations and security, all connected to a business outcome. This view is conceptual and doesn't show any employer's actual systems.</p>
-    </div>
-    <div class="seg-wrap" data-seg-wrap hidden><div class="seg" role="tablist" aria-label="Areas of my work"><span class="seg-thumb" aria-hidden="true"></span><button type="button" role="tab" id="tab-ai" aria-controls="area-ai" aria-selected="true" tabindex="0" data-area="ai">AI</button><button type="button" role="tab" id="tab-people" aria-controls="area-people" aria-selected="false" tabindex="-1" data-area="people">People</button><button type="button" role="tab" id="tab-enterprise" aria-controls="area-enterprise" aria-selected="false" tabindex="-1" data-area="enterprise">Enterprise</button><button type="button" role="tab" id="tab-industrial" aria-controls="area-industrial" aria-selected="false" tabindex="-1" data-area="industrial">Industrial</button><button type="button" role="tab" id="tab-security" aria-controls="area-security" aria-selected="false" tabindex="-1" data-area="security">Security</button><button type="button" role="tab" id="tab-outcomes" aria-controls="area-outcomes" aria-selected="false" tabindex="-1" data-area="outcomes">Outcomes</button></div></div>
-    <div class="areas" data-areas><div class="area" id="area-ai" role="tabpanel" aria-labelledby="tab-ai" tabindex="0" data-area-panel="ai">
-  <p class="area-name">AI</p>
-  <h3>AI that does real work, with people firmly in control.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Train people on AI for the tasks they actually do</li><li>Find the use cases worth building, and build them</li><li>Direct AI agents to create and test working software</li><li>Use AI as a research partner on unfamiliar technical problems</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>Treat training as discovery: the people doing the work know where AI can help, so I collect their ideas and turn the best into applications.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-people" data-area-link="people"><strong>People</strong><span>Copilot training turned into working applications</span></a></li><li><a href="#area-enterprise" data-area-link="enterprise"><strong>Enterprise technology</strong><span>AI use cases built on the Microsoft platform</span></a></li><li><a href="#area-outcomes" data-area-link="outcomes"><strong>Business outcomes</strong><span>Working applications for the business</span></a></li><li><a href="#area-industrial" data-area-link="industrial"><strong>Industrial operations</strong><span>AI research helped solve a machine fault</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/regional-ai-adoption/">Regional AI adoption</a><a class="chip-link" href="projects/industrial-communication-fault/">The machine that disappeared</a><a class="more" href="ai/">All my AI work</a></div></div>
-</div><div class="area" id="area-people" role="tabpanel" aria-labelledby="tab-people" tabindex="0" data-area-panel="people">
-  <p class="area-name">People</p>
-  <h3>Technology changes nothing until people trust it and use it.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Lead a regional team across four international sites</li><li>Work with global functions across time zones</li><li>Design and deliver training, then follow up</li><li>Explain problems simply, so that leaders can decide</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>Before any certification control or new system, I start with the managers and the people on shift, and explain why it matters to them.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-ai" data-area-link="ai"><strong>AI</strong><span>Copilot training turned into working applications</span></a></li><li><a href="#area-industrial" data-area-link="industrial"><strong>Industrial operations</strong><span>Training across shifts and operator guides</span></a></li><li><a href="#area-outcomes" data-area-link="outcomes"><strong>Business outcomes</strong><span>Adoption, so that delivery lasts</span></a></li><li><a href="#area-security" data-area-link="security"><strong>Security and resilience</strong><span>Policy understood and acknowledged by everyone</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/aramco-cyber-security-certification/">Aramco Cyber Security Certification</a><a class="chip-link" href="projects/covid-remote-work/">Keeping the business running through COVID-19</a><a class="more" href="profile/">How I work</a></div></div>
-</div><div class="area" id="area-enterprise" role="tabpanel" aria-labelledby="tab-enterprise" tabindex="0" data-area-panel="enterprise">
-  <p class="area-name">Enterprise technology</p>
-  <h3>Reliable foundations for offices, plants and remote sites.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Infrastructure, servers, backup and disaster recovery</li><li>Microsoft 365, Entra ID, Intune and SharePoint</li><li>Cisco and N-Tron networks, firewalls and telephony</li><li>Service delivery from support desk to site readiness</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>I choose the stable, long-term solution rather than only the fastest one, and rehearse changes before they touch production.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-ai" data-area-link="ai"><strong>AI</strong><span>AI use cases built on the Microsoft platform</span></a></li><li><a href="#area-security" data-area-link="security"><strong>Security and resilience</strong><span>Identity, devices and recovery under control</span></a></li><li><a href="#area-outcomes" data-area-link="outcomes"><strong>Business outcomes</strong><span>Lower operating cost</span></a></li><li><a href="#area-industrial" data-area-link="industrial"><strong>Industrial operations</strong><span>One documented network, machine to core</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/cloud-identity-migration/">Moving identity and devices to the Microsoft cloud</a><a class="chip-link" href="projects/network-lifecycle-renewal/">Renewing ageing switches without disruption</a><a class="chip-link" href="projects/new-regional-office/">A new regional office in six months</a><a class="more" href="skills/">All my skills</a></div></div>
-</div><div class="area" id="area-industrial" role="tabpanel" aria-labelledby="tab-industrial" tabindex="0" data-area-panel="industrial">
-  <p class="area-name">Industrial operations</p>
-  <h3>IT that survives heat, dust and the production schedule.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Product tracking and material management systems</li><li>Shop-floor digital workflows and touchscreens</li><li>IT/OT connectivity, from machine to core network</li><li>Cycle-time monitoring and shutdown analysis</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>Plan around production: site surveys and switch replacements happen in planned shutdowns, one building at a time.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-ai" data-area-link="ai"><strong>AI</strong><span>AI research helped solve a machine fault</span></a></li><li><a href="#area-people" data-area-link="people"><strong>People</strong><span>Training across shifts and operator guides</span></a></li><li><a href="#area-enterprise" data-area-link="enterprise"><strong>Enterprise technology</strong><span>One documented network, machine to core</span></a></li><li><a href="#area-outcomes" data-area-link="outcomes"><strong>Business outcomes</strong><span>Visibility of cycle times and shutdowns</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/network-topology/">Mapping a whole plant&#x27;s network</a><a class="chip-link" href="projects/plant-digitalisation/">Digitalising a plant, from paper to live data</a><a class="chip-link" href="projects/ndt-replacement/">NDT production-line replacement</a><a class="more" href="projects/">All my projects</a></div></div>
-</div><div class="area" id="area-security" role="tabpanel" aria-labelledby="tab-security" tabindex="0" data-area-panel="security">
-  <p class="area-name">Security and resilience</p>
-  <h3>Security and continuity built into the work, not added afterwards.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Led Aramco Cyber Security Certification for the company</li><li>Secured connected devices over a year-long programme</li><li>Practitioner in ISO 27001, 27701, 22301, 31000 and 42001</li><li>Procedures, standards and audit readiness</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>Go beyond the requirement when the risk is real. Nobody asked us to inspect every PC and laptop, and I took the lead on it anyway.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-enterprise" data-area-link="enterprise"><strong>Enterprise technology</strong><span>Identity, devices and recovery under control</span></a></li><li><a href="#area-people" data-area-link="people"><strong>People</strong><span>Policy understood and acknowledged by everyone</span></a></li><li><a href="#area-outcomes" data-area-link="outcomes"><strong>Business outcomes</strong><span>Certification that protects a key customer</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/aramco-cyber-security-certification/">Aramco Cyber Security Certification</a><a class="chip-link" href="projects/#connected-device-security">Connected-device security programme</a><a class="chip-link" href="projects/it-asset-control/">Regaining control of more than 1,000 devices</a><a class="more" href="credentials/">Qualifications</a></div></div>
-</div><div class="area" id="area-outcomes" role="tabpanel" aria-labelledby="tab-outcomes" tabindex="0" data-area-panel="outcomes">
-  <p class="area-name">Business outcomes</p>
-  <h3>Every connection on this map exists to reach this point.</h3>
-  <div class="area-cols">
-    <div><h4>What I do</h4><ul class="ticks"><li>Lower operating cost and consolidated suppliers</li><li>Certification ahead of schedule</li><li>Visibility for production management</li><li>A business that kept running through a crisis</li></ul></div>
-    <div><h4>A decision I stand by</h4><p>I own procurement, contracts and licensing as well as the technology, so every technical decision also has to make business sense.</p></div>
-    <div><h4>How it connects</h4><ul class="conns"><li><a href="#area-ai" data-area-link="ai"><strong>AI</strong><span>Working applications for the business</span></a></li><li><a href="#area-people" data-area-link="people"><strong>People</strong><span>Adoption, so that delivery lasts</span></a></li><li><a href="#area-enterprise" data-area-link="enterprise"><strong>Enterprise technology</strong><span>Lower operating cost</span></a></li><li><a href="#area-security" data-area-link="security"><strong>Security and resilience</strong><span>Certification that protects a key customer</span></a></li><li><a href="#area-industrial" data-area-link="industrial"><strong>Industrial operations</strong><span>Visibility of cycle times and shutdowns</span></a></li></ul></div>
-  </div>
-  <div class="area-proof"><h4>See it in practice</h4><div><a class="chip-link" href="projects/plant-digitalisation/">Digitalising a plant, from paper to live data</a><a class="chip-link" href="projects/aramco-cyber-security-certification/">Aramco Cyber Security Certification</a><a class="chip-link" href="projects/covid-remote-work/">Keeping the business running through COVID-19</a><a class="more" href="career/">Full career history</a></div></div>
-</div></div>
-  </div>
-</section>
-
-<section class="sec sec-navy" aria-labelledby="career-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">Career</p>
-      <h2 id="career-title" class="rv">The course so far.</h2>
-    </div>
-    <div class="route" data-route><span class="route-line" aria-hidden="true"><span class="route-fill"></span></span><ol><li class="wp"><a href="career/#project-engineer">
-  <span class="wp-dates">Jan 2014 – Jan 2015</span>
-  <span class="wp-title">Project Engineer</span>
-  <span class="wp-emp">Target Construction</span>
-  <span class="wp-sum">IT delivery on an Aramco contractor project in the Uthmaniyah and Udhailiyah area, coordinating teams, vendors and contractors across remote sites.</span>
-</a></li><li class="wp"><a href="career/#head-of-it">
-  <span class="wp-dates">Jan 2015 – Sep 2017</span>
-  <span class="wp-title">Head of IT Department</span>
-  <span class="wp-emp">Target Construction</span>
-  <span class="wp-sum">Responsible for IT across head office and remote construction sites, also serving as Admin and IT procurement advisor. 699 users.</span>
-</a></li><li class="wp"><a href="career/#it-specialist">
-  <span class="wp-dates">Oct 2017 – Jan 2021</span>
-  <span class="wp-title">IT Specialist</span>
-  <span class="wp-emp">Vallourec</span>
-  <span class="wp-sum">Hands-on ownership of production IT on the shop floor, supplier-connected systems and the site&#x27;s device estate. Excellence Leader Award, 2020. Creativity Award, Vallourec Group, 2019.</span>
-</a></li><li class="wp"><a href="career/#infrastructure-expert-project-manager">
-  <span class="wp-dates">Jan 2021 – Jan 2024</span>
-  <span class="wp-title">Infrastructure Expert &amp; Project Manager</span>
-  <span class="wp-emp">Vallourec</span>
-  <span class="wp-sum">A dedicated project management role alongside infrastructure ownership: scope, schedules, cost, risk and testing, with progress and decisions reported to management.</span>
-</a></li><li class="wp"><a href="career/#middle-east-it-leader">
-  <span class="wp-dates">Jan 2024 – Present</span>
-  <span class="wp-title">Middle East IT Leader</span>
-  <span class="wp-emp">Vallourec</span>
-  <span class="wp-sum">I lead IT across four international sites (corporate offices, plants and remote locations) and act as the regional focal point for global shared services.</span>
-</a></li></ol></div>
-    <p class="sec-more"><a class="pill pill-white" href="career/">Complete career history</a></p>
-  </div>
-</section>
-
-<section class="sec sec-sail" aria-labelledby="cred-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow rv">Qualifications</p>
-      <h2 id="cred-title" class="rv">Stated exactly as they are.</h2>
-    </div>
-    <div class="bento bento-4">
-      <div class="tile"><span class="tile-kicker">Degree</span><span class="tile-h">BSc Information Technology &amp; Computing</span><span class="tile-label">Arab Open University. GPA 3.24 / 4.00.</span></div>
-      <div class="tile"><span class="tile-kicker">Certified, 2026</span><span class="tile-h">Five ISO standards, practitioner level</span><span class="tile-label">TRECCERT Digital Trust Fellowship, 91.7%. ISO 27001, 27701, 22301, 31000 and 42001.</span></div>
-      <div class="tile"><span class="tile-kicker">In progress</span><span class="tile-h">PMP and MIT</span><span class="tile-label">PMP exam booked. Enrolled in MIT's Applied Generative AI for Digital Transformation.</span></div>
-      <div class="tile"><span class="tile-kicker">Recognition</span><span class="tile-h">Two Vallourec awards</span><span class="tile-label">Excellence Leader Award, 2020. Group Creativity Award, 2019.</span></div>
-    </div>
-    <p class="sec-more"><a class="pill pill-navy" href="credentials/">All qualifications and training</a></p>
-  </div>
-</section>
-
-<section class="contact" aria-labelledby="contact-title" id="contact">
-  <div class="wrap contact-in">
-    <h2 id="contact-title" class="rv">Bring me a difficult problem.</h2>
-    <p class="lede rv">I'm open to conversations with recruiters, technology leaders and collaborators. Email is the best way to reach me.</p>
-    <div class="cta rv">
-      <a class="pill pill-white" href="mailto:IhopeYouAreFine@gmail.com">Email me</a>
-      <a class="pill pill-line" href="https://www.linkedin.com/in/ali-alzahrani-one/" rel="me noopener">LinkedIn</a>
-      <a class="pill pill-line" href="Ali-Alzahrani-CV.pdf">Download CV</a>
-    </div>
-    <p class="contact-mail rv"><a href="mailto:IhopeYouAreFine@gmail.com">IhopeYouAreFine@gmail.com</a> <button class="copy" type="button" data-copy="IhopeYouAreFine@gmail.com" hidden>Copy</button></p>
-  </div>
-  <div class="waves waves-foot" aria-hidden="true">
-  <svg class="wv wv1" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="M0 100C200 58 400 58 600 100S1000 142 1200 100 1600 58 1800 100 2200 142 2400 100V220H0Z"/></svg>
-  <svg class="wv wv2" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="M0 110C150 80 450 80 600 110S1050 140 1200 110 1650 80 1800 110 2250 140 2400 110V220H0Z"/></svg>
-  <svg class="wv wv3" viewBox="0 0 2400 220" preserveAspectRatio="none" focusable="false"><path d="M0 120C200 96 400 96 600 120S1000 144 1200 120 1600 96 1800 120 2200 144 2400 120V220H0Z"/></svg>
+<!-- ── DOT NAV ── -->
+<div class="dots" id="dots">
+  <div class="dot on" data-id="hero" data-lbl="Home"></div>
+  <div class="dot" data-id="career" data-lbl="Career"></div>
+  <div class="dot" data-id="impact" data-lbl="Impact"></div>
+  <div class="dot" data-id="skills" data-lbl="Skills"></div>
+  <div class="dot" data-id="projects" data-lbl="Projects"></div>
+  <div class="dot" data-id="ai" data-lbl="AI"></div>
+  <div class="dot" data-id="credentials" data-lbl="Credentials"></div>
+  <div class="dot" data-id="contact" data-lbl="Contact"></div>
 </div>
-</section>
-</main>
-<footer class="foot">
-  <div class="wrap foot-in">
-    <div>
-      <p class="foot-name">Ali Alzahrani</p>
-      <p>Middle East IT Leader, Vallourec<br>Eastern Province, Saudi Arabia</p>
+
+<!-- ── CANVAS ── -->
+<canvas id="bg"></canvas>
+<div class="veil"></div>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero" id="hero">
+  <div>
+    <span class="hl e">Middle East IT Leader · Vallourec · Eastern Province, Saudi Arabia</span>
+    <h1 class="name e">Ali<br>Alzahrani</h1>
+    <p class="sub e">Technology leader connecting enterprise IT, industrial operations, and practical AI across four international sites in the Middle East.</p>
+    <div class="stats e">
+      <div><span class="sn" data-count="12">0</span><span class="sl">years in IT</span></div>
+      <div><span class="sn" data-count="4">0</span><span class="sl">international sites</span></div>
+      <div><span class="sn" data-count="300" data-pre="~">0</span><span class="sl">AI-trained staff</span></div>
+      <div><span class="sn" data-count="9">0</span><span class="sl">remote sites built</span></div>
     </div>
-    <nav aria-label="Footer"><a href="profile/">Profile</a><a href="career/">Career</a><a href="projects/">Projects</a><a href="ai/">AI</a><a href="skills/">Skills</a><a href="credentials/">Credentials</a></nav>
-    <div class="foot-contact">
-      <a href="mailto:IhopeYouAreFine@gmail.com">IhopeYouAreFine@gmail.com</a>
-      <a href="https://www.linkedin.com/in/ali-alzahrani-one/" rel="me noopener">linkedin.com/in/ali-alzahrani-one</a>
-      <a href="Ali-Alzahrani-CV.pdf">Download CV (PDF)</a>
+    <div class="ctas e">
+      <a class="btn bp" href="#career">Explore career</a>
+      <a class="btn bo" href="Ali-Alzahrani-CV.pdf" download>Download CV</a>
     </div>
   </div>
-</footer>
-<script src="assets/app.js?v=ef6de86b" defer></script>
+</section>
+
+<!-- ════════════════ CAREER ════════════════ -->
+<section id="career">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl ex">Career</p>
+    <h2 class="sh ex">Twelve years of steady engineering</h2>
+    <p class="sd ex">From data centres to factory floors and remote desert construction sites — a career built on making technology reliable where it has to be.</p>
+
+    <div class="tl">
+      <div class="ti ex">
+        <div class="tn"><div class="td"></div><div class="tl-"></div></div>
+        <div class="tc">
+          <p class="rco">Vallourec · Jan 2024 – Present</p>
+          <h3 class="rt">Middle East IT Leader</h3>
+          <p class="rp">4 international sites · Saudi Arabia &amp; UAE</p>
+          <p class="rd">Lead IT strategy and operations across four Vallourec sites. Regional focal point for global infrastructure, cybersecurity, cloud services, and AI adoption. Own the full technology lifecycle — from end-user support to industrial OT connectivity and digital transformation.</p>
+          <div class="tags">
+            <span class="tag">IT Leadership</span><span class="tag">AI Adoption</span><span class="tag">Microsoft 365</span><span class="tag">OT / Industrial</span><span class="tag">Cybersecurity</span><span class="tag">Digital Transformation</span>
+          </div>
+        </div>
+      </div>
+      <div class="ti ex">
+        <div class="tn"><div class="td"></div><div class="tl-"></div></div>
+        <div class="tc">
+          <p class="rco">Vallourec · Jan 2021 – Jan 2024</p>
+          <h3 class="rt">Infrastructure Expert &amp; Project Manager</h3>
+          <p class="rp">3 years · Eastern Province, Saudi Arabia</p>
+          <p class="rd">Led Aramco Cyber Security Certification as principal lead — delivered ahead of schedule. Re-architected 100+ Cisco and N-Tron switches. Migrated Active Directory to Entra ID with Intune. Delivered new regional office end-to-end in six months. Excellence Leader Award 2020, Creativity Award Vallourec Group 2019.</p>
+          <div class="tags">
+            <span class="tag">Aramco CSTS</span><span class="tag">Network Architecture</span><span class="tag">Entra ID</span><span class="tag">Project Management</span><span class="tag">Server Infrastructure</span>
+          </div>
+        </div>
+      </div>
+      <div class="ti ex">
+        <div class="tn"><div class="td"></div><div class="tl-"></div></div>
+        <div class="tc">
+          <p class="rco">Vallourec · Oct 2017 – Jan 2021</p>
+          <h3 class="rt">IT Specialist</h3>
+          <p class="rp">3 years · Plant IT, Eastern Province</p>
+          <p class="rd">Owned production IT on the factory floor: QR-code processing systems, real-time product tracking, and 200+ endpoints. During COVID-19, moved seven departments (100 people) to full remote work in days with one IT technician — the business kept running.</p>
+          <div class="tags">
+            <span class="tag">Production IT</span><span class="tag">QR Automation</span><span class="tag">Endpoint Management</span><span class="tag">COVID-19 Response</span>
+          </div>
+        </div>
+      </div>
+      <div class="ti ex">
+        <div class="tn"><div class="td"></div><div class="tl-"></div></div>
+        <div class="tc">
+          <p class="rco">Target Construction · Jan 2015 – Sep 2017</p>
+          <h3 class="rt">Head of IT Department</h3>
+          <p class="rp">699 users · Al Khobar, Saudi Arabia</p>
+          <p class="rd">Ran IT for a major Aramco contractor across head office and remote sites. Migrated all 699 users to Exchange Online with zero downtime. Recovered governance of 1,000+ unmanaged devices. Deployed biometric attendance systems across all sites.</p>
+          <div class="tags">
+            <span class="tag">Exchange Online</span><span class="tag">Asset Governance</span><span class="tag">Service Desk</span><span class="tag">Biometrics</span>
+          </div>
+        </div>
+      </div>
+      <div class="ti ex">
+        <div class="tn"><div class="td"></div></div>
+        <div class="tc">
+          <p class="rco">Target Construction · Jan 2014 – Jan 2015</p>
+          <h3 class="rt">Project Engineer</h3>
+          <p class="rp">Remote site deployments · Eastern Province</p>
+          <p class="rd">Directed IT delivery across nine remote project sites, connecting 500+ users. Coordinated nine support teams. Resolved 79% of reported issues remotely as first-line support — a record that held for years.</p>
+          <div class="tags">
+            <span class="tag">Remote Sites</span><span class="tag">Team Coordination</span><span class="tag">First-line Support</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ IMPACT ════════════════ -->
+<section id="impact">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl e">Impact</p>
+    <h2 class="sh e">The numbers tell the story</h2>
+    <p class="sd e">Twelve years of outcomes, documented and verifiable.</p>
+    <div class="ig">
+      <div class="ic e"><div class="if_">~300</div><div class="id_">Employees trained on Microsoft Copilot in a single regional programme</div></div>
+      <div class="ic e"><div class="if_">Zero</div><div class="id_">Downtime migrating 699 users to Exchange Online</div></div>
+      <div class="ic e"><div class="if_">9</div><div class="id_">Remote sites stood up and connected for 500+ construction workers</div></div>
+      <div class="ic e"><div class="if_">79%</div><div class="id_">Of reported IT issues resolved remotely at first line</div></div>
+      <div class="ic e"><div class="if_">1,000+</div><div class="id_">Devices brought back under governance and control</div></div>
+      <div class="ic e"><div class="if_">6 mo.</div><div class="id_">To deliver a full new regional office from greenfield to live</div></div>
+      <div class="ic e"><div class="if_">100+</div><div class="id_">Cisco and N-Tron switches re-architected across industrial sites</div></div>
+      <div class="ic e"><div class="if_">Ahead</div><div class="id_">Aramco Cyber Security Certification delivered ahead of schedule</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ SKILLS ════════════════ -->
+<section id="skills">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl ex">Expertise</p>
+    <h2 class="sh ex">Broad, deep, applied</h2>
+    <p class="sd ex">Thirteen areas of practice built over 12 years of real deployments across enterprise, industrial, and cloud environments.</p>
+    <div class="sg">
+      <div class="sc ex">
+        <p class="scn">Leadership &amp; Strategy</p>
+        <div class="sl_">
+          <span class="si">IT strategy</span><span class="si">Multi-site management</span><span class="si">Budget ownership</span><span class="si">Vendor negotiation</span><span class="si">Stakeholder management</span>
+        </div>
+      </div>
+      <div class="sc ex">
+        <p class="scn">AI &amp; Automation</p>
+        <div class="sl_">
+          <span class="si">Microsoft Copilot</span><span class="si">AI governance</span><span class="si">Prompt engineering</span><span class="si">Process automation</span><span class="si">GenAI tools</span>
+        </div>
+      </div>
+      <div class="sc ex">
+        <p class="scn">Microsoft 365 &amp; Cloud</p>
+        <div class="sl_">
+          <span class="si">Microsoft 365</span><span class="si">Entra ID</span><span class="si">Exchange Online</span><span class="si">SharePoint</span><span class="si">Teams</span><span class="si">Intune</span><span class="si">Azure</span>
+        </div>
+      </div>
+      <div class="sc ex">
+        <p class="scn">Network &amp; Infrastructure</p>
+        <div class="sl_">
+          <span class="si">Network design</span><span class="si">Cisco switches</span><span class="si">VMware ESXi</span><span class="si">Data Domain</span><span class="si">Backup &amp; DR</span><span class="si">Servers</span>
+        </div>
+      </div>
+      <div class="sc ex">
+        <p class="scn">Cybersecurity</p>
+        <div class="sl_">
+          <span class="si">Aramco CSTS</span><span class="si">ISO 27001</span><span class="si">OT security</span><span class="si">Endpoint protection</span><span class="si">Armis</span><span class="si">Cisco Meraki</span>
+        </div>
+      </div>
+      <div class="sc ex">
+        <p class="scn">Industrial &amp; OT</p>
+        <div class="sl_">
+          <span class="si">MES systems</span><span class="si">BioTime</span><span class="si">N-Tron switches</span><span class="si">SCADA connectivity</span><span class="si">Plant networks</span><span class="si">Production IT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PROJECTS ════════════════ -->
+<section id="projects">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl ex">Notable Work</p>
+    <h2 class="sh ex">Projects that moved things forward</h2>
+    <p class="sd ex">A selection of documented contributions from across a twelve-year career.</p>
+    <div class="pg">
+      <div class="pc ex"><span class="pn">01</span><div><p class="pt">Aramco Cyber Security Certification</p><p class="pd">Principal lead for CSTS at Vallourec Saudi Arabia. Delivered ahead of schedule with an authorised third party. Followed by a twelve-month programme to secure every device on the network.</p></div></div>
+      <div class="pc ex"><span class="pn">02</span><div><p class="pt">Regional AI Adoption — Microsoft Copilot</p><p class="pd">Designed and ran the company-wide AI adoption programme for ~300 employees across Saudi Arabia and the UAE. Built training, governance, and use-case library from the ground up.</p></div></div>
+      <div class="pc ex"><span class="pn">03</span><div><p class="pt">Nine Remote Site Deployments (500+ users)</p><p class="pd">Directed IT delivery for nine Aramco contractor project sites across the Eastern Province. Connected 500+ users, coordinated nine support teams, resolved 79% of issues remotely.</p></div></div>
+      <div class="pc ex"><span class="pn">04</span><div><p class="pt">Exchange Online Migration — Zero Downtime</p><p class="pd">Migrated all 699 users at Target Construction to Exchange Online with no service interruption. Built the supporting Active Directory, group policies, and backup infrastructure.</p></div></div>
+      <div class="pc ex"><span class="pn">05</span><div><p class="pt">Network Re-architecture — 100+ Switches</p><p class="pd">Led a two-year programme to recover and define the complete factory network topology — from the OT automation layer through to core group switching. 100+ Cisco and N-Tron switches re-architected.</p></div></div>
+      <div class="pc ex"><span class="pn">06</span><div><p class="pt">Plant Digitalisation at Vallourec</p><p class="pd">Led SharePoint migration with automated workflows and digital signatures. Introduced cycle-time monitoring, shutdown analysis, and digital shop-floor reporting on large touchscreens.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ AI ════════════════ -->
+<section id="ai">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl e">AI Work</p>
+    <h2 class="sh e">AI as a practical discipline</h2>
+    <p class="sd e">Not a theory. A daily practice of using, building, and governing AI tools to solve problems that actually exist.</p>
+    <div style="display:flex;flex-direction:column;gap:.875rem">
+      <div class="ac e">
+        <span class="ai_">◎</span>
+        <div><p class="at">Microsoft Copilot Adoption Lead</p><p class="ad">Designed and ran the regional AI adoption programme across ~300 employees at Vallourec. Built the training curriculum, governance framework, and an initiative to identify and deliver high-value AI use cases from real business operations.</p></div>
+      </div>
+      <div class="ac e">
+        <span class="ai_">◈</span>
+        <div><p class="at">MIT Applied Generative AI</p><p class="ad">Currently enrolled at Massachusetts Institute of Technology in the Applied Generative AI programme. Building the theoretical foundations that underpin the practical AI work.</p></div>
+      </div>
+      <div class="ac e">
+        <span class="ai_">◇</span>
+        <div><p class="at">RFQ Master — Multi-Agent Research Tool</p><p class="ad">Personal project: a multi-agent AI system designed to research and evaluate RFQ responses with structured reasoning across supplier data. Built as a working prototype.</p></div>
+      </div>
+      <div class="ac e">
+        <span class="ai_">◉</span>
+        <div><p class="at">AI Governance — ISO 42001</p><p class="ad">Applied ISO 42001 AI management principles to governance across the region. Every AI use case is verifiable: if a person cannot check the output, it does not go to production.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ CREDENTIALS ════════════════ -->
+<section id="credentials">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl e">Credentials</p>
+    <h2 class="sh e">Education and certifications</h2>
+    <div class="cg" style="margin-top:1.5rem">
+      <div class="cc e"><p class="ct">Degree</p><h3 class="cn">BSc Information Technology &amp; Computing</h3><p class="cd">Arab Open University · GPA 3.24</p></div>
+      <div class="cc e"><p class="ct">Certificate</p><h3 class="cn">Undergraduate Certificate, Computer Science</h3><p class="cd">University of Nottingham</p></div>
+      <div class="cc e"><p class="ct">Fellowship — Certified Jul 2026</p><h3 class="cn">TRECCERT Digital Trust Fellowship</h3><p class="cd">Score: 91.7%</p></div>
+      <div class="cc e"><p class="ct">In Progress</p><h3 class="cn">PMP — Project Management Professional</h3><p class="cd">Exam booked · Expected 2026</p></div>
+      <div class="cc e"><p class="ct">Enrolled</p><h3 class="cn">MIT Applied Generative AI</h3><p class="cd">Massachusetts Institute of Technology · 2026</p></div>
+      <div class="cc e"><p class="ct">Training</p><h3 class="cn">Microsoft AZ-900, Power BI, Aramco CSTS</h3><p class="cd">Multiple completions · 2019 – 2026</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ CONTACT ════════════════ -->
+<section id="contact">
+  <div style="width:100%;max-width:580px">
+    <p class="lbl e">Contact</p>
+    <h2 class="sh e">Let's talk</h2>
+    <p class="sd e">Available for technology leadership, AI advisory, and regional IT transformation roles and conversations.</p>
+    <div class="ci-list e">
+      <div class="ci"><span class="cilb">Location</span><span class="civ">Eastern Province, Saudi Arabia</span></div>
+      <div class="ci"><span class="cilb">LinkedIn</span><a class="civ" href="https://www.linkedin.com/in/ali-alzahrani-one/" target="_blank" rel="noopener">linkedin.com/in/ali-alzahrani-one</a></div>
+      <div class="ci"><span class="cilb">CV</span><a class="civ" href="Ali-Alzahrani-CV.pdf" download>Download PDF</a></div>
+    </div>
+    <div class="ctas e" style="margin-top:2.5rem">
+      <a class="btn bp" href="Ali-Alzahrani-CV.pdf" download>Download CV</a>
+      <a class="btn bo" href="https://www.linkedin.com/in/ali-alzahrani-one/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="foot">Ali Alzahrani · Eastern Province, Saudi Arabia · 2026</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     THREE.JS + APP
+════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" crossorigin="anonymous"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── Three.js scene ── */
+var canvas = document.getElementById('bg');
+if(!window.WebGLRenderingContext){ canvas.style.display='none'; return; }
+
+var W = window.innerWidth, H = window.innerHeight;
+var isMobile = W < 900;
+
+var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile?1.5:2));
+renderer.setSize(W, H);
+renderer.setClearColor(0x000000, 0);
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 100);
+camera.position.z = 5;
+
+/* ── Particle sphere ── */
+var COUNT = isMobile ? 600 : 950;
+var RADIUS = 2.0;
+var pos = new Float32Array(COUNT*3);
+var col = new Float32Array(COUNT*3);
+var GOLDEN = (1+Math.sqrt(5))/2;
+
+for(var i=0;i<COUNT;i++){
+  var theta = Math.acos(1-2*(i+0.5)/COUNT);
+  var phi   = 2*Math.PI*i/GOLDEN;
+  pos[i*3]   = Math.sin(theta)*Math.cos(phi)*RADIUS;
+  pos[i*3+1] = Math.cos(theta)*RADIUS;
+  pos[i*3+2] = Math.sin(theta)*Math.sin(phi)*RADIUS;
+  var brass = Math.random()<0.18;
+  if(brass){
+    col[i*3]=0.788; col[i*3+1]=0.659; col[i*3+2]=0.416;
+  } else {
+    var v=0.35+Math.random()*0.4;
+    col[i*3]=v; col[i*3+1]=v+0.04; col[i*3+2]=v+0.18;
+  }
+}
+
+var sGeo = new THREE.BufferGeometry();
+sGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+sGeo.setAttribute('color',    new THREE.BufferAttribute(col,3));
+var sMat = new THREE.PointsMaterial({size:0.019,vertexColors:true,transparent:true,opacity:.88,sizeAttenuation:true});
+var sphere = new THREE.Points(sGeo, sMat);
+scene.add(sphere);
+
+/* ── Connection lines (desktop only) ── */
+if(!isMobile){
+  var lv=[], THRESH=0.62, MAXL=1400;
+  for(var i=0;i<COUNT&&lv.length/6<MAXL;i++){
+    var ax=pos[i*3],ay=pos[i*3+1],az=pos[i*3+2];
+    for(var j=i+1;j<COUNT;j++){
+      var bx=pos[j*3],by=pos[j*3+1],bz=pos[j*3+2];
+      var dx=ax-bx,dy=ay-by,dz=az-bz;
+      if(Math.sqrt(dx*dx+dy*dy+dz*dz)<THRESH){
+        lv.push(ax,ay,az,bx,by,bz);
+        if(lv.length/6>=MAXL) break;
+      }
+    }
+  }
+  var lGeo=new THREE.BufferGeometry();
+  lGeo.setAttribute('position',new THREE.Float32BufferAttribute(lv,3));
+  var lMat=new THREE.LineBasicMaterial({color:0x1a3d80,transparent:true,opacity:.16});
+  var lines=new THREE.LineSegments(lGeo,lMat);
+  scene.add(lines);
+}
+
+/* ── Background stars ── */
+var STARS=isMobile?200:400;
+var sp=new Float32Array(STARS*3);
+for(var i=0;i<STARS;i++){
+  var r=4+Math.random()*9;
+  var t=Math.random()*Math.PI*2, p=Math.random()*Math.PI;
+  sp[i*3]=r*Math.sin(p)*Math.cos(t);
+  sp[i*3+1]=r*Math.sin(p)*Math.sin(t);
+  sp[i*3+2]=r*Math.cos(p);
+}
+var stGeo=new THREE.BufferGeometry(); stGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+var stMat=new THREE.PointsMaterial({size:.013,color:0x1a3870,transparent:true,opacity:.5});
+scene.add(new THREE.Points(stGeo,stMat));
+
+/* ── Position sphere ── */
+function placeSphere(){
+  if(window.innerWidth>=900){
+    sphere.position.set(1.6,0,0);
+    if(lines) lines.position.set(1.6,0,0);
+  } else {
+    sphere.position.set(0,1.4,0);
+    if(lines) lines.position.set(0,1.4,0);
+  }
+}
+placeSphere();
+
+/* ── Mouse ── */
+var mx=0,my=0,trx=0,try_=0,crx=0,cry=0;
+document.addEventListener('mousemove',function(e){
+  mx=(e.clientX/window.innerWidth-.5)*2;
+  my=(e.clientY/window.innerHeight-.5)*2;
+});
+document.addEventListener('touchmove',function(e){
+  var t=e.touches[0];
+  mx=(t.clientX/window.innerWidth-.5)*2;
+  my=(t.clientY/window.innerHeight-.5)*2;
+},{passive:true});
+
+/* ── Resize ── */
+window.addEventListener('resize',function(){
+  W=window.innerWidth; H=window.innerHeight;
+  isMobile=W<900;
+  camera.aspect=W/H; camera.updateProjectionMatrix();
+  renderer.setSize(W,H);
+  placeSphere();
+});
+
+/* ── Animate ── */
+var t=0, lastT=0;
+function animate(ts){
+  requestAnimationFrame(animate);
+  var dt=Math.min((ts-lastT)/16.67,3); lastT=ts;
+  t+=0.001*dt;
+  trx+=(my*.18-trx)*.04*dt;
+  try_+=(mx*.22-try_)*.04*dt;
+  crx+=(trx-crx)*.10*dt;
+  cry+=(try_-cry)*.10*dt;
+  sphere.rotation.y=t*.5+cry;
+  sphere.rotation.x=crx;
+  if(lines){ lines.rotation.y=sphere.rotation.y; lines.rotation.x=sphere.rotation.x; }
+  var sc=1+Math.sin(t*1.4)*.007;
+  sphere.scale.setScalar(sc);
+  if(lines) lines.scale.setScalar(sc);
+  renderer.render(scene, camera);
+}
+animate(0);
+
+/* ── Section observer ── */
+var allSec=document.querySelectorAll('section');
+var allDot=document.querySelectorAll('.dot');
+
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.classList.add('on');
+      var id=e.target.id;
+      allDot.forEach(function(d){ d.classList.toggle('on',d.dataset.id===id); });
+    }
+  });
+},{threshold:.25});
+allSec.forEach(function(s){ io.observe(s); });
+
+/* ── Dot click ── */
+allDot.forEach(function(d){
+  d.addEventListener('click',function(){
+    var el=document.getElementById(d.dataset.id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ── Counter ── */
+function counter(el,target,dur){
+  var num=parseInt(String(target).replace(/\D/g,''));
+  var pre=el.dataset.pre||'';
+  if(!num){el.textContent=pre+target;return;}
+  var s0=performance.now();
+  (function tick(now){
+    var prog=Math.min((now-s0)/dur,1);
+    var eased=1-Math.pow(1-prog,3);
+    var cur=Math.round(num*eased);
+    el.textContent=pre+(cur>=1000?cur.toLocaleString():cur);
+    if(prog<1) requestAnimationFrame(tick);
+  })(s0);
+}
+var heroIo=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting){
+    document.querySelectorAll('.sn').forEach(function(el,i){
+      setTimeout(function(){ counter(el,el.dataset.count,1400+i*200); },600);
+    });
+    heroIo.disconnect();
+  }
+},{threshold:.5});
+heroIo.observe(document.getElementById('hero'));
+
+})();
+</script>
 </body>
 </html>
