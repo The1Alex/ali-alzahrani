@@ -1,689 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ali Alzahrani — Middle East IT Leader</title>
-<meta name="description" content="Ali Alzahrani: Technology leader connecting enterprise IT, industrial operations and practical AI across the Middle East. 12 years. 4 international sites.">
-<meta property="og:title" content="Ali Alzahrani — Middle East IT Leader">
-<meta property="og:description" content="12 years building technology infrastructure that works in real conditions.">
-<meta property="og:url" content="https://the1alex.github.io/ali-alzahrani/">
+<meta name="description" content="Ali Alzahrani is a Middle East IT Leader based in Saudi Arabia, with twelve years across enterprise IT, industrial technology, cybersecurity coordination and practical AI adoption. Explore the work as a living 3D network.">
+<meta name="theme-color" content="#02060e">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://the1alex.github.io/ali-alzahrani/">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230a1f3d'/><path d='M16 7l9 18h-4l-5-10-5 10H7z' fill='%23c9a86a'/></svg>" type="image/svg+xml">
+<meta property="og:site_name" content="Ali Alzahrani">
+<meta property="og:title" content="Ali Alzahrani — Middle East IT Leader">
+<meta property="og:description" content="Twelve years of enterprise IT, industrial operations and practical AI, drawn as a living network of real work.">
+<meta property="og:url" content="https://the1alex.github.io/ali-alzahrani/">
+<meta property="og:image" content="https://the1alex.github.io/ali-alzahrani/net/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2302060e'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23cfaa67' stroke-width='1.5' stroke-dasharray='2 4'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23ecd29c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#030c1a;
-  --brass:#c9a86a;
-  --brass2:rgba(201,168,106,0.15);
-  --off:#c8d8f0;
-  --muted:rgba(200,216,240,0.5);
-  --glass:rgba(6,20,46,0.82);
-  --edge:rgba(201,168,106,0.08);
-  --font:'Inter',system-ui,sans-serif;
-}
-html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);background:var(--bg);color:#fff}
-canvas{position:fixed;inset:0;z-index:0;display:block}
-
-/* ── NAV ── */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.9rem 2rem;
-  background:rgba(3,12,26,.7);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--edge);
-}
-.logo{font-size:1rem;font-weight:700;color:var(--brass);text-decoration:none;letter-spacing:.08em}
-.nav-hint{font-size:.7rem;color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:.5rem}
-.nav-hint span{opacity:.5}
-.nav-cv{color:var(--brass);text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(201,168,106,.4);padding:.3rem .9rem;border-radius:2rem;transition:all .2s}
-.nav-cv:hover{background:var(--brass);color:var(--bg)}
-
-/* ── LABEL LAYER (3D node labels) ── */
-#labels{position:fixed;inset:0;z-index:10;pointer-events:none}
-.lbl{
-  position:absolute;transform:translate(-50%,-50%);
-  pointer-events:auto;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  transition:opacity .25s;
-}
-.lbl .lt{
-  font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--off);opacity:.6;white-space:nowrap;
-  transition:color .2s,opacity .2s,transform .2s;
-}
-.lbl .ls{
-  font-size:.55rem;color:var(--muted);letter-spacing:.06em;
-  opacity:0;transition:opacity .2s;white-space:nowrap;
-}
-.lbl.center .lt{font-size:.85rem;font-weight:700;color:var(--brass);opacity:1;letter-spacing:.04em}
-.lbl.center .ls{opacity:.6;font-size:.6rem;color:var(--muted)}
-.lbl:hover .lt,.lbl.active .lt{color:var(--brass);opacity:1;transform:translateY(-2px)}
-.lbl:hover .ls,.lbl.active .ls{opacity:.8}
-.lbl.sub .lt{font-size:.52rem;letter-spacing:.08em;opacity:.5}
-.lbl.sub:hover .lt,.lbl.sub.active .lt{opacity:1;color:var(--brass)}
-
-/* ── CONTENT PANEL ── */
-#panel{
-  position:fixed;top:0;right:0;bottom:0;z-index:200;
-  width:min(500px,100vw);
-  background:var(--glass);
-  backdrop-filter:blur(28px);
-  -webkit-backdrop-filter:blur(28px);
-  border-left:1px solid rgba(201,168,106,.18);
-  transform:translateX(100%);
-  transition:transform .45s cubic-bezier(.4,0,.2,1);
-  overflow-y:auto;
-  padding:5rem 2rem 3rem;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(201,168,106,.2) transparent;
-}
-#panel.open{transform:translateX(0)}
-#panel-close{
-  position:absolute;top:1.1rem;right:1.5rem;
-  background:none;border:none;cursor:pointer;
-  color:var(--off);font-size:1.1rem;opacity:.6;
-  transition:opacity .2s;padding:.3rem .6rem;
-  font-family:var(--font);
-}
-#panel-close:hover{opacity:1}
-.p-tag{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--brass);margin-bottom:.7rem;display:block}
-.p-title{font-size:1.6rem;font-weight:700;line-height:1.15;margin-bottom:1rem;letter-spacing:-.02em}
-.p-lead{font-size:.9rem;color:var(--off);line-height:1.65;margin-bottom:1.75rem}
-.p-sec{margin-bottom:1.5rem}
-.p-sec h3{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,106,.15)}
-.p-item{display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.7rem}
-.p-dot{width:4px;height:4px;border-radius:50%;background:var(--brass);flex-shrink:0;margin-top:.45rem}
-.p-txt{font-size:.8rem;color:var(--off);line-height:1.6}
-.p-txt strong{color:#fff;font-weight:600}
-.stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.5rem}
-.stat-box{background:rgba(201,168,106,.07);border:1px solid rgba(201,168,106,.15);border-radius:.5rem;padding:.8rem 1rem}
-.stat-num{display:block;font-size:1.5rem;font-weight:700;color:var(--brass);line-height:1}
-.stat-lbl{display:block;font-size:.65rem;color:var(--muted);margin-top:.3rem;letter-spacing:.03em}
-.role-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:.5rem;padding:.9rem 1rem;margin-bottom:.75rem}
-.role-title{font-size:.8rem;font-weight:600;color:#fff;margin-bottom:.2rem}
-.role-meta{font-size:.65rem;color:var(--muted);margin-bottom:.5rem}
-.role-body{font-size:.75rem;color:var(--off);line-height:1.55}
-.skill-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
-.chip{font-size:.65rem;font-weight:600;letter-spacing:.06em;padding:.25rem .65rem;border-radius:1rem;border:1px solid rgba(201,168,106,.3);color:var(--off);background:rgba(201,168,106,.06)}
-.cta-row{display:flex;gap:.6rem;margin-top:1.5rem;flex-wrap:wrap}
-.btn{padding:.55rem 1.2rem;border-radius:2rem;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:.35rem;border:none;cursor:pointer;font-family:var(--font)}
-.bp{background:var(--brass);color:var(--bg)}
-.bp:hover{background:#fff;box-shadow:0 4px 20px rgba(201,168,106,.3)}
-.bo{background:transparent;color:var(--off);border:1px solid rgba(255,255,255,.2)}
-.bo:hover{border-color:var(--brass);color:var(--brass)}
-
-/* ── HINT OVERLAY ── */
-#hint{
-  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
-  z-index:100;
-  font-size:.7rem;letter-spacing:.1em;color:var(--muted);text-align:center;
-  pointer-events:none;
-  animation:fadeHint 1s ease 2s both, fadeOut 1s ease 7s forwards;
-}
-@keyframes fadeHint{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
-@keyframes fadeOut{to{opacity:0}}
-
-/* ── MOBILE ── */
-@media(max-width:600px){
-  #panel{width:100vw}
-  .nav-hint{display:none}
-  .p-title{font-size:1.3rem}
-}
-</style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="net/style.css?v=8b544d6391">
+<script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__netBooted){var c=document.documentElement.classList;c.remove('js');c.add('loaded','fallback');}},9000);</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<link rel="modulepreload" href="net/app.js?v=8b544d6391">
+<link rel="modulepreload" href="net/data.js?v=8b544d6391">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Ali Alzahrani","jobTitle":"Middle East IT Leader","worksFor":{"@type":"Organization","name":"Vallourec"},"address":{"@type":"PostalAddress","addressRegion":"Eastern Province","addressCountry":"SA"},"url":"https://the1alex.github.io/ali-alzahrani/","sameAs":["https://www.linkedin.com/in/ali-alzahrani-one/"],"knowsAbout":["Enterprise IT","Industrial IT and OT","Cybersecurity","AI adoption","Project management","Microsoft 365","Networking"]}</script>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav class="nav">
-  <a class="logo" href="#">AA</a>
-  <span class="nav-hint"><span>Click any node to explore</span></span>
-  <a class="nav-cv" href="Ali-Alzahrani-CV.pdf" download>Download CV</a>
-</nav>
-
-<!-- 3D canvas -->
-<canvas id="bg"></canvas>
-
-<!-- CSS label layer -->
-<div id="labels"></div>
-
-<!-- Content panel -->
-<div id="panel">
-  <button id="panel-close">✕ Close</button>
-  <div id="panel-body"></div>
+<div id="loader" aria-hidden="true">
+  <div class="ld">
+    <div class="ld-mark">
+      <svg viewBox="0 0 120 120"><circle class="r1" cx="60" cy="60" r="57"/><circle class="r2" cx="60" cy="60" r="47"/></svg>
+      <span>A</span>
+    </div>
+    <p class="ld-name">Ali Alzahrani</p>
+    <div class="ld-bar"><i id="ld-bar"></i></div>
+    <div class="ld-meta"><span id="ld-pct">000</span><span id="ld-step">Initialising</span></div>
+  </div>
 </div>
 
-<!-- Interaction hint -->
-<div id="hint">DRAG TO ROTATE &nbsp;·&nbsp; CLICK A NODE TO EXPLORE</div>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="scrim" aria-hidden="true"></div>
+<div id="labels" aria-hidden="true"></div>
+<svg id="leaders" aria-hidden="true"><path id="ld-a"/><circle id="ld-a-ring" class="ring" r="9"/><circle id="ld-a-dot" r="2.5"/><path id="ld-b"/><circle id="ld-b-ring" class="ring" r="12"/><circle id="ld-b-dot" r="2.5"/></svg>
+<div id="plate" aria-hidden="true"><div class="pl"></div></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" crossorigin="anonymous"></script>
-<script>
-(function(){
-'use strict';
+<header class="top">
+  <a class="brand" href="./" data-go="hero" aria-label="Ali Alzahrani, back to the start"><b>Ali <i>Alzahrani</i></b><span>Middle East IT Leader</span></a>
+  <div class="tick" aria-hidden="true"><span id="tick-n">00</span><i></i><span id="tick-l">Introduction</span></div>
+  <div class="top-r">
+    <button class="pill" type="button" data-open="index">All work <b id="idx-count">28</b></button>
+    <a class="pill" href="https://www.linkedin.com/in/ali-alzahrani-one/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="pill pill-brass" href="Ali-Alzahrani-CV.pdf" download>Download CV</a>
+  </div>
+</header>
 
-/* ═══════════════════════════════════════
-   CONTENT DATA
-════════════════════════════════════════ */
-var CONTENT = {
-  career: {
-    tag: 'Career',
-    title: 'Twelve years of delivery',
-    lead: 'From standing up nine remote construction sites as a Project Engineer, to leading IT across four international Vallourec sites as Middle East IT Leader. Every step built on real operations, not theory.',
-    sections: [
-      {
-        h: 'Vallourec · 2017 – Present',
-        items: [
-          '<strong>Middle East IT Leader</strong> · Jan 2024 – Present — Lead IT across four international sites. Regional AI adoption (~300 staff). Plant digitalisation. Procurement and contracts ownership.',
-          '<strong>Infrastructure Expert & Project Manager</strong> · Jan 2021 – Jan 2024 — Aramco Cyber Security Certification (ahead of schedule). Full factory network topology recovery. Entra ID + Intune migration. 100+ switches re-architected.',
-          '<strong>IT Specialist</strong> · Oct 2017 – Jan 2021 — Shop-floor production IT. QR-code processing system. COVID crisis cell: moved 100 people to remote work. Excellence Leader Award 2020. Creativity Award Vallourec Group 2019.'
-        ]
-      },
-      {
-        h: 'Target Construction · 2014 – 2017',
-        items: [
-          '<strong>Head of IT</strong> · Jan 2015 – Sep 2017 — 699 users. Exchange Online migration (zero downtime). Regained control of 1,000+ devices.',
-          '<strong>Project Engineer</strong> · Jan 2014 – Jan 2015 — Nine remote sites for Aramco contractor work. 500+ connected users. 79% first-line remote resolution.'
-        ]
-      }
-    ]
-  },
-  ai: {
-    tag: 'AI & Innovation',
-    title: 'AI that does real work',
-    lead: 'Not a theory. A daily practice of using, building, and governing AI tools to solve problems that actually exist in industrial and enterprise environments.',
-    stats: [
-      { n: '~300', l: 'employees trained on Microsoft Copilot' },
-      { n: 'ISO 42001', l: 'AI governance practitioner' },
-      { n: 'MIT', l: 'Applied Generative AI — enrolled 2026' },
-      { n: 'RFQ Master', l: 'multi-agent research tool built' }
-    ],
-    sections: [
-      {
-        h: 'What I have built and led',
-        items: [
-          'Designed and ran the regional AI adoption programme across ~300 Vallourec employees — training curriculum, governance framework, and an initiative to identify and deliver high-value AI use cases from real business operations.',
-          'RFQ Master: a personal multi-agent AI system that researches and evaluates RFQ responses with structured reasoning across supplier data.',
-          'Applied ISO 42001 AI management principles to AI governance across the region. Every use case is verifiable: if a person cannot check the output, it does not go to production.',
-          'Currently enrolled at MIT in Applied Generative AI, building the theoretical foundations that underpin the practical work.'
-        ]
-      }
-    ]
-  },
-  skills: {
-    tag: 'Skills',
-    title: 'The technical and human toolkit',
-    lead: 'Built across twelve years of real operations — factory floors, construction sites, and international teams. I can configure a switch in the morning and defend its budget in the afternoon.',
-    chips: ['Microsoft Azure', 'Entra ID', 'Intune', 'Exchange Online', 'SharePoint', 'Copilot', 'Cisco Networking', 'N-Tron OT', 'Active Directory', 'Windows Server', 'Cyberoam', 'IT/OT Integration', 'Project Management', 'Vendor Negotiation', 'ISO 42001', 'AI Adoption', 'Team Leadership', 'Arabic', 'English'],
-    sections: [
-      {
-        h: 'Infrastructure & Security',
-        items: [
-          'Network design and topology: Cisco and N-Tron estates, IT/OT boundary, 100+ switches re-architected.',
-          'Identity and endpoint: Entra ID, Intune, group policy, compliance management.',
-          'Servers and backup: 20+ physical and virtual servers with disaster recovery.',
-          'Aramco Cyber Security Certification as principal lead — delivered ahead of schedule.'
-        ]
-      },
-      {
-        h: 'Leadership & Commercial',
-        items: [
-          'Regional IT ownership across four international sites spanning corporate, plant, and remote.',
-          'Full procurement cycle: vendor selection, negotiation, consolidation, contract and licensing management.',
-          'Bridging global functions (Business Applications, Infrastructure, Endpoint, Security) with local site execution.'
-        ]
-      }
-    ]
-  },
-  projects: {
-    tag: 'Projects',
-    title: 'Delivery that left something behind',
-    lead: 'The projects that changed how the business ran. Each one ended with procedures, standards, and documentation that outlasted the project itself.',
-    sections: [
-      {
-        h: 'Landmark deliveries',
-        items: [
-          '<strong>Aramco Cyber Security Certification</strong> — Principal lead for Vallourec Saudi Arabia. Delivered ahead of expected schedule. Followed by a 12-month device security programme.',
-          '<strong>Factory Network Topology</strong> — Two-year programme to map and re-architect the complete network, from automation layer to core group switching. 100+ switches, IT/OT boundary defined.',
-          '<strong>Nine Remote Sites</strong> — Directed IT and construction teams to establish nine remote project sites for 500+ Aramco contractor users. 79% of issues resolved remotely.',
-          '<strong>Exchange Online Migration</strong> — 699 users, zero downtime.',
-          '<strong>Cloud Identity Migration</strong> — On-premises Active Directory to Entra ID with Intune. Lowered operating cost, centralised compliance.',
-          '<strong>Plant Digitalisation</strong> — SharePoint migration, digital workflows, cycle-time monitoring, touchscreen shop-floor reporting, digital quality logs.',
-          '<strong>QR-Code Processing System</strong> — Built an automated system with interactive GUI that reduced manual handling errors in production. Creativity Award, Vallourec Group 2019.',
-          '<strong>COVID Remote Work</strong> — With one technician, moved seven departments and ~100 people to remote work. Business kept running.'
-        ]
-      }
-    ]
-  },
-  impact: {
-    tag: 'Impact',
-    title: 'Numbers that mean something',
-    lead: 'Each figure comes from a real project. The 12 years are lived, the 1,000 devices were recovered one by one, and the zero downtime was planned for.',
-    stats: [
-      { n: '12', l: 'years in IT, seven of them in leadership' },
-      { n: '4', l: 'international sites led across the Middle East' },
-      { n: '~300', l: 'employees trained on Microsoft Copilot' },
-      { n: '9', l: 'remote sites stood up for 500+ users' },
-      { n: '1,000+', l: 'devices brought back under control' },
-      { n: '100+', l: 'Cisco and N-Tron switches re-architected' },
-      { n: '79%', l: 'of issues resolved remotely at first line' },
-      { n: 'Zero', l: 'downtime moving 699 users to Exchange Online' }
-    ]
-  },
-  connect: {
-    tag: 'Connect',
-    title: "Let's talk",
-    lead: 'Available for technology leadership roles, AI advisory, and regional IT transformation conversations.',
-    sections: [
-      {
-        h: 'Reach out',
-        items: [
-          '<strong>Location:</strong> Eastern Province, Saudi Arabia',
-          '<strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ali-alzahrani-one/" target="_blank" style="color:var(--brass);text-decoration:none">linkedin.com/in/ali-alzahrani-one</a>',
-          '<strong>CV:</strong> Available to download (see the button above, or below)'
-        ]
-      },
-      {
-        h: 'Education',
-        items: [
-          '<strong>BSc Information Technology & Computing</strong> — Arab Open University · GPA 3.24',
-          '<strong>Undergraduate Certificate, Computer Science</strong> — University of Nottingham',
-          '<strong>TRECCERT Digital Trust Fellowship</strong> — Certified Jul 2026 · Score 91.7%',
-          '<strong>PMP — Project Management Professional</strong> — Exam booked · Expected 2026',
-          '<strong>MIT Applied Generative AI</strong> — Enrolled 2026'
-        ]
-      }
-    ],
-    ctas: true
-  }
-};
+<nav id="rail" aria-label="Chapters"></nav>
 
-/* ═══════════════════════════════════════
-   NODE DEFINITIONS
-════════════════════════════════════════ */
-var W = window.innerWidth, H = window.innerHeight;
-var isMobile = W < 700;
+<main id="story"></main>
 
-/* 3D positions for main nodes — arranged so they look good in 3D when rotated */
-var NODES = [
-  { id:'center', label:'Ali Alzahrani', sub:'Middle East IT Leader', size:0.14, color:0xc9a86a, emissive:0xc9a86a, emissiveIntensity:0.6, pos:[0,0,0], isCenter:true },
-  { id:'career',   label:'CAREER',   sub:'12 yrs · 2 employers',  size:0.09, color:0x4a9eff, emissive:0x2060c0, emissiveIntensity:0.5, pos:[ 2.0, 0.6,-0.4], parent:'center' },
-  { id:'ai',       label:'AI',       sub:'~300 trained · ISO 42001', size:0.09, color:0xf0c060, emissive:0xd09020, emissiveIntensity:0.5, pos:[-1.4, 1.2, 1.1], parent:'center' },
-  { id:'skills',   label:'SKILLS',   sub:'Infrastructure · Cloud · OT', size:0.08, color:0x50e0a0, emissive:0x20a060, emissiveIntensity:0.5, pos:[ 0.6,-1.9, 1.2], parent:'center' },
-  { id:'projects', label:'PROJECTS', sub:'8 landmark deliveries',  size:0.09, color:0xf06090, emissive:0xa02050, emissiveIntensity:0.5, pos:[-2.1,-0.4,-0.7], parent:'center' },
-  { id:'impact',   label:'IMPACT',   sub:'12 · 4 · 300 · 1000+',  size:0.08, color:0x60d0ff, emissive:0x2080b0, emissiveIntensity:0.5, pos:[ 0.9, 1.9, 0.9], parent:'center' },
-  { id:'connect',  label:'CONNECT',  sub:'Saudi Arabia · LinkedIn',  size:0.07, color:0xa080ff, emissive:0x6040c0, emissiveIntensity:0.5, pos:[-0.6,-1.6,-1.9], parent:'center' }
-];
+<aside id="card" aria-label="Details" hidden>
+  <button id="card-close" type="button" aria-label="Close details"><span>Close</span><i></i></button>
+  <div id="card-body" data-lenis-prevent></div>
+</aside>
 
-/* sub-nodes (smaller, orbit their parent visually) */
-var SUBNODES = [
-  /* career */
-  { id:'vallourec', label:'Vallourec', size:0.045, color:0x4a9eff, pos:[ 2.6, 1.3,-0.1], parent:'career' },
-  { id:'target',    label:'Target Construction', size:0.04, color:0x4a9eff, pos:[ 2.9,-0.1,-1.0], parent:'career' },
-  { id:'awards',    label:'2× Awards', size:0.035, color:0xc9a86a, pos:[ 1.3, 1.5,-0.9], parent:'career' },
-  /* ai */
-  { id:'copilot',   label:'Copilot Lead', size:0.04, color:0xf0c060, pos:[-2.0, 1.9, 0.6], parent:'ai' },
-  { id:'rfq',       label:'RFQ Master',   size:0.04, color:0xf0c060, pos:[-1.0, 0.6, 1.9], parent:'ai' },
-  { id:'iso42001',  label:'ISO 42001',    size:0.035, color:0xf0c060, pos:[-1.9, 0.6, 1.8], parent:'ai' },
-  /* skills */
-  { id:'infra',     label:'Infrastructure', size:0.04, color:0x50e0a0, pos:[ 1.3,-2.4, 0.8], parent:'skills' },
-  { id:'security',  label:'Cybersecurity',  size:0.04, color:0x50e0a0, pos:[ 0.0,-2.1, 2.0], parent:'skills' },
-  /* projects */
-  { id:'aramco',    label:'Aramco Cert',  size:0.045, color:0xf06090, pos:[-2.8,-1.0,-0.3], parent:'projects' },
-  { id:'network',   label:'Network Map',  size:0.04, color:0xf06090, pos:[-2.6, 0.4,-1.5], parent:'projects' },
-  { id:'covid',     label:'COVID Cell',   size:0.035, color:0xf06090, pos:[-1.4,-1.2,-1.6], parent:'projects' },
-  /* impact */
-  { id:'stat12',    label:'12 Yrs', size:0.04, color:0x60d0ff, pos:[ 1.7, 2.6, 0.4], parent:'impact' },
-  { id:'stat300',   label:'~300 AI', size:0.04, color:0x60d0ff, pos:[ 0.3, 2.3, 1.7], parent:'impact' },
-  /* connect */
-  { id:'linkedin',  label:'LinkedIn', size:0.04, color:0xa080ff, pos:[ 0.1,-2.3,-2.2], parent:'connect' },
-  { id:'edu',       label:'Education', size:0.04, color:0xa080ff, pos:[-1.4,-0.8,-2.6], parent:'connect' }
-];
+<div class="hud" aria-hidden="true">
+  <div class="hud-l"><span>26°N <em>·</em> 50°E</span><span>Eastern Province <em>·</em> <b id="hud-time">--:--</b> AST</span></div>
+  <div class="hud-r"><span>BRG <b id="hud-brg">000°</b> <em>·</em> RNG <b id="hud-rng">0.0</b></span><span><b id="hud-nodes">0</b> nodes <em>·</em> <b id="hud-links">0</b> links <em>·</em> <b id="hud-particles">0</b> particles</span></div>
+</div>
 
-var ALL_NODES = NODES.concat(SUBNODES);
+<div id="tip" role="tooltip" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"><i class="c-r"></i><i class="c-d"></i><span class="c-l"></span></div>
 
-/* edges: pairs of node ids to draw lines between */
-var EDGES = [
-  ['center','career'],['center','ai'],['center','skills'],
-  ['center','projects'],['center','impact'],['center','connect'],
-  /* cross-links */
-  ['career','impact'],['career','projects'],['ai','skills'],
-  ['ai','impact'],['skills','projects'],['projects','impact'],
-  ['impact','connect'],['ai','connect'],
-  /* sub-node connections */
-  ['career','vallourec'],['career','target'],['career','awards'],
-  ['ai','copilot'],['ai','rfq'],['ai','iso42001'],
-  ['skills','infra'],['skills','security'],
-  ['projects','aramco'],['projects','network'],['projects','covid'],
-  ['impact','stat12'],['impact','stat300'],
-  ['connect','linkedin'],['connect','edu']
-];
+<noscript>
+  <div class="nojs">
+    <h1>Ali Alzahrani</h1>
+    <p>Middle East IT Leader at Vallourec, based in the Eastern Province, Saudi Arabia. Twelve years across enterprise IT, industrial operations, cybersecurity coordination and practical AI adoption.</p>
+    <p><a href="Ali-Alzahrani-CV.pdf">Download the CV</a> · <a href="https://www.linkedin.com/in/ali-alzahrani-one/">LinkedIn</a></p>
+    <p>This site draws the work as an interactive 3D network. Turn on JavaScript to explore it.</p>
+  </div>
+</noscript>
 
-/* ═══════════════════════════════════════
-   THREE.JS SETUP
-════════════════════════════════════════ */
-var canvas = document.getElementById('bg');
-var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(W, H);
-renderer.setClearColor(0x000000, 0);
-
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 100);
-camera.position.z = isMobile ? 7.5 : 6.2;
-
-/* build a lookup by id */
-var nodeMap = {};
-ALL_NODES.forEach(function(n){ nodeMap[n.id] = n; });
-
-/* create node meshes */
-var meshes = []; /* array of {mesh, node} */
-var labelEls = {}; /* id -> DOM element */
-var labelsDiv = document.getElementById('labels');
-
-ALL_NODES.forEach(function(n){
-  var geo = new THREE.SphereGeometry(n.size, 16, 12);
-  var mat = new THREE.MeshBasicMaterial({color:n.color, transparent:true, opacity:0.95});
-  var mesh = new THREE.Mesh(geo, mat);
-  mesh.position.set(n.pos[0], n.pos[1], n.pos[2]);
-  mesh.userData.nodeId = n.id;
-  scene.add(mesh);
-  meshes.push({mesh:mesh, node:n});
-  n._mesh = mesh;
-
-  /* store ref for highlight control */
-  n._glow = mesh.material;
-
-  /* CSS label */
-  var el = document.createElement('div');
-  el.className = 'lbl' + (n.isCenter ? ' center' : '') + (n.size < 0.055 ? ' sub' : '');
-  el.dataset.id = n.id;
-  el.innerHTML = '<span class="lt">'+n.label+'</span>' + (n.sub ? '<span class="ls">'+n.sub+'</span>' : '');
-  if(!n.size < 0.04) el.style.pointerEvents = 'auto';
-  labelsDiv.appendChild(el);
-  labelEls[n.id] = el;
-
-  if(CONTENT[n.id]){
-    el.addEventListener('click', function(){ openPanel(n.id); });
-    el.style.cursor = 'pointer';
-  }
-});
-
-/* create edges */
-var edgeMeshes = [];
-EDGES.forEach(function(e){
-  var a = nodeMap[e[0]], b = nodeMap[e[1]];
-  if(!a || !b) return;
-  var pts = [
-    new THREE.Vector3(a.pos[0],a.pos[1],a.pos[2]),
-    new THREE.Vector3(b.pos[0],b.pos[1],b.pos[2])
-  ];
-  var geo = new THREE.BufferGeometry().setFromPoints(pts);
-  var isCross = !['center'].includes(e[0]) && !['center'].includes(e[1]) && !e[1].match(/vallourec|target|awards|copilot|rfq|iso42001|infra|security|aramco|network|covid|stat12|stat300|linkedin|edu/);
-  var opacity = a.isCenter || b.isCenter ? 0.22 :
-                isCross ? 0.10 : 0.18;
-  var color = a.isCenter ? (nodeMap[b.id] || {color:0x3a60a8}).color : a.color;
-  var mat = new THREE.LineBasicMaterial({color:color, transparent:true, opacity:opacity});
-  var line = new THREE.Line(geo, mat);
-  scene.add(line);
-  edgeMeshes.push({line:line, a:a, b:b, mat:mat, baseOpacity:opacity});
-  a._edges = a._edges || []; a._edges.push({mat:mat,baseOpacity:opacity});
-  b._edges = b._edges || []; b._edges.push({mat:mat,baseOpacity:opacity});
-});
-
-/* particle background */
-var ptCount = isMobile ? 300 : 600;
-var ptPos = new Float32Array(ptCount*3);
-for(var i=0;i<ptCount;i++){
-  var r = 5+Math.random()*10;
-  var t = Math.random()*Math.PI*2, p = Math.random()*Math.PI;
-  ptPos[i*3]  =r*Math.sin(p)*Math.cos(t);
-  ptPos[i*3+1]=r*Math.sin(p)*Math.sin(t);
-  ptPos[i*3+2]=r*Math.cos(p);
-}
-var ptGeo = new THREE.BufferGeometry(); ptGeo.setAttribute('position',new THREE.BufferAttribute(ptPos,3));
-scene.add(new THREE.Points(ptGeo, new THREE.PointsMaterial({size:.022,color:0x2a4880,transparent:true,opacity:.5})));
-
-/* ═══════════════════════════════════════
-   MOUSE / DRAG / HOVER
-════════════════════════════════════════ */
-var mouse = new THREE.Vector2(-999,-999);
-var isDragging = false, dragStart = {x:0,y:0};
-var rotY = 0.0, rotX = 0.06; /* initial rotation */
-var targetRotY = rotY, targetRotX = rotX;
-var autoRotY = 0;
-var hovered = null;
-var raycaster = new THREE.Raycaster();
-raycaster.params.Points = {threshold:0.05};
-
-function getClient(e){ return e.touches ? e.touches[0] : e; }
-
-canvas.addEventListener('mousedown', function(e){
-  isDragging=true; dragStart.x=e.clientX; dragStart.y=e.clientY;
-  canvas.style.cursor='grabbing';
-});
-canvas.addEventListener('touchstart', function(e){
-  isDragging=true; var t=e.touches[0]; dragStart.x=t.clientX; dragStart.y=t.clientY;
-},{passive:true});
-
-window.addEventListener('mousemove', function(e){
-  if(isDragging){
-    targetRotY += (e.clientX-dragStart.x)*0.006;
-    targetRotX += (e.clientY-dragStart.y)*0.004;
-    targetRotX = Math.max(-0.7, Math.min(0.7, targetRotX));
-    dragStart.x=e.clientX; dragStart.y=e.clientY;
-  }
-  mouse.x=(e.clientX/W)*2-1;
-  mouse.y=-(e.clientY/H)*2+1;
-});
-window.addEventListener('touchmove', function(e){
-  if(isDragging){
-    var t=e.touches[0];
-    targetRotY += (t.clientX-dragStart.x)*0.008;
-    targetRotX += (t.clientY-dragStart.y)*0.005;
-    targetRotX = Math.max(-0.7, Math.min(0.7, targetRotX));
-    dragStart.x=t.clientX; dragStart.y=t.clientY;
-  }
-},{passive:true});
-
-window.addEventListener('mouseup', function(){ isDragging=false; canvas.style.cursor=''; });
-window.addEventListener('touchend', function(){ isDragging=false; });
-
-/* click on canvas: pick node via raycaster */
-canvas.addEventListener('click', function(e){
-  if(Math.abs(e.clientX-dragStart.x)>5||Math.abs(e.clientY-dragStart.y)>5) return;
-  var rect=canvas.getBoundingClientRect();
-  mouse.x=((e.clientX-rect.left)/W)*2-1;
-  mouse.y=-((e.clientY-rect.top)/H)*2+1;
-  raycaster.setFromCamera(mouse, camera);
-  var intersects = raycaster.intersectObjects(meshes.map(function(m){return m.mesh;}));
-  if(intersects.length){
-    var id = intersects[0].object.userData.nodeId;
-    if(CONTENT[id]) openPanel(id);
-    else {
-      /* find parent's content */
-      var n = nodeMap[id];
-      if(n && n.parent && CONTENT[n.parent]) openPanel(n.parent);
-    }
-  }
-});
-
-/* ═══════════════════════════════════════
-   PANEL
-════════════════════════════════════════ */
-var panelEl = document.getElementById('panel');
-var panelBody = document.getElementById('panel-body');
-var currentOpen = null;
-
-document.getElementById('panel-close').addEventListener('click', closePanel);
-panelEl.addEventListener('click', function(e){ e.stopPropagation(); });
-
-function openPanel(id){
-  var d = CONTENT[id];
-  if(!d) return;
-  currentOpen = id;
-
-  /* highlight node */
-  ALL_NODES.forEach(function(n){
-    var active = (n.id===id || n.parent===id);
-    if(n._mesh){
-      n._mesh.material.opacity = active ? 1.0 : 0.25;
-    }
-    var el = labelEls[n.id];
-    if(el) el.classList.toggle('active', active);
-  });
-  edgeMeshes.forEach(function(e){
-    var active = (e.a.id===id||e.b.id===id||e.a.parent===id||e.b.parent===id);
-    e.mat.opacity = active ? e.baseOpacity*2.5 : e.baseOpacity*0.3;
-  });
-
-  /* build HTML */
-  var html = '';
-  html += '<span class="p-tag">'+d.tag+'</span>';
-  html += '<h2 class="p-title">'+d.title+'</h2>';
-  html += '<p class="p-lead">'+d.lead+'</p>';
-
-  if(d.stats){
-    html += '<div class="stat-row">';
-    d.stats.forEach(function(s){
-      html += '<div class="stat-box"><span class="stat-num">'+s.n+'</span><span class="stat-lbl">'+s.l+'</span></div>';
-    });
-    html += '</div>';
-  }
-
-  if(d.chips){
-    html += '<div class="p-sec"><h3>Technologies & Capabilities</h3><div class="skill-chips">';
-    d.chips.forEach(function(c){ html += '<span class="chip">'+c+'</span>'; });
-    html += '</div></div>';
-  }
-
-  if(d.sections){
-    d.sections.forEach(function(s){
-      html += '<div class="p-sec"><h3>'+s.h+'</h3>';
-      s.items.forEach(function(item){
-        html += '<div class="p-item"><div class="p-dot"></div><div class="p-txt">'+item+'</div></div>';
-      });
-      html += '</div>';
-    });
-  }
-
-  if(d.ctas){
-    html += '<div class="cta-row"><a class="btn bp" href="Ali-Alzahrani-CV.pdf" download>Download CV</a><a class="btn bo" href="https://www.linkedin.com/in/ali-alzahrani-one/" target="_blank" rel="noopener">LinkedIn</a></div>';
-  }
-
-  panelBody.innerHTML = html;
-  panelEl.classList.add('open');
-  panelEl.scrollTop = 0;
-}
-
-function closePanel(){
-  panelEl.classList.remove('open');
-  currentOpen = null;
-  /* restore all nodes */
-  ALL_NODES.forEach(function(n){
-    if(n._mesh) n._mesh.material.opacity = 0.95;
-    var el = labelEls[n.id]; if(el) el.classList.remove('active');
-  });
-  edgeMeshes.forEach(function(e){ e.mat.opacity = e.baseOpacity; });
-}
-
-/* close on background click */
-canvas.addEventListener('click', function(e){
-  if(!isDragging && !e.target.closest && currentOpen){
-    var rect=canvas.getBoundingClientRect();
-    mouse.x=((e.clientX-rect.left)/W)*2-1;
-    mouse.y=-((e.clientY-rect.top)/H)*2+1;
-    raycaster.setFromCamera(mouse, camera);
-    var hits=raycaster.intersectObjects(meshes.map(function(m){return m.mesh;}));
-    if(!hits.length) closePanel();
-  }
-});
-
-/* ═══════════════════════════════════════
-   ANIMATE
-════════════════════════════════════════ */
-var t = 0;
-var pivot = new THREE.Group();
-scene.add(pivot);
-/* move all nodes and edges into pivot */
-meshes.forEach(function(m){ pivot.add(m.mesh); });
-edgeMeshes.forEach(function(e){ pivot.add(e.line); });
-
-var projVec = new THREE.Vector3();
-
-function updateLabels(){
-  ALL_NODES.forEach(function(n){
-    var el = labelEls[n.id]; if(!el) return;
-    /* project 3D position to screen */
-    projVec.set(n.pos[0], n.pos[1], n.pos[2]);
-    projVec.applyMatrix4(pivot.matrixWorld);
-    projVec.project(camera);
-    var sx = (projVec.x+1)*0.5*W;
-    var sy = (1-projVec.y)*0.5*H;
-    var behindCamera = projVec.z > 1;
-    el.style.left = sx+'px';
-    el.style.top = sy+'px';
-    el.style.opacity = behindCamera ? '0' : '1';
-    /* hide tiny sub-node labels when far away */
-    if(n.size < 0.045 && !n.isCenter){
-      el.style.display = projVec.z < 1 ? 'flex' : 'none';
-    }
-  });
-}
-
-function animate(){
-  requestAnimationFrame(animate);
-  t += 0.001;
-
-  /* auto rotation when not dragging */
-  if(!isDragging) autoRotY += 0.0007;
-
-  /* smooth lerp to target rotation */
-  rotY += (targetRotY - rotY) * 0.06;
-  rotX += (targetRotX - rotX) * 0.06;
-
-  pivot.rotation.y = rotY + autoRotY;
-  pivot.rotation.x = rotX;
-
-  /* gentle node pulse */
-  meshes.forEach(function(m){
-    var sc = 1 + Math.sin(t*2.0 + m.node.pos[0])*0.04;
-    m.mesh.scale.setScalar(sc);
-  });
-
-  /* hover detection */
-  if(!isDragging){
-    raycaster.setFromCamera(mouse, camera);
-    var hits = raycaster.intersectObjects(meshes.map(function(m){return m.mesh;}));
-    var newHovered = hits.length ? hits[0].object.userData.nodeId : null;
-    if(newHovered !== hovered){
-      hovered = newHovered;
-      canvas.style.cursor = (hovered && CONTENT[hovered]) ? 'pointer' : (hovered ? 'pointer' : '');
-    }
-  }
-
-  pivot.updateMatrixWorld();
-  updateLabels();
-  renderer.render(scene, camera);
-}
-animate();
-
-/* ═══════════════════════════════════════
-   RESIZE
-════════════════════════════════════════ */
-window.addEventListener('resize', function(){
-  W=window.innerWidth; H=window.innerHeight;
-  isMobile=W<700;
-  camera.aspect=W/H; camera.updateProjectionMatrix();
-  renderer.setSize(W,H);
-  camera.position.z = isMobile ? 7.5 : 6.2;
-});
-
-})();
-</script>
+<script type="module" src="net/app.js?v=8b544d6391"></script>
 </body>
 </html>

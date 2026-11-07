@@ -695,6 +695,9 @@ def main():
     (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>', encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    # The live home page is the single-page 3D network; it overlays the pages built above.
+    import runpy
+    runpy.run_path(str(ROOT / "network" / "build_network.py"), run_name="__main__")
     if not (OUT / "Ali-Alzahrani-CV.pdf").exists():
         errors.append("CV PDF missing: run python cv/build_cv.py")
     print(f"Built {len(urls)} pages into {OUT}")
